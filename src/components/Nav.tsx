@@ -1,9 +1,10 @@
 import { StateUpdater, useState } from "preact/hooks";
-import { NavItem } from "../app";
+import * as app from "../app";
+import { NavItem } from "./NavItem";
 
 interface NavProps {
-  nav: NavItem[];
-  setActiveNavItem: StateUpdater<NavItem>;
+  nav: app.NavItem[];
+  setActiveNavItem: StateUpdater<app.NavItem>;
 }
 
 export function Nav(props: NavProps) {
@@ -25,12 +26,7 @@ export function Nav(props: NavProps) {
       <ul className="divide-y border-gray-300">
         {filteredNav.map((item) => (
           <li>
-            <button
-              className="py-3"
-              onClick={() => props.setActiveNavItem(item)}
-            >
-              {item.title}
-            </button>
+            <NavItem item={item} setActiveNavItem={props.setActiveNavItem}/>
           </li>
         ))}
       </ul>

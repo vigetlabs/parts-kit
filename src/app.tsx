@@ -22,8 +22,19 @@ enum ScreenSize {
 const nav: NavItem[] = [
   {
     title: "Button",
-    url: "/button.html",
-    children: [],
+    url: "",
+    children: [
+      {
+        title: "Primary",
+        url: "/button-primary.html",
+        children: []
+      },
+      {
+        title: "Secondary",
+        url: "/button-secondary.html",
+        children: []
+      },
+    ],
   },
   {
     title: "Card",
