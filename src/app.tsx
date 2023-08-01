@@ -1,8 +1,9 @@
 import { useState } from "preact/hooks";
 import "./app.css";
 import cx from 'classnames'
+import { Nav } from "./components/Nav";
 
-interface NavItem {
+export interface NavItem {
   title: string;
   url: string | null;
   children: NavItem[];
@@ -60,17 +61,9 @@ export function App() {
 
   return (
     <div className="grid grid-cols-[250px,_1fr] grid-rows-[auto,_1fr] h-screen">
-      <nav className=" row-span-2 bg-gray-200 p-5">
-        <ul className="divide-y border-gray-300">
-          {nav.map((item) => (
-            <li>
-              <button className="py-3" onClick={() => setActiveNavItem(item)}>
-                {item.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <div className=" row-span-2 bg-gray-200 p-5">
+        <Nav nav={nav} setActiveNavItem={setActiveNavItem} />
+      </div>
 
       <div className="bg-gray-700 p-2 gap-2 flex justify-center">
         {screenSizes.map((item) => (
