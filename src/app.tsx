@@ -1,7 +1,9 @@
-import { useState } from "preact/hooks";
+import {useState} from "preact/hooks";
 import "./app.css";
 import cx from 'classnames'
-import { Nav } from "./components/Nav";
+import {Nav} from "./components/Nav";
+import {useEffect} from "preact/compat";
+import {NavItem} from "./components/NavItem.tsx";
 
 export interface NavItem {
   title: string;
@@ -14,34 +16,6 @@ enum ScreenSize {
   Tablet,
   Desktop,
 }
-
-/**
- * In the final product, navigation is loaded via Ajax. It is up to the CMS to generate this navigation.
- * Or a developer can just manually write this JSON
- */
-const nav: NavItem[] = [
-  {
-    title: "Button",
-    url: "",
-    children: [
-      {
-        title: "Primary",
-        url: "/button-primary.html",
-        children: []
-      },
-      {
-        title: "Secondary",
-        url: "/button-secondary.html",
-        children: []
-      },
-    ],
-  },
-  {
-    title: "Card",
-    url: "/card.html",
-    children: [],
-  },
-];
 
 const screenSizes = [
   {
@@ -57,7 +31,6 @@ const screenSizes = [
     size: ScreenSize.Desktop,
   },
 ];
-
 const screenSizeMap = {
   [ScreenSize.Mobile]: 375,
   [ScreenSize.Tablet]: 768,
@@ -65,41 +38,106 @@ const screenSizeMap = {
 }
 
 export function App() {
-  const [activeNavItem, setActiveNavItem] = useState(nav[0]);
-  const [activeScreenSize, setActiveScreenSize] = useState(ScreenSize.Desktop);
+  const [nav, setNav] = useState([]);
 
+  const loadNav = async (url: string) => {
+    const response = await fetch(url, {
+      method: 'GET',
+    })
+
+    if (!response.ok) {
+      throw new Error('Coudnt load')
+    }
+
+    const data = await response.json()
+
+    setNav(data)
+  };
+
+  useEffect(() => {
+    // loadNav('/nav.json')
+    loadNav('https://mwi.ddev.site/actions/web/new-parts-kit/nav')
+  }, [])
+
+  if (nav.length === 0) {
+    return (<div>Loading</div>)
+  }
+
+  const findViableNavItem = (item:NavItem) :NavItem|undefined => {
+    if (item.url) {
+      return item
+    }
+
+    return item.children.find(item => !!item.url)
+  }
+
+  const firstNavItem = findViableNavItem(nav[0]);
+
+  if(firstNavItem === undefined) {
+    return (<div>Could not find viable nav item</div>)
+  }
+
+  const [activeNavItem, setActiveNavItem] = useState<NavItem>(firstNavItem);
+  const [activeScreenSize, setActiveScreenSize] = useState(ScreenSize.Desktop);
   const activeScreenWidth = screenSizeMap[activeScreenSize]
 
+  const setViableNavItem = (item:NavItem): void => {
+    const viableItem = findViableNavItem(item);
+
+    if (viableItem === undefined) {
+      console.error('Cant find viable nav item for ', item);
+      return
+    }
+    setActiveNavItem(viableItem)
+  }
+
   return (
-    <div className="grid grid-cols-[250px,_1fr] grid-rows-[auto,_1fr] h-screen">
-      <div className=" row-span-2 bg-gray-200 p-5">
-        <Nav nav={nav} setActiveNavItem={setActiveNavItem} />
+    <div className="bg-gray-100 grid grid-cols-[250px,_1fr] h-screen p-2 pl-0">
+      <div className="py-1 overflow-auto">
+        <Nav activeNavItem={activeNavItem} nav={nav} setActiveNavItem={setViableNavItem}/>
       </div>
 
-      <div className="bg-gray-700 p-2 gap-2 flex justify-center">
-        {screenSizes.map((item) => (
-          <button
-            onClick={() => setActiveScreenSize(item.size)}
-            className={cx(
-              'bg-white py-2 px-3',
-              {
-                'bg-black text-white': activeScreenSize === item.size
+      <div className="flex flex-col shadow-sm bg-white rounded-md">
+        {/* Utility bar */}
+        <div className="flex justify-start items-stretch divide-gray-200 divide-x text-sm border-b border-gray-200">
+          <div className="flex items-center py-3 px-4 text-xs uppercase font-semibold">
+            Screen Size
+          </div>
+          {screenSizes.map((item) => (
+            <button
+              onClick={() => setActiveScreenSize(item.size)}
+              className={cx(
+                'relative py-3 px-4 hover:text-blue-500 hover:bg-gray-100',
+                {
+                  'text-blue-700': item.size === activeScreenSize
+                },
+              )}
+            >
+              {item.title}
+              {item.size === activeScreenSize
+                ? (<span className="absolute inset-x-0 bottom-1.5 mx-auto w-1 h-1 rounded-full bg-blue-700"></span>)
+                : null
               }
-            )}
-          >
-            {item.title}
-          </button>
-        ))}
-      </div>
 
-      <div className="p-5 flex items-stretch justify-center bg-gray-100">
-        <div className="flex-grow shadow-sm bg-white p-4 rounded-md" style={{maxWidth: activeScreenWidth}}>
-          <iframe
-            className="w-full h-full"
-            src={activeNavItem.url ?? undefined}
-          ></iframe>
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-stretch justify-center flex-grow">
+          <div className={cx('flex-grow', {'py-5': activeScreenSize !== ScreenSize.Desktop})} style={{maxWidth: activeScreenWidth}}>
+            <iframe
+              className={cx(
+                'w-full h-full',
+                {
+                  'border-2 rounded border-gray-100': activeScreenSize !== ScreenSize.Desktop,
+                },
+              )}
+              src={activeNavItem?.url ?? undefined}
+            ></iframe>
+          </div>
         </div>
       </div>
+
     </div>
   );
 }

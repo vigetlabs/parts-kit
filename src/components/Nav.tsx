@@ -1,10 +1,11 @@
-import { StateUpdater, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import * as app from "../app";
 import { NavItem } from "./NavItem";
 
 interface NavProps {
   nav: app.NavItem[];
-  setActiveNavItem: StateUpdater<app.NavItem>;
+  activeNavItem: app.NavItem;
+  setActiveNavItem: (item: app.NavItem) => void;
 }
 
 export function Nav(props: NavProps) {
@@ -16,17 +17,26 @@ export function Nav(props: NavProps) {
 
   return (
     <nav>
-      <input
-        type="search"
-        onInput={(e) =>
-          setCurrentSearch(e.currentTarget.value)
-        }
-      />
+      <div className="px-5 mb-3">
+        <div className="relative">
+          <span className="absolute left-2 inset-y-0 flex items-center">🔍</span>
+          <input
+            type="search"
+            className="block w-full p-1 pl-8 border bg-transparent border-gray-300 rounded focus:border-blue-600 focus:outline-none focus:bg-white"
+            placeholder="Search"
+            onInput={(e) => setCurrentSearch(e.currentTarget.value)}
+          />
+        </div>
+      </div>
 
-      <ul className="divide-y border-gray-300">
+      <ul className="space-y-1">
         {filteredNav.map((item) => (
           <li>
-            <NavItem item={item} setActiveNavItem={props.setActiveNavItem}/>
+            <NavItem
+              activeNavItem={props.activeNavItem}
+              item={item}
+              setActiveNavItem={props.setActiveNavItem}
+            />
           </li>
         ))}
       </ul>

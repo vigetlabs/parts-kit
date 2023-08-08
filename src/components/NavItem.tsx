@@ -1,28 +1,58 @@
-import { StateUpdater, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import * as app from "../app";
+import cx from "classnames";
 
 interface NavItemProps {
   item: app.NavItem;
-  setActiveNavItem: StateUpdater<app.NavItem>;
+  activeNavItem: app.NavItem;
+  setActiveNavItem: (item: app.NavItem) => void;
+  isChild?: boolean;
 }
 
 export function NavItem(props: NavItemProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const isChild = props.isChild ?? false;
 
   return (
     <div>
-      <button className="py-3" onClick={() => {
-        if(props.item.children.length) {
-          return setIsOpen(!isOpen)
-        }
-        return props.setActiveNavItem(props.item);
-      }}>
+      <button
+        className={cx("pl-5 flex w-full gap-1 text-sm hover:bg-gray-200", {
+          "py-2 font-medium": !isChild,
+          "py-1 pl-8": isChild,
+          "bg-blue-200 hover:to-blue-300": props.activeNavItem === props.item,
+        })}
+        onClick={() => {
+          if (props.item.children.length) {
+            if (isOpen) {
+              return setIsOpen(false);
+            }
+            setIsOpen(true);
+            // Intentionally pass through to set active nav item
+          }
+          return props.setActiveNavItem(props.item);
+        }}
+      >
+        {props.item.children.length ? (
+          <span
+            className={cx({
+              "-rotate-90": !isOpen,
+              "translate-y-[-2px]": isOpen,
+            })}
+          >
+            ▾
+          </span>
+        ) : null}
         {props.item.title}
       </button>
       {props.item.children.length && isOpen ? (
-        <ul className="pl-5">
-          {props.item.children.map(child => (
-            <NavItem item={child} setActiveNavItem={props.setActiveNavItem} />
+        <ul>
+          {props.item.children.map((child) => (
+            <NavItem
+              isChild
+              activeNavItem={props.activeNavItem}
+              item={child}
+              setActiveNavItem={props.setActiveNavItem}
+            />
           ))}
         </ul>
       ) : null}
