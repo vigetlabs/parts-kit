@@ -12,7 +12,10 @@ export function Nav(props: NavProps) {
   const [currentSearch, setCurrentSearch] = useState("");
 
   const filteredNav = props.nav.filter((item) =>
-    item.title.toLowerCase().includes(currentSearch.toLowerCase()),
+    {
+      const itemMatchesSearch = (item:app.NavItem) => item.title.toLowerCase().includes(currentSearch);
+      return itemMatchesSearch(item) || item.children.some(child => itemMatchesSearch(child));
+    },
   );
 
   return (
