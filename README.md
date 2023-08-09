@@ -9,7 +9,7 @@ This is a proof of concept for a decoupled (headless?) parts kit.
 #### The Navigation JSON file
 The navigation JSON file contains a nested tree of pages.
 
-You could either write this JSON by hand, or your CMS of choice could have a plugin created to create this navigation on the fly. 
+You could either write this JSON by hand, or your CMS of choice could have a plugin created to create this navigation on the fly.
 
 ```json
 [
@@ -52,7 +52,7 @@ When a nav item is clicked, an `<iframe>` in the parts kit loads the URLs listed
 
 The `<iframe>` isolates projects styles and scripts from the parts kits. It also makes it easy to emulate screen sizes and test the responsive behaviors of your components.
 
-## Features ist
+## Possible Features
 
 ### Parts Kit
 **Required**
@@ -86,10 +86,10 @@ Components
 
 **Required**
 
-- Provides a URL to render individual parts. 
+- Provides a URL to render individual parts.
 
 **Optional**
 - Generates JSON for the parts kit navigation.
-- Provides a `/parts-kit` url that inserts loads JavaScript for parts kit. 
+- Provides a `/parts-kit` url that inserts loads JavaScript for parts kit.
 - Automatically inserts any JavaScript for turning on `contenteditable` or copy/paste of snippets.
 - Helpers for dummy text and images (some of this already exists in `craft-viget-base`)
