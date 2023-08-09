@@ -5,6 +5,9 @@ import {Nav} from "./components/Nav";
 import {useEffect} from "preact/compat";
 import {NavItem} from "./components/NavItem.tsx";
 
+/** Make this configurable */
+const NAV_URL = '/nav.json';
+
 export interface NavItem {
   title: string;
   url: string | null;
@@ -55,8 +58,7 @@ export function App() {
   };
 
   useEffect(() => {
-    // loadNav('/nav.json')
-    loadNav('https://mwi.ddev.site/actions/web/new-parts-kit/nav')
+    loadNav(NAV_URL)
   }, [])
 
   if (nav.length === 0) {
