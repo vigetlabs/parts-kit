@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #form-message {
+      max-height: 50vh;
+      opacity: 1;
+      transition: all 200ms;
+      visibility: visible;
+    }
+    #form-message.fade-out {
+      max-height: 0;
+      opacity: 0;
+      padding-bottom: 0;
+      padding-top: 0;
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    function ready(fn) {
+      if (document.readyState !== 'loading') {
+        fn();
+      } else {
+        document.addEventListener('DOMContentLoaded', fn);
+      }
+    }
+
+    function addEventListener(el, eventName, eventHandler, selector) {
+      if (selector) {
+        const wrappedHandler = (e) => {
+          if (!e.target) return;
+          const el = e.target.closest(selector);
+          if (el) {
+            eventHandler.call(el, e);
+          }
+        };
+        el.addEventListener(eventName, wrappedHandler);
+        return wrappedHandler;
+      } else {
+        const wrappedHandler = (e) => {
+          eventHandler.call(el, e);
+        };
+        el.addEventListener(eventName, wrappedHandler);
+        return wrappedHandler;
+      }
+    }
+
+    const defaultJsonValue = 'nav.json';
+
+    const loadJsonValue = () => {
+      const input = document.getElementById('parts-json');
+      let value = localStorage.getItem('parts-json');
+
+      if (!value) {
+        value = defaultJsonValue;
+      }
+
+      input.value = value;
+    };
+
+    const doSettingsSaved = () => {
+      const message = document.getElementById('form-message');
+
+      message.innerHTML = 'Settings Saved!';
+      message.style.display = 'block';
+
+      setTimeout(() => {
+        message.classList.add('fade-out');
+      }, 5000);
+    };
+
+    const bindForm = () => {
+      const form = document.getElementById('app-settings'),
+        input = document.getElementById('parts-json'),
+        message = document.getElementById('form-message');
+
+      addEventListener(form, 'submit', (e) => {
+        e.preventDefault();
+        message.style.display = 'none';
+        message.classList.remove('fade-out');
+        if (input.value !== defaultJsonValue){
+          localStorage.setItem('parts-json', input.value);
+        }
+        doSettingsSaved();
+      });
+    };
+
+    ready(function(){
+      loadJsonValue();
+      bindForm();
+    });
+  </script>
+
+</head>
+<body>
+<div id="form-message" class="bg-green-200 p-3" style="display: none;"></div>
+<form class="p-3" action="" method="post" id="app-settings">
+  <label class="flex flex-col">
+    <span class="mb-1">Parts JSON URL:</span>
+    <span><input type="text" id="parts-json" name="parts-json" value="" class="px-3 py-2 border border-black w-full" /></span>
+  </label>
+  <div class="my-2">
+    <button class="bg-blue-700 text-white py-2 px-5" type="submit">Save Settings</button>
+  </div>
+</form>
+</body>
+</html>

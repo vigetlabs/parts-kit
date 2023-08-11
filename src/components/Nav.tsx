@@ -19,7 +19,7 @@ export function Nav(props: NavProps) {
   );
 
   return (
-    <nav>
+    <nav className="min-h-full flex flex-col">
       <div className="px-5 mb-3">
         <div className="relative">
           <span className="absolute left-2 inset-y-0 flex items-center">🔍</span>
@@ -42,6 +42,20 @@ export function Nav(props: NavProps) {
             />
           </li>
         ))}
+      </ul>
+
+      <ul className="flex flex-col min-h-full mt-auto">
+        <li className="app-settings">
+          <NavItem
+            activeNavItem={props.activeNavItem}
+            item={{
+              'title': 'Settings',
+              'url': '/settings.html',
+              'children': []
+            }}
+            setActiveNavItem={props.setActiveNavItem}
+          />
+        </li>
       </ul>
     </nav>
   );
