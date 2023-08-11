@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      .toggle-content-editable {
+        display: inline-flex;
+        padding: 12px 8px;
+        border-radius: 8px;
+        margin: 10px;
+        background: black;
+        color: white;
+        font-size: 14px;
+      }
+
+      [contenteditable]:hover {
+        outline: solid 5px red;
+      }
+    </style>
+
+    <script async src="/content-editable.js"></script>
+  </head>
+  <body>
+    <div>
+      <button class="toggle-content-editable">Edit Text</button>
+    </div>
+    <button class="bg-red-500 p-5 lg:bg-blue-500">
+      This is a secondary button
+    </button>
+  </body>
+</html>
