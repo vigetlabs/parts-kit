@@ -6,7 +6,7 @@ import {useEffect} from "preact/compat";
 import {NavItem} from "./components/NavItem.tsx";
 
 /** Make this configurable */
-const NAV_URL = '/nav.json';
+const NAV_URL =  `${import.meta.env.BASE_URL}nav.json`;
 
 export interface NavItem {
   title: string;

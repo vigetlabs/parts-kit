@@ -5,19 +5,19 @@
       "children": [
       {
         "title": "Primary",
-        "url": "/button-primary.html",
+        "url": "button-primary.html",
         "children": []
       },
       {
         "title": "Secondary",
-        "url": "/button-secondary.html",
+        "url": "button-secondary.html",
         "children": []
       }
     ]
   },
   {
     "title": "Card",
-    "url": "/card.html",
+    "url": "card.html",
     "children": []
   }
 ]
