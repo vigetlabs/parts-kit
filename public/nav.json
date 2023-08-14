@@ -1,23 +1,25 @@
-[
-  {
+{
+  "nav": [
+    {
       "title": "Button",
       "url": "",
       "children": [
-      {
-        "title": "Primary",
-        "url": "button-primary.html",
-        "children": []
-      },
-      {
-        "title": "Secondary",
-        "url": "button-secondary.html",
-        "children": []
-      }
-    ]
-  },
-  {
-    "title": "Card",
-    "url": "card.html",
-    "children": []
-  }
-]
+        {
+          "title": "Primary",
+          "url": "button-primary.html",
+          "children": []
+        },
+        {
+          "title": "Secondary",
+          "url": "button-secondary.html",
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "Card",
+      "url": "card.html",
+      "children": []
+    }
+  ]
+}
