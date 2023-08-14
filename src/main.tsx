@@ -1,5 +1,5 @@
-import { render } from 'preact'
-import { App } from './app.tsx'
+// TODO figure out how to isolate CSS from rest of project
 import './index.css'
+import PartsKit from './custom-elements/parts-kit'
 
-render(<App />, document.getElementById('app')!)
+customElements.define('parts-kit', PartsKit, {extends: 'div'})
