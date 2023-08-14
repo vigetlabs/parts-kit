@@ -6,6 +6,8 @@ export default class PartsKit extends HTMLElement {
     // Always call super first in constructor
     super()
 
-    render(<App />, this)
+    const configUrl = this.getAttribute('config-url')
+
+    render(<App configUrl={configUrl} />, this)
   }
 }

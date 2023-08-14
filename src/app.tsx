@@ -13,6 +13,10 @@ import {
 import Welcome from "./features/welcome/Welcome.tsx";
 import UtilityBar from "./features/utility-bar/UtilityBar.tsx";
 
+export interface AppProps {
+  configUrl: string|null;
+}
+
 /**
  * Config is the JSON we get back from the CMS or App
  * Right now it's only nav links, but there could be other config
@@ -22,7 +26,7 @@ export interface Config {
   nav: NavItemInterface[];
 }
 
-export function App() {
+export function App(props: AppProps) {
   const settings = useSettingsStore();
   const utilityStore = useUtilityBarStore();
 
@@ -43,7 +47,8 @@ export function App() {
   };
 
   useEffect(() => {
-    loadConfig(settings.configUrl);
+    // If the custom element has a config URL, don't pull one from the settings field
+    loadConfig(props.configUrl ?? settings.configUrl);
   }, [settings.configUrl]);
 
   if (config.nav.length === 0) {
@@ -89,7 +94,7 @@ export function App() {
         <UtilityBar />
 
         <div className="flex items-stretch justify-center flex-grow">
-          {isWelcomeVisible ? (
+          {!props.configUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
             <div
