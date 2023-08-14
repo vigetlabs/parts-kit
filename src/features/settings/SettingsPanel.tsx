@@ -16,10 +16,17 @@ export default function () {
           value={localNavUrl}
           onInput={(e) => setLocalNavUrl(e.currentTarget.value)}
         />
+        <div className="text-xs mt-2">
+          Your parts kit URLs need to have appropriate CORS and no
+          X-Frame-Options restrictions. You can use a Chrome Plugin like
+          Requestly to bypass these headers.
+        </div>
       </div>
       <button
         className="bg-gray-700 text-white text-xs uppercase font-medium px-4 py-3 rounded"
-        onClick={() => settings.setNavUrl(localNavUrl.trim() || DEFAULT_NAV_URL)}
+        onClick={() =>
+          settings.setNavUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
+        }
       >
         Save Settings
       </button>
