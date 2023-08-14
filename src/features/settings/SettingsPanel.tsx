@@ -3,7 +3,7 @@ import { DEFAULT_NAV_URL, useSettingsStore } from "./store";
 
 export default function () {
   const settings = useSettingsStore();
-  const [localNavUrl, setLocalNavUrl] = useState(settings.navUrl);
+  const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl);
   return (
     <div className="bg-gray-200 p-5 space-y-3">
       <div className="max-w-md">
@@ -25,7 +25,7 @@ export default function () {
       <button
         className="bg-gray-700 text-white text-xs uppercase font-medium px-4 py-3 rounded"
         onClick={() =>
-          settings.setNavUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
+          settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
         }
       >
         Save Settings
