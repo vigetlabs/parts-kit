@@ -1,6 +1,11 @@
+
 # Decoupled Parts Kit proof of concept
 
 This is a proof of concept for a decoupled (headless?) parts kit.
+
+#### Table of Contents
+- [Key Concepts](#key-concepts)
+- [Contribute to this project](#contribute-to-this-project)
 
 ![Diagram of decoupled parts kit](docs/hero-image.png)
 
@@ -93,3 +98,11 @@ Components
 - Provides a `/parts-kit` url that inserts loads JavaScript for parts kit.
 - Automatically inserts any JavaScript for turning on `contenteditable` or copy/paste of snippets.
 - Helpers for dummy text and images (some of this already exists in `craft-viget-base`)
+
+# Contribute to this project
+
+## Deploy
+
+Right now the demo is deployed to github pages. It's a manual process that uses the [gh-pages](https://github.com/tschaub/gh-pages) npm package.
+- Check out the `main` branch
+- Call `npm run deploy`
