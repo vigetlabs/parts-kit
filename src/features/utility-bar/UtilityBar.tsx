@@ -1,9 +1,13 @@
 import SettingsPanel from "../settings/SettingsPanel";
 import { screenSizes, useUtilityBarStore } from "./store";
-import cx from 'classnames'
+import cx from "classnames";
 
-export default function () {
-  const store = useUtilityBarStore()
+interface UtilityBarProps {
+  showSettings: boolean;
+}
+
+export default function (props: UtilityBarProps) {
+  const store = useUtilityBarStore();
 
   return (
     <div>
@@ -28,14 +32,14 @@ export default function () {
           </button>
         ))}
         {/* Show / hide settings */}
-        <button
-          className="px-4 text-sm font-medium"
-          onClick={() =>
-            store.setIsSettingsVisible(!store.isSettingsVisible)
-          }
-        >
-          {store.isSettingsVisible ? "× Hide" : "⚙️ Show"} Settings
-        </button>
+        {props.showSettings ? (
+          <button
+            className="px-4 text-sm font-medium"
+            onClick={() => store.setIsSettingsVisible(!store.isSettingsVisible)}
+          >
+            {store.isSettingsVisible ? "× Hide" : "⚙️ Show"} Settings
+          </button>
+        ) : null}
       </div>
 
       {/* Settings Panel */}

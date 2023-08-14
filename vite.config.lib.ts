@@ -2,7 +2,13 @@ import { defineConfig, mergeConfig } from 'vite'
 import {sharedConfig} from './vite.config.js'
 import { resolve } from 'path'
 
-export default mergeConfig(sharedConfig, {
+const libraryConfig = defineConfig({
+  define: {
+    // I think this is because normally you wouldn't include `preact` in your node module
+    // https://vitejs.dev/config/shared-options.html#define
+    // https://github.com/vitejs/vite/issues/9186#issuecomment-1189228653
+    'process.env.NODE_ENV': '"production"',
+  },
   build: {
     outDir: 'lib',
     copyPublicDir: false,
@@ -12,9 +18,9 @@ export default mergeConfig(sharedConfig, {
       name: 'PartsKit',
       // the proper extensions will be added
       fileName: 'parts-kit',
+      formats: ['es']
     },
   },
 })
 
-
-
+export default mergeConfig(sharedConfig, libraryConfig)

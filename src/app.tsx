@@ -31,6 +31,7 @@ export function App(props: AppProps) {
   const utilityStore = useUtilityBarStore();
 
   const [config, setConfig] = useState<Config>({ nav: [] });
+  const hasConfigUrl = !!props.configUrl
 
   const loadConfig = async (url: string) => {
     const response = await fetch(url, {
@@ -91,10 +92,10 @@ export function App(props: AppProps) {
       </div>
 
       <div className="flex flex-col shadow-sm bg-white rounded-md">
-        <UtilityBar />
+        <UtilityBar showSettings={!hasConfigUrl} />
 
         <div className="flex items-stretch justify-center flex-grow">
-          {!props.configUrl && isWelcomeVisible ? (
+          {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
             <div

@@ -6,12 +6,10 @@
   "files": [
     "lib"
   ],
-  "main": "./lib/parts-kit.umd.cjs",
   "module": "./lib/parts-kit.js",
   "exports": {
     ".": {
-      "import": "./lib/parts-kit.js",
-      "require": "./lib/parts-kit.umd.cjs"
+      "import": "./lib/parts-kit.js"
     }
   },
   "publishConfig": {
