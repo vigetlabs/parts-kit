@@ -11,18 +11,22 @@ interface NavProps {
 export function Nav(props: NavProps) {
   const [currentSearch, setCurrentSearch] = useState("");
 
-  const filteredNav = props.nav.filter((item) =>
-    {
-      const itemMatchesSearch = (item:app.NavItem) => item.title.toLowerCase().includes(currentSearch);
-      return itemMatchesSearch(item) || item.children.some(child => itemMatchesSearch(child));
-    },
-  );
+  const filteredNav = props.nav.filter((item) => {
+    const itemMatchesSearch = (item: app.NavItem) =>
+      item.title.toLowerCase().includes(currentSearch);
+    return (
+      itemMatchesSearch(item) ||
+      item.children.some((child) => itemMatchesSearch(child))
+    );
+  });
 
   return (
     <nav>
       <div className="px-5 mb-3">
         <div className="relative">
-          <span className="absolute left-2 inset-y-0 flex items-center">🔍</span>
+          <span className="absolute left-2 inset-y-0 flex items-center">
+            🔍
+          </span>
           <input
             type="search"
             className="block w-full p-1 pl-8 border bg-transparent border-gray-300 rounded focus:border-blue-600 focus:outline-none focus:bg-white"
