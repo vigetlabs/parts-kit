@@ -1,9 +1,9 @@
 import { useState } from "preact/hooks";
 import "./app.css";
 import cx from "classnames";
-import { Nav } from "./components/Nav";
+import { Nav } from "./features/nav/Nav.tsx";
 import { useEffect } from "preact/compat";
-import { NavItem } from "./components/NavItem.tsx";
+import { NavItemInterface } from "./features/nav/Nav.tsx";
 import { useSettingsStore } from "./features/settings/store.ts";
 import {
   ScreenSize,
@@ -13,19 +13,13 @@ import {
 import Welcome from "./features/welcome/Welcome.tsx";
 import UtilityBar from "./features/utility-bar/UtilityBar.tsx";
 
-export interface NavItem {
-  title: string;
-  url: string | null;
-  children: NavItem[];
-}
-
 /**
  * Config is the JSON we get back from the CMS or App
  * Right now it's only nav links, but there could be other config
  * items in the future.
  */
 export interface Config {
-  nav: NavItem[];
+  nav: NavItemInterface[];
 }
 
 export function App() {
@@ -56,7 +50,7 @@ export function App() {
     return <div>Loading</div>;
   }
 
-  const findViableNavItem = (item: NavItem): NavItem | undefined => {
+  const findViableNavItem = (item: NavItemInterface): NavItemInterface | undefined => {
     if (item.url) {
       return item;
     }
@@ -64,17 +58,11 @@ export function App() {
     return item.children.find((item) => !!item.url);
   };
 
-  const firstNavItem = findViableNavItem(config.nav[0]);
-
-  if (firstNavItem === undefined) {
-    return <div>Could not find viable nav item</div>;
-  }
-
   const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(true);
-  const [activeNavItem, setActiveNavItem] = useState<NavItem>(firstNavItem);
+  const [activeNavItem, setActiveNavItem] = useState<NavItemInterface|undefined>(findViableNavItem(config.nav[0]));
   const activeScreenWidth = screenSizeMap[utilityStore.activeScreenSize];
 
-  const setViableNavItem = (item: NavItem): void => {
+  const setViableNavItem = (item: NavItemInterface): void => {
     const viableItem = findViableNavItem(item);
 
     if (viableItem === undefined) {
@@ -88,11 +76,13 @@ export function App() {
   return (
     <div className="bg-gray-100 grid grid-cols-[250px,_1fr] h-screen p-2 pl-0">
       <div className="py-1 overflow-auto">
-        <Nav
-          activeNavItem={activeNavItem}
-          nav={config.nav}
-          setActiveNavItem={setViableNavItem}
-        />
+        {activeNavItem !== undefined ? (
+          <Nav
+            activeNavItem={activeNavItem}
+            nav={config.nav}
+            setActiveNavItem={setViableNavItem}
+          />
+        ) : null}
       </div>
 
       <div className="flex flex-col shadow-sm bg-white rounded-md">

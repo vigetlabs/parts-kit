@@ -1,18 +1,22 @@
 import { useState } from "preact/hooks";
-import * as app from "../app";
-import { NavItem } from "./NavItem";
+import { NavItem } from "../../components/NavItem";
 
+export interface NavItemInterface {
+  title: string;
+  url: string | null;
+  children: NavItemInterface[];
+}
 interface NavProps {
-  nav: app.NavItem[];
-  activeNavItem: app.NavItem;
-  setActiveNavItem: (item: app.NavItem) => void;
+  nav: NavItemInterface[];
+  activeNavItem: NavItemInterface;
+  setActiveNavItem: (item: NavItemInterface) => void;
 }
 
 export function Nav(props: NavProps) {
   const [currentSearch, setCurrentSearch] = useState("");
 
   const filteredNav = props.nav.filter((item) => {
-    const itemMatchesSearch = (item: app.NavItem) =>
+    const itemMatchesSearch = (item: NavItemInterface) =>
       item.title.toLowerCase().includes(currentSearch);
     return (
       itemMatchesSearch(item) ||
