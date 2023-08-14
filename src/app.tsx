@@ -5,9 +5,13 @@ import { Nav } from "./components/Nav";
 import { useEffect } from "preact/compat";
 import { NavItem } from "./components/NavItem.tsx";
 import { useSettingsStore } from "./features/settings/store.ts";
-import SettingsPanel from "./features/settings/SettingsPanel.tsx";
-import { useUtilityBarStore } from "./features/utility-bar/store.ts";
+import {
+  ScreenSize,
+  screenSizeMap,
+  useUtilityBarStore,
+} from "./features/utility-bar/store.ts";
 import Welcome from "./features/welcome/Welcome.tsx";
+import UtilityBar from "./features/utility-bar/UtilityBar.tsx";
 
 export interface NavItem {
   title: string;
@@ -26,7 +30,7 @@ export interface Config {
 
 export function App() {
   const settings = useSettingsStore();
-  const [nav, setNav] = useState([]);
+  const utilityStore = useUtilityBarStore();
 
   const [config, setConfig] = useState<Config>({ nav: [] });
 
@@ -66,11 +70,9 @@ export function App() {
     return <div>Could not find viable nav item</div>;
   }
 
-  const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(true)
+  const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(true);
   const [activeNavItem, setActiveNavItem] = useState<NavItem>(firstNavItem);
-  const [activeScreenSize, setActiveScreenSize] = useState(ScreenSize.Desktop);
-  const activeScreenWidth = screenSizeMap[activeScreenSize];
-  const utilityBar = useUtilityBarStore()
+  const activeScreenWidth = screenSizeMap[utilityStore.activeScreenSize];
 
   const setViableNavItem = (item: NavItem): void => {
     const viableItem = findViableNavItem(item);
@@ -80,7 +82,7 @@ export function App() {
       return;
     }
     setActiveNavItem(viableItem);
-    setIsWelcomeVisible(false)
+    setIsWelcomeVisible(false);
   };
 
   return (
@@ -94,61 +96,27 @@ export function App() {
       </div>
 
       <div className="flex flex-col shadow-sm bg-white rounded-md">
-        {/* Utility bar */}
-        <div>
-          <div className="flex justify-start items-stretch divide-gray-200 divide-x text-sm border-b border-gray-200">
-            <div className="flex items-center py-3 px-4 text-xs uppercase font-semibold">
-              Screen Size
-            </div>
-            {screenSizes.map((item) => (
-              <button
-                onClick={() => setActiveScreenSize(item.size)}
-                className={cx(
-                  "relative py-3 px-4 hover:text-blue-500 hover:bg-gray-100",
-                  {
-                    "text-blue-700": item.size === activeScreenSize,
-                  },
-                )}
-              >
-                {item.title}
-                {item.size === activeScreenSize ? (
-                  <span className="absolute inset-x-0 bottom-1.5 mx-auto w-1 h-1 rounded-full bg-blue-700"></span>
-                ) : null}
-              </button>
-            ))}
-            {/* Show / hide settings */}
-            <button
-              className="px-4 text-sm font-medium"
-              onClick={() => utilityBar.setIsSettingsVisible(!utilityBar.isSettingsVisible)}
-            >
-              {utilityBar.isSettingsVisible ? "× Hide" : "⚙️ Show"} Settings
-            </button>
-          </div>
-
-          {/* Settings Panel */}
-          {utilityBar.isSettingsVisible ? (<SettingsPanel />) : null}
-
-        </div>
+        <UtilityBar />
 
         <div className="flex items-stretch justify-center flex-grow">
-          <div
-            className={cx("flex-grow", {
-              "py-5": activeScreenSize !== ScreenSize.Desktop,
-            })}
-            style={{ maxWidth: activeScreenWidth }}
-          >
-            {isWelcomeVisible ? (
-              <Welcome />
-            ) : (
+          {isWelcomeVisible ? (
+            <Welcome />
+          ) : (
+            <div
+              className={cx("flex-grow", {
+                "py-5": utilityStore.activeScreenSize !== ScreenSize.Desktop,
+              })}
+              style={{ maxWidth: activeScreenWidth }}
+            >
               <iframe
                 className={cx("w-full h-full", {
                   "border-2 rounded border-gray-100":
-                    activeScreenSize !== ScreenSize.Desktop,
+                    utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
                 src={activeNavItem?.url ?? undefined}
               ></iframe>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
