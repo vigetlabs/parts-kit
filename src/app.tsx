@@ -15,38 +15,22 @@ export interface NavItem {
   children: NavItem[];
 }
 
-enum ScreenSize {
-  Mobile,
-  Tablet,
-  Desktop,
+/**
+ * Config is the JSON we get back from the CMS or App
+ * Right now it's only nav links, but there could be other config
+ * items in the future.
+ */
+export interface Config {
+  nav: NavItem[];
 }
-
-const screenSizes = [
-  {
-    title: "Mobile",
-    size: ScreenSize.Mobile,
-  },
-  {
-    title: "Tablet",
-    size: ScreenSize.Tablet,
-  },
-  {
-    title: "Desktop",
-    size: ScreenSize.Desktop,
-  },
-];
-
-const screenSizeMap = {
-  [ScreenSize.Mobile]: 375,
-  [ScreenSize.Tablet]: 768,
-  [ScreenSize.Desktop]: undefined,
-};
 
 export function App() {
   const settings = useSettingsStore();
   const [nav, setNav] = useState([]);
 
-  const loadNav = async (url: string) => {
+  const [config, setConfig] = useState<Config>({ nav: [] });
+
+  const loadConfig = async (url: string) => {
     const response = await fetch(url, {
       method: "GET",
     });
@@ -57,14 +41,14 @@ export function App() {
 
     const data = await response.json();
 
-    setNav(data);
+    setConfig(data);
   };
 
   useEffect(() => {
-    loadNav(settings.navUrl);
-  }, [settings.navUrl]);
+    loadConfig(settings.configUrl);
+  }, [settings.configUrl]);
 
-  if (nav.length === 0) {
+  if (config.nav.length === 0) {
     return <div>Loading</div>;
   }
 
@@ -76,7 +60,7 @@ export function App() {
     return item.children.find((item) => !!item.url);
   };
 
-  const firstNavItem = findViableNavItem(nav[0]);
+  const firstNavItem = findViableNavItem(config.nav[0]);
 
   if (firstNavItem === undefined) {
     return <div>Could not find viable nav item</div>;
@@ -104,7 +88,7 @@ export function App() {
       <div className="py-1 overflow-auto">
         <Nav
           activeNavItem={activeNavItem}
-          nav={nav}
+          nav={config.nav}
           setActiveNavItem={setViableNavItem}
         />
       </div>
