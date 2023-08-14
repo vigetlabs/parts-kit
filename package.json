@@ -1,8 +1,19 @@
 {
-  "name": "preact-ts",
-  "private": true,
+  "name": "@viget/parts-kit",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/parts-kit.umd.cjs",
+  "module": "./lib/parts-kit.js",
+  "exports": {
+    ".": {
+      "import": "./lib/parts-kit.js",
+      "require": "./lib/parts-kit.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
