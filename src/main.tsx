@@ -2,4 +2,4 @@
 import './index.css'
 import PartsKit from './custom-elements/parts-kit'
 
-customElements.define('parts-kit', PartsKit, {extends: 'div'})
+customElements.define('parts-kit', PartsKit)
