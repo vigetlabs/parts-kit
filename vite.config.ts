@@ -1,8 +1,9 @@
-import { defineConfig } from 'vite'
+import { defineConfig, mergeConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 
+/** Config shared by all of our build processes. Used with `mergeConfig` */
 export const sharedConfig = {
   plugins: [
     preact(),
@@ -10,7 +11,6 @@ export const sharedConfig = {
   ],
 }
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  ...sharedConfig
+export default mergeConfig(sharedConfig, {
+  // Customize your local dev here
 })
