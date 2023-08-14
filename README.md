@@ -2,14 +2,28 @@
 
 This is a proof of concept for a decoupled (headless?) parts kit.
 
-#### Table of Contents
+**Table of Contents**
 
+- [Use on your project](#use-on-your-project)
 - [Key Concepts](#key-concepts)
 - [Contribute to this project](#contribute-to-this-project)
 
-![Diagram of decoupled parts kit](docs/hero-image.png)
+## Use on your project!
 
-### Key Concepts
+All it takes is two lines to have a decoupled parts kit in your project.
+
+Include the CDN hosted script and configure the `<parts-kit>` custom element with the URL to your [Config JSON](#the-config-json-file) file.
+
+In the future, we'll have CMS plugins that automatically setup and configure of your parts kit.
+
+```html
+<script type="module" src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"></script>
+<parts-kit config-url="YOUR-URL-HERE"></parts-kit>
+```
+
+## Key Concepts
+
+![Diagram of decoupled parts kit](docs/hero-image.png)
 
 #### The Config JSON file
 
