@@ -1,7 +1,7 @@
 {
   "name": "@viget/parts-kit",
   "private": false,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "files": [
     "lib"
@@ -14,12 +14,16 @@
       "require": "./lib/parts-kit.umd.cjs"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "test": "echo \"No tests yet\"",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
-    "buildLib": "tsc && vite --config vite.config.lib build"
+    "gh-pages": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
+    "build-lib": "tsc && vite --config vite.config.lib build"
   },
   "dependencies": {
     "classnames": "^2.3.2",
