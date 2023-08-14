@@ -6,6 +6,8 @@ import { useEffect } from "preact/compat";
 import { NavItem } from "./components/NavItem.tsx";
 import { useSettingsStore } from "./features/settings/store.ts";
 import SettingsPanel from "./features/settings/SettingsPanel.tsx";
+import { useUtilityBarStore } from "./features/utility-bar/store.ts";
+import Welcome from "./features/welcome/Welcome.tsx";
 
 export interface NavItem {
   title: string;
@@ -80,10 +82,11 @@ export function App() {
     return <div>Could not find viable nav item</div>;
   }
 
+  const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(true)
   const [activeNavItem, setActiveNavItem] = useState<NavItem>(firstNavItem);
   const [activeScreenSize, setActiveScreenSize] = useState(ScreenSize.Desktop);
   const activeScreenWidth = screenSizeMap[activeScreenSize];
-  const [showSettings, setShowSettings] = useState(false);
+  const utilityBar = useUtilityBarStore()
 
   const setViableNavItem = (item: NavItem): void => {
     const viableItem = findViableNavItem(item);
@@ -93,6 +96,7 @@ export function App() {
       return;
     }
     setActiveNavItem(viableItem);
+    setIsWelcomeVisible(false)
   };
 
   return (
@@ -131,14 +135,14 @@ export function App() {
             {/* Show / hide settings */}
             <button
               className="px-4 text-sm font-medium"
-              onClick={() => setShowSettings(!showSettings)}
+              onClick={() => utilityBar.setIsSettingsVisible(!utilityBar.isSettingsVisible)}
             >
-              {showSettings ? "× Hide" : "⚙️ Show"} Settings
+              {utilityBar.isSettingsVisible ? "× Hide" : "⚙️ Show"} Settings
             </button>
           </div>
 
-{/* Settings Panel */}
-          {showSettings ? (<SettingsPanel />) : null}
+          {/* Settings Panel */}
+          {utilityBar.isSettingsVisible ? (<SettingsPanel />) : null}
 
         </div>
 
@@ -149,13 +153,17 @@ export function App() {
             })}
             style={{ maxWidth: activeScreenWidth }}
           >
-            <iframe
-              className={cx("w-full h-full", {
-                "border-2 rounded border-gray-100":
-                  activeScreenSize !== ScreenSize.Desktop,
-              })}
-              src={activeNavItem?.url ?? undefined}
-            ></iframe>
+            {isWelcomeVisible ? (
+              <Welcome />
+            ) : (
+              <iframe
+                className={cx("w-full h-full", {
+                  "border-2 rounded border-gray-100":
+                    activeScreenSize !== ScreenSize.Desktop,
+                })}
+                src={activeNavItem?.url ?? undefined}
+              ></iframe>
+            )}
           </div>
         </div>
       </div>
