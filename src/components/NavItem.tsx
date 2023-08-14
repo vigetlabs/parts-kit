@@ -1,11 +1,11 @@
 import { useState } from "preact/hooks";
-import * as app from "../app";
 import cx from "classnames";
+import {NavItemInterface} from "../features/nav/Nav.tsx";
 
 interface NavItemProps {
-  item: app.NavItem;
-  activeNavItem: app.NavItem;
-  setActiveNavItem: (item: app.NavItem) => void;
+  item: NavItemInterface;
+  activeNavItem: NavItemInterface;
+  setActiveNavItem: (item: NavItemInterface) => void;
   isChild?: boolean;
 }
 
