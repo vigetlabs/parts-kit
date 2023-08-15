@@ -1,12 +1,26 @@
 # Decoupled Parts Kit proof of concept
 
-This is a proof of concept for a decoupled (headless?) parts kit.
-
 **Table of Contents**
 
 - [Use on your project](#use-on-your-project)
 - [Key Concepts](#key-concepts)
 - [Contribute to this project](#contribute-to-this-project)
+
+This is a proof of concept for a decoupled/build-free/headless parts kit (still trying to figure out what to call it).
+
+What does that mean exactly?
+
+There are two sides to this idea. First, your app is responsible for rendering components in your template language of choice. Second, the parts kit provides the UI to view those components in a "Storybook-esque" experience. No additional tooling or build steps required.
+
+Storybook is awesome! But... it doesn't have first-party support for Twig, ERB or other template formats that CMS and application frameworks commonly use.
+
+While third-party plugins do exist, they often adds [extra layers of abstraction](https://wingsuit-designsystem.github.io/), or use a [JavaScript template renderer](https://github.com/markhuot/storybook-twig) that isn't a 1:1 match to the actual PHP or Ruby app.
+
+While all of these tools are awesome and are well suited for certain projects, this parts kit takes things in a different direction:
+
+- **No build tools needed** - Paste a CDN hosted script, write a JSON file. Your CMS or App handles component rendering.
+- **Low abstraction** - The parts kit uses standard web concepts (script files, JSON, web components, etc). It should be possible to get a basic parts kit up and running without boilerplate.
+- **One to one rendering between parts and app** - Because your app is rendering these components, you can be confident that you are testing the same component and features that you're using in your app.
 
 ## Use on your project!
 
@@ -61,13 +75,13 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
 }
 ```
 
-#### CMS or App Rendered Content
+#### CMS or App Rendered Components
 
 The CMS or App renders the content. All it needs to do is provide urls for each part. These URLS render the CSS, JS and Markup for a part.
 
 It is optional for a CMS to generate a Navigation JSON file. But for commonly used platforms, it would make sense to automate this.
 
-#### Parts Kit Shell
+#### Parts Kit
 
 The parts kit reads the Navigation JSON file and creates a nav.
 
