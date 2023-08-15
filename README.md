@@ -33,6 +33,7 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
 
 ```json
 {
+  "schemaVersion": "0.0.1",
   "nav": [
     {
       "title": "Buttons",

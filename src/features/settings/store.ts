@@ -10,7 +10,7 @@ interface SettingsState {
   setConfigUrl: (url: string) => void;
 }
 
-export const DEFAULT_NAV_URL = `${import.meta.env.BASE_URL}nav.json`
+export const DEFAULT_NAV_URL = `${import.meta.env.BASE_URL}config.json`
 
 export const useSettingsStore = create<SettingsState>()(
   devtools(
