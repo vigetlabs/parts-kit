@@ -12,9 +12,16 @@ import {
 } from "./features/utility-bar/store.ts";
 import Welcome from "./features/welcome/Welcome.tsx";
 import UtilityBar from "./features/utility-bar/UtilityBar.tsx";
+import {
+  findNavItemByUrl,
+  findFirstNavItem,
+  UseHistory,
+  SEARCH_PARAM_PART,
+} from "./features/nav/routing.ts";
+import { uniqueId } from "./utilities/string.ts";
 
 export interface AppProps {
-  configUrl: string|null;
+  configUrl: string | null;
 }
 
 /**
@@ -31,7 +38,7 @@ export function App(props: AppProps) {
   const utilityStore = useUtilityBarStore();
 
   const [config, setConfig] = useState<Config>({ nav: [] });
-  const hasConfigUrl = !!props.configUrl
+  const hasConfigUrl = !!props.configUrl;
 
   const loadConfig = async (url: string) => {
     const response = await fetch(url, {
@@ -56,27 +63,57 @@ export function App(props: AppProps) {
     return <div>Loading</div>;
   }
 
-  const findViableNavItem = (item: NavItemInterface): NavItemInterface | undefined => {
-    if (item.url) {
-      return item;
-    }
+  const url = new URL(window.location.href).searchParams.get(SEARCH_PARAM_PART);
+  const navItemFromUrl = url ? findNavItemByUrl(url, config.nav) : undefined;
 
-    return item.children.find((item) => !!item.url);
-  };
+  const useHistory = UseHistory({
+    onPopState: ({ url }) => {
+      const urlFromHistory = url.searchParams.get(SEARCH_PARAM_PART);
 
-  const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(true);
-  const [activeNavItem, setActiveNavItem] = useState<NavItemInterface|undefined>(findViableNavItem(config.nav[0]));
+      if (!urlFromHistory) {
+        console.warn("Url wasn't in history");
+        // Select the first nav item?
+        setActiveNavItem(findFirstNavItem(config.nav[0]));
+        return;
+      }
+
+      const foundNavItem = findNavItemByUrl(urlFromHistory, config.nav);
+
+      if (!foundNavItem) {
+        console.error("Could not find nav item after popstate");
+        // TODO show a 404 message
+        return;
+      }
+
+      setActiveNavItem(foundNavItem);
+    },
+  });
+
+  const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(
+    !navItemFromUrl,
+  );
+
+  const [activeNavItem, setActiveNavItem] = useState<
+    NavItemInterface | undefined
+  >(navItemFromUrl || findFirstNavItem(config.nav[0]));
+
   const activeScreenWidth = screenSizeMap[utilityStore.activeScreenSize];
 
-  const setViableNavItem = (item: NavItemInterface): void => {
-    const viableItem = findViableNavItem(item);
+  const setViableNavItem = (clickedItem: NavItemInterface): void => {
+    const foundItem = findFirstNavItem(clickedItem);
 
-    if (viableItem === undefined) {
-      console.error("Cant find viable nav item for ", item);
+    if (foundItem === undefined || !foundItem.url) {
+      console.error("Cant find viable nav item for ", clickedItem);
+      // TODO update state with an error message
       return;
     }
-    setActiveNavItem(viableItem);
+
+    setActiveNavItem(foundItem);
     setIsWelcomeVisible(false);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set(SEARCH_PARAM_PART, foundItem.url);
+    useHistory.push(url, { url: foundItem.url });
   };
 
   return (
@@ -104,7 +141,9 @@ export function App(props: AppProps) {
               })}
               style={{ maxWidth: activeScreenWidth }}
             >
+              {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
               <iframe
+                key={activeNavItem?.url + uniqueId()}
                 className={cx("w-full h-full", {
                   "border-2 rounded border-gray-100":
                     utilityStore.activeScreenSize !== ScreenSize.Desktop,
