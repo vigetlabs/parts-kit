@@ -1,15 +1,9 @@
 import { useState } from "preact/hooks";
 import "./app.css";
-import cx from "classnames";
 import { Nav } from "./features/nav/Nav.tsx";
 import { useEffect } from "preact/compat";
 import { NavItemInterface } from "./features/nav/Nav.tsx";
 import { useSettingsStore } from "./features/settings/store.ts";
-import {
-  ScreenSize,
-  screenSizeMap,
-  useUtilityBarStore,
-} from "./features/utility-bar/store.ts";
 import Welcome from "./features/welcome/Welcome.tsx";
 import UtilityBar from "./features/utility-bar/UtilityBar.tsx";
 import {
@@ -18,7 +12,7 @@ import {
   UseHistory,
   SEARCH_PARAM_PART,
 } from "./features/nav/routing.ts";
-import { uniqueId } from "./utilities/string.ts";
+import Viewport from "./features/viewport/Viewport.tsx";
 
 export interface AppProps {
   configUrl: string | null;
@@ -35,7 +29,6 @@ export interface Config {
 
 export function App(props: AppProps) {
   const settings = useSettingsStore();
-  const utilityStore = useUtilityBarStore();
 
   const [config, setConfig] = useState<Config>({ nav: [] });
   const hasConfigUrl = !!props.configUrl;
@@ -97,8 +90,6 @@ export function App(props: AppProps) {
     NavItemInterface | undefined
   >(navItemFromUrl || findFirstNavItem(config.nav[0]));
 
-  const activeScreenWidth = screenSizeMap[utilityStore.activeScreenSize];
-
   const setViableNavItem = (clickedItem: NavItemInterface): void => {
     const foundItem = findFirstNavItem(clickedItem);
 
@@ -135,22 +126,7 @@ export function App(props: AppProps) {
           {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
-            <div
-              className={cx("flex-grow", {
-                "py-5": utilityStore.activeScreenSize !== ScreenSize.Desktop,
-              })}
-              style={{ maxWidth: activeScreenWidth }}
-            >
-              {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
-              <iframe
-                key={activeNavItem?.url + uniqueId()}
-                className={cx("w-full h-full", {
-                  "border-2 rounded border-gray-100":
-                    utilityStore.activeScreenSize !== ScreenSize.Desktop,
-                })}
-                src={activeNavItem?.url ?? undefined}
-              ></iframe>
-            </div>
+            <Viewport activeNavItem={activeNavItem} />
           )}
         </div>
       </div>
