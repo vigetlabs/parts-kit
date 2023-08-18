@@ -41,13 +41,11 @@ interface UseHistoryParams {
 
 export const UseHistory = (params: UseHistoryParams) => {
   const push = (url: URL, data: any): void => {
-    console.log("push", { data, url });
     history.pushState(data, "", url);
   };
 
   useEffect(() => {
-    const handlePopState = (e: PopStateEvent) => {
-      console.log("pop");
+    const handlePopState = () => {
       params.onPopState({
         url: new URL(window.location.href),
       });
