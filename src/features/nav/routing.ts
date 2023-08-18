@@ -1,6 +1,11 @@
 import { useEffect } from "preact/hooks";
 import { NavItemInterface } from "./Nav";
 
+/**
+ * The search param to look for when routing to the proper nav item
+ */
+export const SEARCH_PARAM_PART = "part";
+
 export const findNavItemByUrl = (
   urlToFind: string,
   navItems: NavItemInterface[],
