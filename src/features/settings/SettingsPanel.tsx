@@ -1,11 +1,11 @@
-import { useState } from "preact/hooks";
-import { DEFAULT_NAV_URL, useSettingsStore } from "./store";
+import { useState } from 'preact/hooks'
+import { DEFAULT_NAV_URL, useSettingsStore } from './store'
 
 export default function () {
-  const settings = useSettingsStore();
-  const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl);
+  const settings = useSettingsStore()
+  const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl)
   return (
-    <div className="bg-gray-200 p-5 space-y-3">
+    <div className="bg-neutral-200 p-5 space-y-3">
       <div className="max-w-md">
         <label className="text-xs uppercase font-medium" for="parts-json-url">
           Parts JSON URL
@@ -23,7 +23,7 @@ export default function () {
         </div>
       </div>
       <button
-        className="bg-gray-700 text-white text-xs uppercase font-medium px-4 py-3 rounded"
+        className="bg-neutral-700 text-white text-xs uppercase font-medium px-4 py-3 rounded"
         onClick={() =>
           settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
         }
@@ -31,5 +31,5 @@ export default function () {
         Save Settings
       </button>
     </div>
-  );
+  )
 }
