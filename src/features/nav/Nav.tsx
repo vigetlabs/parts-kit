@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks'
 import { NavItem } from '../../components/NavItem'
+import { Search } from '../../components/Search'
 
 export interface NavItemInterface {
   title: string
@@ -25,20 +26,9 @@ export function Nav(props: NavProps) {
   })
 
   return (
-    <nav>
-      <div className="px-5 mb-3">
-        <h1 className="text-xl font-extrabold uppercase">Parts Kit</h1>
-        <div className="relative">
-          <span className="absolute inset-y-0 flex items-center left-2">
-            🔍
-          </span>
-          <input
-            type="search"
-            className="block w-full p-1 pl-8 bg-transparent border rounded border-neutral-300 focus:border-sky-600 focus:outline-none focus:bg-white"
-            placeholder="Search"
-            onInput={(e) => setCurrentSearch(e.currentTarget.value)}
-          />
-        </div>
+    <nav className="bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% py-8 gap-8 flex flex-col">
+      <div className="px-6">
+        <Search onInput={(e) => setCurrentSearch(e.currentTarget.value)} />
       </div>
 
       <ul className="space-y-1">

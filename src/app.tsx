@@ -117,18 +117,16 @@ export function App(props: AppProps) {
   }
 
   return (
-    <div className="bg-neutral-100 grid grid-cols-[250px,_1fr] h-screen p-2 pl-0">
-      <div className="py-1 overflow-auto">
-        {activeNavItem !== undefined ? (
-          <Nav
-            activeNavItem={activeNavItem}
-            nav={config.nav}
-            setActiveNavItem={setViableNavItem}
-          />
-        ) : null}
-      </div>
+    <div className="bg-gray-100 grid grid-cols-[250px,_1fr] h-screen">
+      {activeNavItem !== undefined ? (
+        <Nav
+          activeNavItem={activeNavItem}
+          nav={config.nav}
+          setActiveNavItem={setViableNavItem}
+        />
+      ) : null}
 
-      <div className="flex flex-col bg-white border rounded-md shadow-sm border-neutral-200">
+      <div className="flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
         <div className="flex items-stretch justify-center flex-grow">
@@ -145,7 +143,7 @@ export function App(props: AppProps) {
               <iframe
                 key={activeNavItem?.url + uniqueId()}
                 className={cx('w-full h-full', {
-                  'border-2 rounded border-neutral-100':
+                  'border-2 rounded border-gray-100':
                     utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
                 src={activeNavItem?.url ?? undefined}

@@ -18,16 +18,16 @@ export default {
       current: 'currentColor',
       black: colors.black,
       white: colors.white,
-      neutral: colors.neutral,
-      sky: colors.sky,
+      gray: colors.gray,
+      blue: colors.blue,
     },
     fontFamily: {
-      sans: ['Open Sans', 'sans-serif'],
+      sans: ['Roboto', 'sans-serif'],
     },
     fontWeight: {
       normal: 400,
-      medium: 600,
-      extrabold: 800,
+      medium: 500,
+      bold: 700,
     },
     fontSize: {
       xs: ['12px', 1.4],
@@ -38,5 +38,5 @@ export default {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require('./config/tailwind/icons.js')],
 }

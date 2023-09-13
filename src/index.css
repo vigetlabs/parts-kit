@@ -3,5 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;800&display=swap');
+  body {
+    @apply text-sm text-gray-900;
+  }
 }
