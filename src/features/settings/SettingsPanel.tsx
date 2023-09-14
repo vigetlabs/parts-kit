@@ -1,9 +1,9 @@
-import { useState } from "preact/hooks";
-import { DEFAULT_NAV_URL, useSettingsStore } from "./store";
+import { useState } from 'preact/hooks'
+import { DEFAULT_NAV_URL, useSettingsStore } from './store'
 
 export default function () {
-  const settings = useSettingsStore();
-  const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl);
+  const settings = useSettingsStore()
+  const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl)
   return (
     <div className="bg-gray-200 p-5 space-y-3">
       <div className="max-w-md">
@@ -31,5 +31,5 @@ export default function () {
         Save Settings
       </button>
     </div>
-  );
+  )
 }

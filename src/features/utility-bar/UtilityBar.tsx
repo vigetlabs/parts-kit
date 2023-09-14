@@ -1,49 +1,84 @@
-import SettingsPanel from "../settings/SettingsPanel";
-import { screenSizes, useUtilityBarStore } from "./store";
-import cx from "classnames";
+import { screenSizes, useUtilityBarStore } from './store'
+import SettingsPanel from '../settings/SettingsPanel'
+import { Dropdown, DropdownMenu } from '../../components/Dropdown'
+import {
+  AspectRatioIcon,
+  BlendingModeIcon,
+  EnterFullScreenIcon,
+  GearIcon,
+} from '@radix-ui/react-icons'
 
 interface UtilityBarProps {
-  showSettings: boolean;
+  showSettings: boolean
 }
 
 export default function (props: UtilityBarProps) {
-  const store = useUtilityBarStore();
+  const store = useUtilityBarStore()
 
   return (
     <div>
-      <div className="flex justify-start items-stretch divide-gray-200 divide-x text-sm border-b border-gray-200">
-        <div className="flex items-center py-3 px-4 text-xs uppercase font-semibold">
-          Screen Size
+      <header className="flex justify-between h-10 gap-4 px-4 bg-gray-100 border-l border-white">
+        <div className="flex items-center gap-2">
+          {/* Theme Control */}
+          <button className="btn-subtle btn-icon" title="Theme">
+            <BlendingModeIcon />
+          </button>
+
+          {/* Screen Size Menu */}
+          {screenSizes.length > 0 && (
+            <Dropdown
+              trigger={
+                <button className="btn-subtle btn-icon" title="Viewport Size">
+                  <AspectRatioIcon />
+                </button>
+              }
+            >
+              <>
+                <DropdownMenu.RadioGroup value={store.activeScreenSize}>
+                  {screenSizes.map((item) => (
+                    <DropdownMenu.RadioItem
+                      key={item.size}
+                      value={item.size}
+                      onClick={() => store.setActiveScreenSize(item.size)}
+                      className="dropdown-item"
+                    >
+                      {item.title}
+                    </DropdownMenu.RadioItem>
+                  ))}
+                </DropdownMenu.RadioGroup>
+                <DropdownMenu.Separator className="dropdown-separator" />
+                <DropdownMenu.Item className="dropdown-item">
+                  Responsive
+                </DropdownMenu.Item>
+              </>
+            </Dropdown>
+          )}
         </div>
-        {screenSizes.map((item) => (
-          <button
-            onClick={() => store.setActiveScreenSize(item.size)}
-            className={cx(
-              "relative py-3 px-4 hover:text-blue-500 hover:bg-gray-100",
-              {
-                "text-blue-700": item.size === store.activeScreenSize,
-              },
-            )}
-          >
-            {item.title}
-            {item.size === store.activeScreenSize ? (
-              <span className="absolute inset-x-0 bottom-1.5 mx-auto w-1 h-1 rounded-full bg-blue-700"></span>
-            ) : null}
+
+        <div className="flex items-center gap-2">
+          {/* Show / Hide Settings */}
+          {props.showSettings ? (
+            <button
+              className="btn-subtle btn-icon"
+              onClick={() =>
+                store.setIsSettingsVisible(!store.isSettingsVisible)
+              }
+              title="Settings"
+              aria-expanded={store.isSettingsVisible}
+            >
+              <GearIcon />
+            </button>
+          ) : null}
+
+          {/* Fullscreen control */}
+          <button className="btn-subtle btn-icon" title="Fullscreen">
+            <EnterFullScreenIcon />
           </button>
-        ))}
-        {/* Show / hide settings */}
-        {props.showSettings ? (
-          <button
-            className="px-4 text-sm font-medium"
-            onClick={() => store.setIsSettingsVisible(!store.isSettingsVisible)}
-          >
-            {store.isSettingsVisible ? "× Hide" : "⚙️ Show"} Settings
-          </button>
-        ) : null}
-      </div>
+        </div>
+      </header>
 
       {/* Settings Panel */}
       {store.isSettingsVisible ? <SettingsPanel /> : null}
     </div>
-  );
+  )
 }

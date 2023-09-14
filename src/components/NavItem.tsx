@@ -1,51 +1,62 @@
-import { useState } from "preact/hooks";
-import cx from "classnames";
-import {NavItemInterface} from "../features/nav/Nav.tsx";
+import { useState } from 'preact/hooks'
+import cx from 'classnames'
+import { NavItemInterface } from '../features/nav/Nav.tsx'
+import { ChevronDownIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 interface NavItemProps {
-  item: NavItemInterface;
-  activeNavItem: NavItemInterface;
-  setActiveNavItem: (item: NavItemInterface) => void;
-  isChild?: boolean;
+  item: NavItemInterface
+  activeNavItem: NavItemInterface
+  setActiveNavItem: (item: NavItemInterface) => void
+  isChild?: boolean
 }
 
 export function NavItem(props: NavItemProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const isChild = props.isChild ?? false;
+  const [isOpen, setIsOpen] = useState(false)
+  const isChild = props.isChild ?? false
 
   return (
     <div>
       <button
-        className={cx("pl-5 flex w-full gap-1 text-sm hover:bg-gray-200", {
-          "py-2 font-medium": !isChild,
-          "py-1 pl-8": isChild,
-          "bg-blue-200 hover:to-blue-300": props.activeNavItem === props.item,
-        })}
+        className={cx(
+          'flex h-8 w-full items-center gap-1 rounded-none px-4 transition-colors hover:bg-black/5 active:bg-black/10',
+          {
+            'py-2 font-medium': !isChild,
+            'py-1 pl-8': isChild,
+            'bg-blue-500 text-white hover:bg-blue-400':
+              props.activeNavItem === props.item,
+          },
+        )}
         onClick={() => {
           if (props.item.children.length) {
             if (isOpen) {
-              return setIsOpen(false);
+              return setIsOpen(false)
             }
-            setIsOpen(true);
+            setIsOpen(true)
             // Intentionally pass through to set active nav item
           }
-          return props.setActiveNavItem(props.item);
+          return props.setActiveNavItem(props.item)
         }}
       >
         {props.item.children.length ? (
-          <span
-            className={cx({
-              "-rotate-90": !isOpen,
-              "translate-y-[-2px]": isOpen,
-            })}
-          >
-            ▾
-          </span>
+          <>
+            <ChevronRightIcon
+              className={cx('icon -ml-1', {
+                hidden: isOpen,
+              })}
+            />
+            <ChevronDownIcon
+              className={cx('icon -ml-1', {
+                hidden: !isOpen,
+              })}
+            />
+          </>
+        ) : !isChild ? (
+          <span className="w-3" /> // spacer
         ) : null}
         {props.item.title}
       </button>
       {props.item.children.length && isOpen ? (
-        <ul>
+        <ul className="flex flex-col">
           {props.item.children.map((child) => (
             <NavItem
               isChild
@@ -57,5 +68,5 @@ export function NavItem(props: NavItemProps) {
         </ul>
       ) : null}
     </div>
-  );
+  )
 }

@@ -1,81 +1,81 @@
-import { findFirstNavItem, findNavItemByUrl } from "./routing";
-import { NavItemInterface } from "./Nav";
+import { findFirstNavItem, findNavItemByUrl } from './routing'
+import { NavItemInterface } from './Nav'
 
-describe("findNavItemByUrl", () => {
-  it("finds a nav item in list", () => {
-    const result = findNavItemByUrl("/match", [
+describe('findNavItemByUrl', () => {
+  it('finds a nav item in list', () => {
+    const result = findNavItemByUrl('/match', [
       {
-        title: "No match",
-        url: "/not-a-match",
+        title: 'No match',
+        url: '/not-a-match',
         children: [],
       },
       {
-        title: "Match",
-        url: "/match",
+        title: 'Match',
+        url: '/match',
         children: [],
       },
-    ]);
+    ])
 
     expect(result).toStrictEqual<NavItemInterface>({
-      title: "Match",
-      url: "/match",
+      title: 'Match',
+      url: '/match',
       children: [],
-    });
-  });
+    })
+  })
 
   it("doesn't find nav item if not in list", () => {
     expect(
-      findNavItemByUrl("/no-match", [
+      findNavItemByUrl('/no-match', [
         {
-          title: "Nooope",
-          url: "/noope",
+          title: 'Nooope',
+          url: '/noope',
           children: [],
         },
       ]),
-    ).toBeUndefined();
-  });
+    ).toBeUndefined()
+  })
 
-  it("finds child", () => {
+  it('finds child', () => {
     expect(
-      findNavItemByUrl("/has-child/child", [
+      findNavItemByUrl('/has-child/child', [
         {
-          title: "Has Child",
-          url: "/has-child",
+          title: 'Has Child',
+          url: '/has-child',
           children: [
             {
-              title: "Child",
-              url: "/has-child/child",
+              title: 'Child',
+              url: '/has-child/child',
               children: [],
             },
           ],
         },
         {
-          title: "No match",
-          url: "/not-a-match",
+          title: 'No match',
+          url: '/not-a-match',
           children: [],
         },
       ]),
     ).toStrictEqual({
-      title: "Child",
-      url: "/has-child/child",
+      title: 'Child',
+      url: '/has-child/child',
       children: [],
-    });
-  });
+    })
+  })
 
-  it("finds grandchild", () => {
+  it('finds grandchild', () => {
     expect(
-      findNavItemByUrl("/grandparent/child/grandchild", [
+      findNavItemByUrl('/grandparent/child/grandchild', [
         {
-          title: "Grandparent",
-          url: "/grandparent",
+          title: 'Grandparent',
+          url: '/grandparent',
           children: [
             {
-              title: "Child",
-              url: "/grandparent/child",
+              title: 'Child',
+              url: '/grandparent/child',
               children: [
                 {
-                  title: "Grandchild",
-                  url: "/grandparent/child/grandchild",
+                  title: 'Grandchild',
+                  url: '/grandparent/child/grandchild',
                   children: [],
                 },
               ],
@@ -83,37 +83,37 @@ describe("findNavItemByUrl", () => {
           ],
         },
         {
-          title: "No match",
-          url: "/not-a-match",
+          title: 'No match',
+          url: '/not-a-match',
           children: [],
         },
       ]),
     ).toStrictEqual({
-      title: "Grandchild",
-      url: "/grandparent/child/grandchild",
+      title: 'Grandchild',
+      url: '/grandparent/child/grandchild',
       children: [],
-    });
-  });
-});
+    })
+  })
+})
 
-describe("findFirstNavItem", () => {
-  it("finds first nav item in top of list", () => {
+describe('findFirstNavItem', () => {
+  it('finds first nav item in top of list', () => {
     const result = findFirstNavItem({
-      title: "Nav Item",
-      url: "",
+      title: 'Nav Item',
+      url: '',
       children: [
         {
-          title: "Found",
-          url: "button.html",
+          title: 'Found',
+          url: 'button.html',
           children: [],
         },
       ],
-    });
+    })
 
     expect(result).toStrictEqual({
-      title: "Found",
-      url: "button.html",
+      title: 'Found',
+      url: 'button.html',
       children: [],
-    });
-  });
-});
+    })
+  })
+})
