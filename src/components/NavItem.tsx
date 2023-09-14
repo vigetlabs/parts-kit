@@ -18,11 +18,11 @@ export function NavItem(props: NavItemProps) {
     <div>
       <button
         className={cx(
-          'flex h-8 w-full items-center gap-1 rounded-none px-4 hover:bg-black/5',
+          'flex h-8 w-full items-center gap-1 rounded-none px-4 transition-colors hover:bg-black/5 active:bg-black/10',
           {
             'py-2 font-medium': !isChild,
             'py-1 pl-8': isChild,
-            'bg-blue-400 text-white hover:bg-blue-400':
+            'bg-blue-500 text-white hover:bg-blue-400':
               props.activeNavItem === props.item,
           },
         )}
@@ -56,7 +56,7 @@ export function NavItem(props: NavItemProps) {
         {props.item.title}
       </button>
       {props.item.children.length && isOpen ? (
-        <ul>
+        <ul className="flex flex-col">
           {props.item.children.map((child) => (
             <NavItem
               isChild

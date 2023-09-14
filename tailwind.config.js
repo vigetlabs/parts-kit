@@ -36,7 +36,15 @@ export default {
       lg: ['18px', 1.4],
       xl: ['24px', 1.2],
     },
-    extend: {},
+    extend: {
+      minHeight: (theme) => ({
+        ...theme('spacing'),
+      }),
+    },
   },
-  plugins: [require('./config/tailwind/icons.js')],
+  plugins: [
+    require('./config/tailwind/icons.js'),
+    require('./config/tailwind/buttons.js'),
+    require('./config/tailwind/dropdown.js'),
+  ],
 }
