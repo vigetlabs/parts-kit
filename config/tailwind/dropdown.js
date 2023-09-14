@@ -2,10 +2,23 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = plugin(({ addComponents }) => {
   const dropdown = {
-    // Variants
     '.dropdown': {
       '@apply inline-flex flex-col gap-2 p-2 bg-white border border-gray-300 shadow min-w-[200px] max-w-[250px] rounded-xl':
         {},
+
+      // handle dropdown animation
+      '&[data-side="top"]': {
+        '@apply animate-slideDownAndFade': {},
+      },
+      '&[data-side="bottom"]': {
+        '@apply animate-slideUpAndFade': {},
+      },
+      '&[data-side="left"]': {
+        '@apply animate-slideRightAndFade': {},
+      },
+      '&[data-side="right"]': {
+        '@apply animate-slideLeftAndFade': {},
+      },
     },
 
     '.dropdown-item': {
