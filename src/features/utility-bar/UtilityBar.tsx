@@ -1,4 +1,3 @@
-import cx from 'classnames'
 import { screenSizes, useUtilityBarStore } from './store'
 import SettingsPanel from '../settings/SettingsPanel'
 import { Dropdown, DropdownMenu } from '../../components/Dropdown'
