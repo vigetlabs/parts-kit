@@ -31,7 +31,7 @@ export function Nav(props: NavProps) {
         <Search onInput={(e) => setCurrentSearch(e.currentTarget.value)} />
       </div>
 
-      <ul className="space-y-1">
+      <ul className="flex flex-col gap-2">
         {filteredNav.map((item) => (
           <li>
             <NavItem
