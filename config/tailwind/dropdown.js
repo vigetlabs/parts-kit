@@ -8,16 +8,16 @@ module.exports = plugin(({ addComponents }) => {
 
       // handle dropdown animation
       '&[data-side="top"]': {
-        '@apply animate-slideDownAndFade': {},
+        '@apply animate-slide-down-and-fade': {},
       },
       '&[data-side="bottom"]': {
-        '@apply animate-slideUpAndFade': {},
+        '@apply animate-slide-up-and-fade': {},
       },
       '&[data-side="left"]': {
-        '@apply animate-slideRightAndFade': {},
+        '@apply animate-slide-right-and-fade': {},
       },
       '&[data-side="right"]': {
-        '@apply animate-slideLeftAndFade': {},
+        '@apply animate-slide-left-and-fade': {},
       },
     },
 

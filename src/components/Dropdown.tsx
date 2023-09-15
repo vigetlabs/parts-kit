@@ -1,7 +1,7 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { JSX } from 'preact/jsx-runtime'
 
-interface DropdownProps {
+interface RootProps {
   trigger: JSX.Element
   children: JSX.Element
   align?: 'start' | 'center' | 'end'
@@ -9,7 +9,7 @@ interface DropdownProps {
   hasArrow?: boolean
 }
 
-export const Dropdown = (props: DropdownProps) => {
+const Root = (props: RootProps) => {
   return (
     <DropdownMenu.Root {...props}>
       <DropdownMenu.Trigger asChild>
@@ -31,4 +31,4 @@ export const Dropdown = (props: DropdownProps) => {
   )
 }
 
-export { DropdownMenu }
+export const Dropdown = { ...DropdownMenu, Root }
