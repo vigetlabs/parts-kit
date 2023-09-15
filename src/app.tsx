@@ -117,7 +117,7 @@ export function App(props: AppProps) {
   }
 
   return (
-    <div className="bg-gray-100 grid grid-cols-[250px,_1fr] h-screen">
+    <div className="grid h-screen grid-cols-[250px,_1fr] bg-gray-100">
       {activeNavItem !== undefined ? (
         <Nav
           activeNavItem={activeNavItem}
@@ -129,7 +129,7 @@ export function App(props: AppProps) {
       <div className="flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
-        <div className="flex items-stretch justify-center flex-grow">
+        <div className="flex flex-grow items-stretch justify-center">
           {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
@@ -142,8 +142,8 @@ export function App(props: AppProps) {
               {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
               <iframe
                 key={activeNavItem?.url + uniqueId()}
-                className={cx('w-full h-full', {
-                  'border-2 rounded border-gray-100':
+                className={cx('h-full w-full', {
+                  'rounded border-2 border-gray-100':
                     utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
                 src={activeNavItem?.url ?? undefined}

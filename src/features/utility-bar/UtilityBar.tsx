@@ -1,12 +1,13 @@
 import { screenSizes, useUtilityBarStore } from './store'
 import SettingsPanel from '../settings/SettingsPanel'
-import { Dropdown, DropdownMenu } from '../../components/Dropdown'
+import { Dropdown } from '../../components/Dropdown'
 import {
   AspectRatioIcon,
   BlendingModeIcon,
   EnterFullScreenIcon,
   GearIcon,
 } from '@radix-ui/react-icons'
+import { Dialog } from '../../components/Dialog'
 
 interface UtilityBarProps {
   showSettings: boolean
@@ -17,7 +18,7 @@ export default function (props: UtilityBarProps) {
 
   return (
     <div>
-      <header className="flex justify-between h-10 gap-4 px-4 bg-gray-100 border-l border-white">
+      <header className="flex h-10 justify-between gap-4 border-l border-white bg-gray-100 px-4">
         <div className="flex items-center gap-2">
           {/* Theme Control */}
           <button className="btn-subtle btn-icon" title="Theme">
@@ -26,7 +27,7 @@ export default function (props: UtilityBarProps) {
 
           {/* Screen Size Menu */}
           {screenSizes.length > 0 && (
-            <Dropdown
+            <Dropdown.Root
               trigger={
                 <button className="btn-subtle btn-icon" title="Viewport Size">
                   <AspectRatioIcon />
@@ -34,41 +35,40 @@ export default function (props: UtilityBarProps) {
               }
             >
               <>
-                <DropdownMenu.RadioGroup value={store.activeScreenSize}>
+                <Dropdown.RadioGroup value={store.activeScreenSize}>
                   {screenSizes.map((item) => (
-                    <DropdownMenu.RadioItem
+                    <Dropdown.RadioItem
                       key={item.size}
                       value={item.size}
                       onClick={() => store.setActiveScreenSize(item.size)}
                       className="dropdown-item"
                     >
                       {item.title}
-                    </DropdownMenu.RadioItem>
+                    </Dropdown.RadioItem>
                   ))}
-                </DropdownMenu.RadioGroup>
-                <DropdownMenu.Separator className="dropdown-separator" />
-                <DropdownMenu.Item className="dropdown-item">
+                </Dropdown.RadioGroup>
+                <Dropdown.Separator className="dropdown-separator" />
+                <Dropdown.Item className="dropdown-item">
                   Responsive
-                </DropdownMenu.Item>
+                </Dropdown.Item>
               </>
-            </Dropdown>
+            </Dropdown.Root>
           )}
         </div>
 
         <div className="flex items-center gap-2">
           {/* Show / Hide Settings */}
-          {props.showSettings ? (
-            <button
-              className="btn-subtle btn-icon"
-              onClick={() =>
-                store.setIsSettingsVisible(!store.isSettingsVisible)
+          {props.showSettings && (
+            <Dialog.Root
+              trigger={
+                <button className="btn-subtle btn-icon" title="Settings">
+                  <GearIcon />
+                </button>
               }
-              title="Settings"
-              aria-expanded={store.isSettingsVisible}
             >
-              <GearIcon />
-            </button>
-          ) : null}
+              <SettingsPanel />
+            </Dialog.Root>
+          )}
 
           {/* Fullscreen control */}
           <button className="btn-subtle btn-icon" title="Fullscreen">
@@ -76,9 +76,6 @@ export default function (props: UtilityBarProps) {
           </button>
         </div>
       </header>
-
-      {/* Settings Panel */}
-      {store.isSettingsVisible ? <SettingsPanel /> : null}
     </div>
   )
 }

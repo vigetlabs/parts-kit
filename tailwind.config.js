@@ -37,29 +37,44 @@ export default {
       xl: ['24px', 1.2],
     },
     keyframes: {
-      slideDownAndFade: {
+      'slide-down-and-fade': {
         from: { opacity: 0, transform: 'translateY(-2px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
       },
-      slideLeftAndFade: {
+      'slide-left-and-fade': {
         from: { opacity: 0, transform: 'translateX(2px)' },
         to: { opacity: 1, transform: 'translateX(0)' },
       },
-      slideUpAndFade: {
+      'slide-up-and-fade': {
         from: { opacity: 0, transform: 'translateY(2px)' },
         to: { opacity: 1, transform: 'translateY(0)' },
       },
-      slideRightAndFade: {
+      'slide-right-and-fade': {
         from: { opacity: 0, transform: 'translateX(-2px)' },
         to: { opacity: 1, transform: 'translateX(0)' },
       },
+      'dialog-overlay-show': {
+        from: { opacity: 0 },
+        to: { opacity: 1 },
+      },
+      'dialog-content-show': {
+        from: { opacity: 0, transform: 'translate(-50%, -48%) scale(0.96)' },
+        to: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+      },
     },
     animation: {
-      slideDownAndFade: 'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-      slideLeftAndFade: 'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-      slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-      slideRightAndFade:
-        'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'slide-down-and-fade':
+        'slide-down-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'slide-left-and-fade':
+        'slide-left-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'slide-up-and-fade':
+        'slide-up-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'slide-right-and-fade':
+        'slide-right-and-fade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'dialog-overlay-show':
+        'dialog-overlay-show 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+      'dialog-content-show':
+        'dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1)',
     },
     extend: {
       minHeight: (theme) => ({

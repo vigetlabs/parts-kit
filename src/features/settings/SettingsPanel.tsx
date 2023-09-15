@@ -1,35 +1,40 @@
 import { useState } from 'preact/hooks'
 import { DEFAULT_NAV_URL, useSettingsStore } from './store'
+import { Dialog } from '../../components/Dialog'
 
 export default function () {
   const settings = useSettingsStore()
   const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl)
   return (
-    <div className="bg-gray-200 p-5 space-y-3">
-      <div className="max-w-md">
-        <label className="text-xs uppercase font-medium" for="parts-json-url">
+    <div className="flex flex-col gap-6">
+      <h2 className="text-md font-bold uppercase">Settings</h2>
+      <div className="flex flex-col gap-2">
+        <label className="text-xs font-medium uppercase" for="parts-json-url">
           Parts JSON URL
         </label>
         <input
-          className="block w-full p-2 text-xs rounded"
+          className="block h-8 w-full rounded bg-white px-4 placeholder-gray-500 ring-1 ring-gray-300 transition hover:bg-gray-50 hover:ring-gray-400 focus:outline-none focus:ring-blue-400 focus-visible:ring-2"
           id="parts-json-url"
           value={localNavUrl}
           onInput={(e) => setLocalNavUrl(e.currentTarget.value)}
         />
-        <div className="text-xs mt-2">
+        <p className="text-xs text-gray-500">
           Your parts kit URLs need to have appropriate CORS and no
           X-Frame-Options restrictions. You can use a Chrome Plugin like
           Requestly to bypass these headers.
-        </div>
+        </p>
       </div>
-      <button
-        className="bg-gray-700 text-white text-xs uppercase font-medium px-4 py-3 rounded"
-        onClick={() =>
-          settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
-        }
-      >
-        Save Settings
-      </button>
+      <div className="flex justify-end gap-2">
+        <Dialog.Close className="btn-outline">Cancel</Dialog.Close>
+        <Dialog.Close
+          className="btn"
+          onClick={() =>
+            settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
+          }
+        >
+          Save Settings
+        </Dialog.Close>
+      </div>
     </div>
   )
 }
