@@ -6,8 +6,8 @@ interface UtilityState {
   setIsSettingsVisible: (newVal: boolean) => void
   activeScreenSize: ScreenSize
   setActiveScreenSize: (newVal: ScreenSize) => void
-  isUtilityBarVisible: boolean
-  setIsUtilityBarVisible: (visible: boolean) => void
+  isNavBarVisible: boolean
+  setIsNavBarVisible: (visible: boolean) => void
 }
 
 export enum ScreenSize {
@@ -45,8 +45,8 @@ export const useUtilityBarStore = create<UtilityState>()(
     activeScreenSize: ScreenSize.Desktop,
     setActiveScreenSize: (val: ScreenSize) =>
       set(() => ({ activeScreenSize: val })),
-    isUtilityBarVisible: true,
-    setIsUtilityBarVisible: (visible: boolean) =>
-      set(() => ({ isUtilityBarVisible: visible })),
+    isNavBarVisible: true,
+    setIsNavBarVisible: (visible: boolean) =>
+      set(() => ({ isNavBarVisible: visible })),
   })),
 )

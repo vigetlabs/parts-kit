@@ -5,21 +5,19 @@ import { useUtilityBarStore } from '../features/utility-bar/store'
 export default function () {
   const utilityStore = useUtilityBarStore()
 
-  // Toggle utility bar visibility with the `f` key and exit fullscreen with the `Escape` key
+  // Toggle nav bar visibility with the `f` key and exit fullscreen with the `Escape` key
   const keydownHandler = (e: KeyboardEvent) => {
-    // Don't toggle utility bar visibility if the user is typing in an input
+    // Don't toggle nav bar visibility if the user is typing in an input
     if (document.activeElement instanceof HTMLInputElement) {
       return
     }
 
     switch (e.key) {
       case 'f':
-        return utilityStore.setIsUtilityBarVisible(
-          !utilityStore.isUtilityBarVisible,
-        )
+        return utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
 
       case 'Escape':
-        return utilityStore.setIsUtilityBarVisible(true)
+        return utilityStore.setIsNavBarVisible(true)
 
       default:
         return
@@ -31,21 +29,21 @@ export default function () {
     return () => {
       document.removeEventListener('keydown', keydownHandler)
     }
-  }, [utilityStore.isUtilityBarVisible])
+  }, [utilityStore.isNavBarVisible])
 
   return (
     <button
       className="btn-subtle btn-icon"
       title={
-        utilityStore.isUtilityBarVisible
+        utilityStore.isNavBarVisible
           ? 'Go Fullscreen [F]'
           : 'Exit Fullscreen [F]'
       }
       onClick={() =>
-        utilityStore.setIsUtilityBarVisible(!utilityStore.isUtilityBarVisible)
+        utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
       }
     >
-      {utilityStore.isUtilityBarVisible ? (
+      {utilityStore.isNavBarVisible ? (
         <EnterFullScreenIcon />
       ) : (
         <CrossCircledIcon />

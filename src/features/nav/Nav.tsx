@@ -34,7 +34,7 @@ export function Nav(props: NavProps) {
       className={cx(
         'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% py-8 transition-all',
         {
-          'invisible opacity-0': !utilityStore.isUtilityBarVisible,
+          'invisible opacity-0': !utilityStore.isNavBarVisible,
         },
       )}
     >

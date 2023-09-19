@@ -121,7 +121,7 @@ export function App(props: AppProps) {
       className={cx(
         'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all',
         {
-          '!grid-cols-[0px,1fr]': !utilityStore.isUtilityBarVisible,
+          '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
         },
       )}
     >
@@ -136,7 +136,7 @@ export function App(props: AppProps) {
       <div className="relative z-10 flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
-        <div className="flex items-stretch justify-center flex-grow">
+        <div className="flex flex-grow items-stretch justify-center">
           {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
