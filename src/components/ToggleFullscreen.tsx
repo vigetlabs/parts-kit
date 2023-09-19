@@ -8,7 +8,10 @@ export default function () {
   // Toggle nav bar visibility with the `f` key and exit fullscreen with the `Escape` key
   const keydownHandler = (e: KeyboardEvent) => {
     // Don't toggle nav bar visibility if the user is typing in an input
-    if (document.activeElement instanceof HTMLInputElement) {
+    if (
+      document.activeElement instanceof HTMLInputElement ||
+      document.activeElement instanceof HTMLTextAreaElement
+    ) {
       return
     }
 
