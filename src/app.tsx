@@ -117,7 +117,14 @@ export function App(props: AppProps) {
   }
 
   return (
-    <div className="grid h-screen grid-cols-[250px,_1fr] bg-gray-100">
+    <div
+      className={cx(
+        'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all',
+        {
+          '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
+        },
+      )}
+    >
       {activeNavItem !== undefined ? (
         <Nav
           activeNavItem={activeNavItem}
@@ -126,7 +133,7 @@ export function App(props: AppProps) {
         />
       ) : null}
 
-      <div className="flex flex-col bg-white">
+      <div className="relative z-10 flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
         <div className="flex flex-grow items-stretch justify-center">

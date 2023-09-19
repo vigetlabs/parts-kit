@@ -4,10 +4,10 @@ import { Dropdown } from '../../components/Dropdown'
 import {
   AspectRatioIcon,
   BlendingModeIcon,
-  EnterFullScreenIcon,
   GearIcon,
 } from '@radix-ui/react-icons'
 import { Dialog } from '../../components/Dialog'
+import ToggleFullscreen from '../../components/ToggleFullscreen'
 
 interface UtilityBarProps {
   showSettings: boolean
@@ -18,7 +18,7 @@ export default function (props: UtilityBarProps) {
 
   return (
     <div>
-      <header className="flex h-10 justify-between gap-4 border-l border-white bg-gray-100 px-4">
+      <header className="flex justify-between h-10 gap-4 px-4 bg-gray-100 border-l border-white">
         <div className="flex items-center gap-2">
           {/* Theme Control */}
           <button className="btn-subtle btn-icon" title="Theme">
@@ -71,9 +71,7 @@ export default function (props: UtilityBarProps) {
           )}
 
           {/* Fullscreen control */}
-          <button className="btn-subtle btn-icon" title="Fullscreen">
-            <EnterFullScreenIcon />
-          </button>
+          <ToggleFullscreen />
         </div>
       </header>
     </div>
