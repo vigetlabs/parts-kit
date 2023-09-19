@@ -1,5 +1,5 @@
 import { CrossCircledIcon, EnterFullScreenIcon } from '@radix-ui/react-icons'
-import { useUtilityBarStore } from '../features/utility-bar/store'
+import { useUtilityBarStore } from './store'
 
 export default function () {
   const utilityStore = useUtilityBarStore()
