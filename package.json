@@ -26,6 +26,7 @@
   "dependencies": {
     "classnames": "^2.3.2",
     "preact": "^10.16.0",
+    "re-resizable": "^6.9.11",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
