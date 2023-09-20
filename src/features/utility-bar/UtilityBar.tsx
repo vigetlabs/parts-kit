@@ -28,8 +28,15 @@ export default function (props: UtilityBarProps) {
           {/* Screen Size Menu */}
           {screenSizes.length > 0 && (
             <Dropdown.Root
+              onOpenChange={() =>
+                store.setIsViewportOpen(!store.isViewportOpen)
+              }
+              open={store.isViewportOpen}
               trigger={
-                <button className="btn-subtle btn-icon" title="Viewport Size">
+                <button
+                  className="btn-subtle btn-icon"
+                  title="Viewport Size [Shift + V]"
+                >
                   <AspectRatioIcon />
                 </button>
               }
