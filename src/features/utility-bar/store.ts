@@ -4,10 +4,15 @@ import { devtools } from 'zustand/middleware'
 interface UtilityState {
   isSettingsVisible: boolean
   setIsSettingsVisible: (newVal: boolean) => void
-  activeScreenSize: ScreenSize
-  setActiveScreenSize: (newVal: ScreenSize) => void
+
+  isViewportOpen: boolean
+  setIsViewportOpen: (open: boolean) => void
+
   isNavBarVisible: boolean
   setIsNavBarVisible: (visible: boolean) => void
+
+  activeScreenSize: ScreenSize
+  setActiveScreenSize: (newVal: ScreenSize) => void
 }
 
 export enum ScreenSize {
@@ -42,11 +47,16 @@ export const useUtilityBarStore = create<UtilityState>()(
     isSettingsVisible: false,
     setIsSettingsVisible: (newVal: boolean) =>
       set(() => ({ isSettingsVisible: newVal })),
-    activeScreenSize: ScreenSize.Desktop,
-    setActiveScreenSize: (val: ScreenSize) =>
-      set(() => ({ activeScreenSize: val })),
+
+    isViewportOpen: false,
+    setIsViewportOpen: (open: boolean) => set(() => ({ isViewportOpen: open })),
+
     isNavBarVisible: true,
     setIsNavBarVisible: (visible: boolean) =>
       set(() => ({ isNavBarVisible: visible })),
+
+    activeScreenSize: ScreenSize.Desktop,
+    setActiveScreenSize: (val: ScreenSize) =>
+      set(() => ({ activeScreenSize: val })),
   })),
 )

@@ -7,6 +7,8 @@ interface RootProps {
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'right' | 'bottom' | 'left'
   hasArrow?: boolean
+  open?: boolean
+  onOpenChange?: () => void
 }
 
 const Root = (props: RootProps) => {

@@ -18,7 +18,7 @@ import {
   UseHistory,
   SEARCH_PARAM_PART,
 } from './features/nav/routing.ts'
-import { uniqueId } from './utilities/string.ts'
+import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
 export interface AppProps {
   configUrl: string | null
@@ -116,6 +116,8 @@ export function App(props: AppProps) {
     useHistory.push(url, { url: foundItem.url })
   }
 
+  KeyboardShortcuts()
+
   return (
     <div
       className={cx(
@@ -136,7 +138,7 @@ export function App(props: AppProps) {
       <div className="relative z-10 flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
-        <div className="flex flex-grow items-stretch justify-center">
+        <div className="flex items-stretch justify-center flex-grow">
           {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
@@ -148,7 +150,7 @@ export function App(props: AppProps) {
             >
               {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
               <iframe
-                key={activeNavItem?.url + uniqueId()}
+                key={activeNavItem?.url}
                 className={cx('h-full w-full', {
                   'rounded border-2 border-gray-100':
                     utilityStore.activeScreenSize !== ScreenSize.Desktop,
