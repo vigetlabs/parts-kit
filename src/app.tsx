@@ -121,7 +121,7 @@ export function App(props: AppProps) {
   return (
     <div
       className={cx(
-        'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all',
+        'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
         {
           '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
         },

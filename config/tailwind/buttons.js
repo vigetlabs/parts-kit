@@ -33,7 +33,7 @@ module.exports = plugin(({ addComponents }) => {
     },
     '.btn-subtle': {
       ...base,
-      '@apply bg-transparent text-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10':
+      '@apply bg-transparent text-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10 dark:text-gray-300 dark:active:text-white dark:enabled:active:bg-black/30 dark:enabled:hover:bg-black/20 dark:aria-expanded:bg-black/30 dark:aria-expanded:text-white':
         {},
     },
 

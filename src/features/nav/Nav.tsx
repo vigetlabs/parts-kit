@@ -32,27 +32,35 @@ export function Nav(props: NavProps) {
   return (
     <nav
       className={cx(
-        'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% py-8 transition-all',
-        {
-          'invisible opacity-0': !utilityStore.isNavBarVisible,
-        },
+        'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% py-8 transition-colors dark:bg-gray-800 dark:from-gray-900/40',
       )}
     >
-      <div className="px-6">
-        <Search onInput={(e) => setCurrentSearch(e.currentTarget.value)} />
-      </div>
+      <div
+        className={cx(
+          'flex flex-col gap-8 transition-all duration-500 ease-out',
+          {
+            'opacity-100 delay-200': utilityStore.isNavBarVisible,
+            'invisible -translate-x-2 opacity-0 delay-0':
+              !utilityStore.isNavBarVisible,
+          },
+        )}
+      >
+        <div className="px-6">
+          <Search onInput={(e) => setCurrentSearch(e.currentTarget.value)} />
+        </div>
 
-      <ul className="flex flex-col gap-2">
-        {filteredNav.map((item) => (
-          <li>
-            <NavItem
-              activeNavItem={props.activeNavItem}
-              item={item}
-              setActiveNavItem={props.setActiveNavItem}
-            />
-          </li>
-        ))}
-      </ul>
+        <ul className="flex flex-col gap-2">
+          {filteredNav.map((item) => (
+            <li>
+              <NavItem
+                activeNavItem={props.activeNavItem}
+                item={item}
+                setActiveNavItem={props.setActiveNavItem}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   )
 }

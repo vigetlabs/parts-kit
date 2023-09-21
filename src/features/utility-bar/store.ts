@@ -5,6 +5,9 @@ interface UtilityState {
   isSettingsVisible: boolean
   setIsSettingsVisible: (newVal: boolean) => void
 
+  isSettingsOpen: boolean
+  setIsSettingsOpen: (open: boolean) => void
+
   isViewportOpen: boolean
   setIsViewportOpen: (open: boolean) => void
 
@@ -47,6 +50,9 @@ export const useUtilityBarStore = create<UtilityState>()(
     isSettingsVisible: false,
     setIsSettingsVisible: (newVal: boolean) =>
       set(() => ({ isSettingsVisible: newVal })),
+
+    isSettingsOpen: false,
+    setIsSettingsOpen: (open: boolean) => set(() => ({ isSettingsOpen: open })),
 
     isViewportOpen: false,
     setIsViewportOpen: (open: boolean) => set(() => ({ isViewportOpen: open })),

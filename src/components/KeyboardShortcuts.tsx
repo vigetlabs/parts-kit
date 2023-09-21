@@ -1,5 +1,6 @@
 import { useEffect } from 'preact/hooks'
 import { useUtilityBarStore } from '../features/utility-bar/store'
+import { handleThemeClick } from '../features/utility-bar/ToggleTheme'
 
 export default function () {
   const utilityStore = useUtilityBarStore()
@@ -17,16 +18,35 @@ export default function () {
     switch (e.key) {
       // toggle fullscreen [F]
       case 'f':
+        e.preventDefault()
         return utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
 
       // exit fullscreen [Esc]
       case 'Escape':
+        e.preventDefault()
         return utilityStore.setIsNavBarVisible(true)
 
-      // open viewport menu [shift + V]
+      // toggle viewport menu [Shift + V]
       case 'V':
         if (e.shiftKey) {
+          e.preventDefault()
           utilityStore.setIsViewportOpen(!utilityStore.isViewportOpen)
+        }
+        return
+
+      // toggle theme [Shift + T]
+      case 'T':
+        if (e.shiftKey) {
+          e.preventDefault()
+          handleThemeClick()
+        }
+        return
+
+      // toggle settings [Shift + S]
+      case 'S':
+        if (e.shiftKey) {
+          e.preventDefault()
+          utilityStore.setIsSettingsOpen(!utilityStore.isSettingsOpen)
         }
         return
 
@@ -41,5 +61,9 @@ export default function () {
     return () => {
       document.removeEventListener('keydown', keydownHandler)
     }
-  }, [utilityStore.isNavBarVisible, utilityStore.isViewportOpen])
+  }, [
+    utilityStore.isNavBarVisible,
+    utilityStore.isViewportOpen,
+    utilityStore.isSettingsOpen,
+  ])
 }
