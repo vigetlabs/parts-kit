@@ -6,6 +6,9 @@
   "files": [
     "lib"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "module": "./lib/parts-kit.js",
   "exports": {
     ".": {
@@ -16,12 +19,17 @@
     "access": "public"
   },
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
     "dev": "vite --port 4000",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "gh-pages": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
-    "build-lib": "tsc && vite --config vite.config.lib build"
+    "build-lib": "tsc && vite --config vite.config.lib build",
+    "np": "np"
+  },
+  "np": {
+    "yarn": false,
+    "contents": "lib"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.4",
@@ -36,6 +44,7 @@
     "@preact/preset-vite": "^2.5.0",
     "autoprefixer": "^10.4.14",
     "gh-pages": "^6.0.0",
+    "np": "^8.0.4",
     "postcss": "^8.4.27",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.5.4",
