@@ -25,7 +25,7 @@
     "preview": "vite preview",
     "gh-pages": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
     "build-lib": "tsc && vite --config vite.config.lib build",
-    "np": "np"
+    "deploy": "npm run gh-pages && npm run build-lib && np"
   },
   "np": {
     "yarn": false
