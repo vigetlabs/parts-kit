@@ -1,7 +1,7 @@
 {
   "name": "@viget/parts-kit",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "lib"
@@ -28,8 +28,7 @@
     "np": "np"
   },
   "np": {
-    "yarn": false,
-    "contents": "lib"
+    "yarn": false
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.4",
