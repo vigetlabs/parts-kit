@@ -154,3 +154,7 @@ For deployments, we let features build up on `main`. When we're ready for a rele
 We use [unpkg.com](https://unpkg.com/) as our CDN. Deploying a new version of the NPM package will automatically publish the script to our various app implementations.
 
 Unpkg URLs can use semver, so a minor release will automatically be deployed to our apps.
+
+## Deploy to Github Pages
+
+The [demo page](https://code.viget.com/parts-kit/) for this project uses **GitHub Pages** and can be manually updated by running `npm run gh-pages` while on `main`.
