@@ -31,7 +31,10 @@ Include the CDN hosted script and configure the `<parts-kit>` custom element wit
 In the future, we'll have CMS plugins that automatically setup and configure of your parts kit.
 
 ```html
-<script type="module" src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"></script>
+<script
+  type="module"
+  src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"
+></script>
 <parts-kit config-url="YOUR-URL-HERE"></parts-kit>
 ```
 
@@ -45,6 +48,8 @@ The config JSON file contains a nested tree of pages and other config options th
 
 You could either write this JSON by hand, or your CMS of choice could have a plugin created to create this JSON on the fly.
 
+**Note:** You should use the proper file extension (e.g. `.html`) based on the framework you have chosen.
+
 ```json
 {
   "schemaVersion": "0.0.1",
@@ -54,11 +59,11 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
       "children": [
         {
           "title": "Primary",
-          "url": "/parts-kit/button/primary"
+          "url": "/parts-kit/button/primary.html"
         },
         {
           "title": "Disabled",
-          "url": "/parts-kit/button/disabled"
+          "url": "/parts-kit/button/disabled.html"
         }
       ]
     },
@@ -67,7 +72,7 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
       "children": [
         {
           "title": "Basic Card",
-          "url": "/parts-kit/cards/basic"
+          "url": "/parts-kit/cards/basic.html"
         }
       ]
     }
