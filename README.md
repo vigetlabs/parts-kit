@@ -35,7 +35,7 @@ In the future, we'll have CMS plugins that automatically setup and configure of 
   type="module"
   src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"
 ></script>
-<parts-kit config-url="YOUR-URL-HERE"></parts-kit>
+<parts-kit config-url="/path/to/config.json"></parts-kit>
 ```
 
 ## Key Concepts
