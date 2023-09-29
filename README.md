@@ -31,8 +31,11 @@ Include the CDN hosted script and configure the `<parts-kit>` custom element wit
 In the future, we'll have CMS plugins that automatically setup and configure of your parts kit.
 
 ```html
-<script type="module" src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"></script>
-<parts-kit config-url="YOUR-URL-HERE"></parts-kit>
+<script
+  type="module"
+  src="https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js"
+></script>
+<parts-kit config-url="/path/to/config.json"></parts-kit>
 ```
 
 ## Key Concepts
@@ -45,6 +48,8 @@ The config JSON file contains a nested tree of pages and other config options th
 
 You could either write this JSON by hand, or your CMS of choice could have a plugin created to create this JSON on the fly.
 
+**Note:** You should use the proper file extension (e.g. `.html`) based on the framework you have chosen.
+
 ```json
 {
   "schemaVersion": "0.0.1",
@@ -54,11 +59,11 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
       "children": [
         {
           "title": "Primary",
-          "url": "/parts-kit/button/primary"
+          "url": "/parts-kit/button/primary.html"
         },
         {
           "title": "Disabled",
-          "url": "/parts-kit/button/disabled"
+          "url": "/parts-kit/button/disabled.html"
         }
       ]
     },
@@ -67,7 +72,7 @@ You could either write this JSON by hand, or your CMS of choice could have a plu
       "children": [
         {
           "title": "Basic Card",
-          "url": "/parts-kit/cards/basic"
+          "url": "/parts-kit/cards/basic.html"
         }
       ]
     }
@@ -149,3 +154,7 @@ For deployments, we let features build up on `main`. When we're ready for a rele
 We use [unpkg.com](https://unpkg.com/) as our CDN. Deploying a new version of the NPM package will automatically publish the script to our various app implementations.
 
 Unpkg URLs can use semver, so a minor release will automatically be deployed to our apps.
+
+## Deploy to Github Pages
+
+The [demo page](https://code.viget.com/parts-kit/) for this project uses **GitHub Pages** and can be manually updated by running `npm run gh-pages` while on `main`.
