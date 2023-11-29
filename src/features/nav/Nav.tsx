@@ -46,7 +46,11 @@ export function Nav(props: NavProps) {
         )}
       >
         <div className="px-6">
-          <Search onInput={(e) => setCurrentSearch(e.currentTarget.value)} />
+          <Search
+            onInput={(e) =>
+              setCurrentSearch(e.currentTarget.value.toLowerCase())
+            }
+          />
         </div>
 
         <ul className="flex flex-col gap-2">
