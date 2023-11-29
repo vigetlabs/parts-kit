@@ -1,8 +1,7 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 import './app.css'
 import cx from 'classnames'
 import { Nav } from './features/nav/Nav.tsx'
-import { useEffect } from 'preact/compat'
 import { NavItemInterface } from './features/nav/Nav.tsx'
 import { useSettingsStore } from './features/settings/store.ts'
 import {
@@ -138,7 +137,7 @@ export function App(props: AppProps) {
       <div className="relative z-10 flex flex-col bg-white">
         <UtilityBar showSettings={!hasConfigUrl} />
 
-        <div className="flex items-stretch justify-center flex-grow">
+        <div className="flex flex-grow items-stretch justify-center">
           {!hasConfigUrl && isWelcomeVisible ? (
             <Welcome />
           ) : (
