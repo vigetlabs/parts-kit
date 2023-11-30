@@ -8,10 +8,13 @@ import ToggleSettingsDialog from './ToggleSettingsDialog'
 
 interface UtilityBarProps {
   showSettings: boolean
+  isDoc?: boolean
 }
 
 export default function (props: UtilityBarProps) {
   const store = useUtilityBarStore()
+
+  console.log(props.isDoc)
 
   return (
     <div>

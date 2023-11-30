@@ -21,6 +21,7 @@ import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
 export interface AppProps {
   configUrl: string | null
+  isDocs?: boolean
 }
 
 /**
@@ -135,7 +136,10 @@ export function App(props: AppProps) {
       ) : null}
 
       <div className="relative z-10 flex flex-col bg-white">
-        <UtilityBar showSettings={!hasConfigUrl} />
+        <UtilityBar
+          isDoc={navItemFromUrl?.doc ?? false}
+          showSettings={!hasConfigUrl}
+        />
 
         <div className="flex flex-grow items-stretch justify-center">
           {!hasConfigUrl && isWelcomeVisible ? (
