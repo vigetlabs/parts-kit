@@ -21,7 +21,6 @@ import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
 export interface AppProps {
   configUrl: string | null
-  isDocs?: boolean
 }
 
 /**
