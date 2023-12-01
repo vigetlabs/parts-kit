@@ -8,6 +8,7 @@ import ToggleSettingsDialog from './ToggleSettingsDialog'
 
 interface UtilityBarProps {
   showSettings: boolean
+  isDoc: boolean
 }
 
 export default function (props: UtilityBarProps) {
@@ -28,7 +29,7 @@ export default function (props: UtilityBarProps) {
           <ToggleTheme />
 
           {/* Viewport Dropdown Controls */}
-          <ToggleViewportDropdown />
+          <ToggleViewportDropdown isDoc={props.isDoc} />
         </div>
 
         <div className="flex items-center gap-2">
