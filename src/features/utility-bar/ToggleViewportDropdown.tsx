@@ -1,6 +1,7 @@
 import { useEffect } from 'preact/hooks'
 import { AspectRatioIcon } from '@radix-ui/react-icons'
 import {
+  ScreenSize,
   screenSizes,
   useUtilityBarStore,
 } from '../../features/utility-bar/store'
@@ -16,7 +17,7 @@ export default function (props: ToggleViewportDropdownProps) {
   // When on doc page, set active screen size to desktop
   useEffect(() => {
     if (props.isDoc) {
-      store.setActiveScreenSize(2)
+      store.setActiveScreenSize(ScreenSize.Desktop)
     }
   }, [props.isDoc])
 

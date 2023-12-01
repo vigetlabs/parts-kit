@@ -136,7 +136,7 @@ export function App(props: AppProps) {
 
       <div className="relative z-10 flex flex-col bg-white">
         <UtilityBar
-          isDoc={navItemFromUrl?.doc ?? false}
+          isDoc={activeNavItem?.doc ?? false}
           showSettings={!hasConfigUrl}
         />
 
