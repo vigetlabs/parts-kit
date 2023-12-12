@@ -118,49 +118,51 @@ export function App(props: AppProps) {
   KeyboardShortcuts()
 
   return (
-    <div
-      className={cx(
-        'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
-        {
-          '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
-        },
-      )}
-    >
-      {activeNavItem !== undefined ? (
-        <Nav
-          activeNavItem={activeNavItem}
-          nav={config.nav}
-          setActiveNavItem={setViableNavItem}
-        />
-      ) : null}
+    <div id="parts-kit">
+      <div
+        className={cx(
+          'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
+          {
+            '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
+          },
+        )}
+      >
+        {activeNavItem !== undefined ? (
+          <Nav
+            activeNavItem={activeNavItem}
+            nav={config.nav}
+            setActiveNavItem={setViableNavItem}
+          />
+        ) : null}
 
-      <div className="relative z-10 flex flex-col bg-white">
-        <UtilityBar
-          isDoc={activeNavItem?.doc ?? false}
-          showSettings={!hasConfigUrl}
-        />
+        <div className="relative z-10 flex flex-col bg-white">
+          <UtilityBar
+            isDoc={activeNavItem?.doc ?? false}
+            showSettings={!hasConfigUrl}
+          />
 
-        <div className="flex flex-grow items-stretch justify-center">
-          {!hasConfigUrl && isWelcomeVisible ? (
-            <Welcome />
-          ) : (
-            <div
-              className={cx('flex-grow', {
-                'py-5': utilityStore.activeScreenSize !== ScreenSize.Desktop,
-              })}
-              style={{ maxWidth: activeScreenWidth }}
-            >
-              {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
-              <iframe
-                key={activeNavItem?.url}
-                className={cx('h-full w-full', {
-                  'rounded border-2 border-gray-100':
-                    utilityStore.activeScreenSize !== ScreenSize.Desktop,
+          <div className="flex flex-grow items-stretch justify-center">
+            {!hasConfigUrl && isWelcomeVisible ? (
+              <Welcome />
+            ) : (
+              <div
+                className={cx('flex-grow', {
+                  'py-5': utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
-                src={activeNavItem?.url ?? undefined}
-              ></iframe>
-            </div>
-          )}
+                style={{ maxWidth: activeScreenWidth }}
+              >
+                {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
+                <iframe
+                  key={activeNavItem?.url}
+                  className={cx('h-full w-full', {
+                    'rounded border-2 border-gray-100':
+                      utilityStore.activeScreenSize !== ScreenSize.Desktop,
+                  })}
+                  src={activeNavItem?.url ?? undefined}
+                ></iframe>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
