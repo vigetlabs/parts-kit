@@ -18,7 +18,7 @@ const Root = (props: RootProps) => {
         {props.trigger && props.trigger}
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Portal>
+      <DropdownMenu.Portal container={document.getElementById('parts-kit')}>
         <DropdownMenu.Content
           sideOffset={5}
           align={props.align || 'start'}
