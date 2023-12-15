@@ -54,12 +54,12 @@ export function Nav(props: NavProps) {
   return (
     <nav
       className={cx(
-        'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% py-8 transition-colors dark:bg-gray-800 dark:from-gray-900/40',
+        'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% transition-colors dark:bg-gray-800 dark:from-gray-900/40',
       )}
     >
       <div
         className={cx(
-          'flex flex-col gap-8 transition-all duration-500 ease-out',
+          'grid grid-rows-[auto,1fr] h-full gap-6 transition-all duration-500 ease-out',
           {
             'opacity-100 delay-200': utilityStore.isNavBarVisible,
             'invisible -translate-x-2 opacity-0 delay-0':
@@ -67,7 +67,7 @@ export function Nav(props: NavProps) {
           },
         )}
       >
-        <div className="px-6">
+        <div className="px-6 pt-6">
           <Search
             onInput={(e) =>
               setCurrentSearch(e.currentTarget.value.toLowerCase())
@@ -75,7 +75,7 @@ export function Nav(props: NavProps) {
           />
         </div>
 
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-2 overflow-auto pb-6">
           {filteredNav.map((item) => (
             <NavItem
               activeNavItem={props.activeNavItem}
