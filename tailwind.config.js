@@ -3,7 +3,7 @@ const colors = require('tailwindcss/colors')
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
-  important: '#parts-kit',
+  prefix: 'pk-',
   theme: {
     screens: {
       sm: '550px',

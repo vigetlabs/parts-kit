@@ -18,11 +18,11 @@ const Root = (props: RootProps) => {
       </DialogPrimitive.Trigger>
 
       <DialogPrimitive.Portal container={document.getElementById('parts-kit')}>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-gray-900/60 backdrop-blur-[2px] data-[state=open]:animate-dialog-overlay-show" />
-        <DialogPrimitive.Content className="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-xl border border-gray-300 bg-white px-6 py-8 shadow-lg transition-colors focus:outline-none data-[state=open]:animate-dialog-content-show dark:border-gray-500 dark:bg-gray-800 dark:text-white">
+        <DialogPrimitive.Overlay className="pk-fixed pk-inset-0 pk-z-50 pk-bg-gray-900/60 pk-backdrop-blur-[2px] data-[state=open]:pk-animate-dialog-overlay-show" />
+        <DialogPrimitive.Content className="pk-fixed pk-left-[50%] pk-top-[50%] pk-z-50 pk-max-h-[85vh] pk-w-[90vw] pk-max-w-md pk-translate-x-[-50%] pk-translate-y-[-50%] pk-rounded-xl pk-border pk-border-gray-300 pk-bg-white pk-px-6 pk-py-8 pk-shadow-lg pk-transition-colors focus:pk-outline-none data-[state=open]:pk-animate-dialog-content-show dark:pk-border-gray-500 dark:pk-bg-gray-800 dark:pk-text-white">
           {props.closeable && (
             <DialogPrimitive.Close asChild>
-              <button className="btn-subtle btn-icon absolute right-2 top-2">
+              <button className="pk-btn-subtle pk-btn-icon pk-absolute pk-right-2 pk-top-2">
                 <Cross1Icon />
               </button>
             </DialogPrimitive.Close>

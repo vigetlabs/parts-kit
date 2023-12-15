@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply text-sm text-gray-900;
+    @apply pk-text-sm pk-text-gray-900;
   }
 }

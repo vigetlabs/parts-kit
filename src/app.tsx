@@ -121,9 +121,9 @@ export function App(props: AppProps) {
     <div id="parts-kit">
       <div
         className={cx(
-          'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
+          'pk-grid pk-h-screen pk-grid-cols-[250px,1fr] pk-bg-gray-100 pk-transition-all pk-duration-500',
           {
-            '!grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
+            '!pk-grid-cols-[0px,1fr]': !utilityStore.isNavBarVisible,
           },
         )}
       >
@@ -135,27 +135,28 @@ export function App(props: AppProps) {
           />
         ) : null}
 
-        <div className="relative z-10 flex flex-col bg-white">
+        <div className="pk-relative pk-z-10 pk-flex pk-flex-col pk-bg-white">
           <UtilityBar
             isDoc={activeNavItem?.doc ?? false}
             showSettings={!hasConfigUrl}
           />
 
-          <div className="flex flex-grow items-stretch justify-center">
+          <div className="pk-flex pk-flex-grow pk-items-stretch pk-justify-center">
             {!hasConfigUrl && isWelcomeVisible ? (
               <Welcome />
             ) : (
               <div
-                className={cx('flex-grow', {
-                  'py-5': utilityStore.activeScreenSize !== ScreenSize.Desktop,
+                className={cx('pk-flex-grow', {
+                  'pk-py-5':
+                    utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
                 style={{ maxWidth: activeScreenWidth }}
               >
                 {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
                 <iframe
                   key={activeNavItem?.url}
-                  className={cx('h-full w-full', {
-                    'rounded border-2 border-gray-100':
+                  className={cx('pk-h-full pk-w-full', {
+                    'pk-rounded pk-border-2 pk-border-gray-100':
                       utilityStore.activeScreenSize !== ScreenSize.Desktop,
                   })}
                   src={activeNavItem?.url ?? undefined}
