@@ -21,24 +21,24 @@ module.exports = plugin(({ addComponents }) => {
 
   const buttons = {
     // Variants
-    '.btn': {
+    '#parts-kit .btn': {
       ...base,
       '@apply bg-blue-500 text-white enabled:hover:bg-blue-600 enabled:active:bg-blue-700 aria-expanded:bg-blue-700':
         {},
     },
-    '.btn-outline': {
+    '#parts-kit .btn-outline': {
       ...base,
       '@apply bg-transparent text-gray-600 border border-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10':
         {},
     },
-    '.btn-subtle': {
+    '#parts-kit .btn-subtle': {
       ...base,
       '@apply bg-transparent text-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10 dark:text-gray-300 dark:active:text-white dark:enabled:active:bg-black/30 dark:enabled:hover:bg-black/20 dark:aria-expanded:bg-black/30 dark:aria-expanded:text-white':
         {},
     },
 
     // Icon buttons (uses base variants for styling)
-    '.btn-icon': {
+    '#parts-kit .btn-icon': {
       '@apply !gap-0 !p-0 w-6 h-6 !leading-[0] !text-[0]': {},
 
       '& svg': {
