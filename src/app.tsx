@@ -19,6 +19,7 @@ import {
   SEARCH_PARAM_PART,
 } from './features/nav/routing.ts'
 import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
+import { instanceOfIframeMessage } from './features/iframe-messages/store.ts'
 
 export interface AppProps {
   configUrl: string | null
@@ -54,10 +55,23 @@ export function App(props: AppProps) {
     setConfig(data)
   }
 
+  const handlePostmessage = (event: MessageEvent) => {
+    if (!instanceOfIframeMessage(event.data)) {
+      return;
+    }
+
+    console.log(event.data.payload)
+  }
+
   useEffect(() => {
     // If the custom element has a config URL, don't pull one from the settings field
     loadConfig(props.configUrl ?? settings.configUrl)
   }, [settings.configUrl])
+
+  useEffect(() => {
+    window.addEventListener('message', handlePostmessage)
+    return () => window.removeEventListener('message', handlePostmessage)
+  })
 
   if (config.nav.length === 0) {
     return <div>Loading</div>
