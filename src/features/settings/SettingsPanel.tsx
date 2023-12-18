@@ -6,26 +6,29 @@ export default function () {
   const settings = useSettingsStore()
   const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl)
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-md font-bold uppercase">Settings</h2>
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-medium uppercase" for="parts-json-url">
+    <div className="pk-flex pk-flex-col pk-gap-6">
+      <h2 className="pk-text-md pk-font-bold pk-uppercase">Settings</h2>
+      <div className="pk-flex pk-flex-col pk-gap-2">
+        <label
+          className="pk-text-xs pk-font-medium pk-uppercase"
+          for="parts-json-url"
+        >
           Parts JSON URL
         </label>
         <input
-          className="block h-8 w-full rounded bg-white px-4 placeholder-gray-500 ring-1 ring-gray-300 transition hover:bg-gray-50 hover:ring-gray-400 focus:outline-none focus:ring-blue-400 focus-visible:ring-2 dark:bg-gray-700 dark:text-white dark:ring-gray-500 dark:hover:bg-gray-700/75 dark:focus:ring-blue-400"
+          className="pk-block pk-h-8 pk-w-full pk-rounded pk-bg-white pk-px-4 pk-placeholder-gray-500 pk-ring-1 pk-ring-gray-300 pk-transition hover:pk-bg-gray-50 hover:pk-ring-gray-400 focus:pk-outline-none focus:pk-ring-blue-400 focus-visible:pk-ring-2 dark:pk-bg-gray-700 dark:pk-text-white dark:pk-ring-gray-500 dark:hover:pk-bg-gray-700/75 dark:focus:pk-ring-blue-400"
           id="parts-json-url"
           value={localNavUrl}
           onInput={(e) => setLocalNavUrl(e.currentTarget.value)}
         />
-        <p className="text-xs text-gray-500 transition-colors dark:text-gray-400">
+        <p className="pk-text-xs pk-text-gray-500 pk-transition-colors dark:pk-text-gray-400">
           Your parts kit URLs need to have appropriate CORS and no
           X-Frame-Options restrictions. You can use a Chrome Plugin like
           Requestly to bypass these headers.
         </p>
       </div>
-      <div className="flex justify-end gap-2">
-        <Dialog.Close className="btn-outline">Cancel</Dialog.Close>
+      <div className="pk-flex pk-justify-end pk-gap-2">
+        <Dialog.Close className="pk-btn-outline">Cancel</Dialog.Close>
         <Dialog.Close
           className="btn"
           onClick={() =>

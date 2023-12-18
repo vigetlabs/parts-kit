@@ -6,7 +6,7 @@ export default function () {
 
   return (
     <button
-      className="btn-subtle btn-icon"
+      className="pk-btn-subtle pk-btn-icon"
       title={
         utilityStore.isNavBarVisible
           ? 'Go Fullscreen [F]'

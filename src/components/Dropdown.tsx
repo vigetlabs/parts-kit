@@ -23,10 +23,12 @@ const Root = (props: RootProps) => {
           sideOffset={5}
           align={props.align || 'start'}
           side={props.side || 'bottom'}
-          className="dropdown"
+          className="pk-dropdown"
         >
           {props.children}
-          {props.hasArrow && <DropdownMenu.Arrow className="dropdown-arrow" />}
+          {props.hasArrow && (
+            <DropdownMenu.Arrow className="pk-dropdown-arrow" />
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>

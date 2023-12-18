@@ -18,13 +18,14 @@ export default function (props: UtilityBarProps) {
     <div>
       <header
         className={cx(
-          'flex h-10 justify-between gap-4 border-l border-white bg-gray-100 px-4 transition dark:border-gray-500 dark:bg-gray-700',
+          'pk-flex pk-h-10 pk-justify-between pk-gap-4 pk-border-l pk-border-white pk-bg-gray-100 pk-px-4 pk-transition dark:pk-border-gray-500 dark:pk-bg-gray-700',
           {
-            'border-gray-100 dark:border-gray-700': !store.isNavBarVisible,
+            'pk-border-gray-100 dark:pk-border-gray-700':
+              !store.isNavBarVisible,
           },
         )}
       >
-        <div className="flex items-center gap-2">
+        <div className="pk-flex pk-items-center pk-gap-2">
           {/* Theme Control */}
           <ToggleTheme />
 
@@ -32,7 +33,7 @@ export default function (props: UtilityBarProps) {
           <ToggleViewportDropdown isDoc={props.isDoc} />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="pk-flex pk-items-center pk-gap-2">
           {/* Settings Control */}
           {props.showSettings && <ToggleSettingsDialog />}
 

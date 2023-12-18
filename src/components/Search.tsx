@@ -7,14 +7,14 @@ interface SearchProps {
 
 export function Search(props: SearchProps) {
   return (
-    <div className="relative flex items-center">
+    <div className="pk-relative pk-flex pk-items-center">
       <MagnifyingGlassIcon
-        className="absolute flex items-center w-5 h-5 text-gray-400 pointer-events-none left-4"
+        className="pk-pointer-events-none pk-absolute pk-left-4 pk-flex pk-h-5 pk-w-5 pk-items-center pk-text-gray-400"
         aria-hidden="true"
       />
       <input
         type="search"
-        className="block w-full h-8 pl-10 pr-2 placeholder-gray-500 transition bg-white rounded-full ring-1 ring-gray-300 hover:bg-gray-50 hover:ring-gray-400 focus:outline-none focus:ring-blue-400 focus-visible:ring-2 dark:bg-gray-700 dark:text-white dark:ring-gray-500 dark:hover:bg-gray-700/75 dark:focus:ring-blue-400"
+        className="pk-block pk-h-8 pk-w-full pk-rounded-full pk-bg-white pk-pl-10 pk-pr-2 pk-placeholder-gray-500 pk-ring-1 pk-ring-gray-300 pk-transition hover:pk-bg-gray-50 hover:pk-ring-gray-400 focus:pk-outline-none focus:pk-ring-blue-400 focus-visible:pk-ring-2 dark:pk-bg-gray-700 dark:pk-text-white dark:pk-ring-gray-500 dark:hover:pk-bg-gray-700/75 dark:focus:pk-ring-blue-400"
         placeholder="Search"
         aria-label="search"
         onInput={props.onInput}

@@ -13,7 +13,7 @@ export function handleThemeClick() {
 export default function () {
   return (
     <button
-      className="btn-subtle btn-icon"
+      className="pk-btn-subtle pk-btn-icon"
       title="Toggle Theme [Shift + T]"
       onClick={() => handleThemeClick()}
     >

@@ -3,39 +3,40 @@ const plugin = require('tailwindcss/plugin')
 module.exports = plugin(({ addComponents }) => {
   const dropdown = {
     '.dropdown': {
-      '@apply pk-inline-flex flex-col gap-2 p-2 bg-white border border-gray-300 shadow min-w-[200px] max-w-[250px] rounded-xl z-50 dark:bg-gray-800 dark:border-gray-500 transition-colors':
+      '@apply pk-inline-flex pk-flex-col pk-gap-2 pk-p-2 pk-bg-white pk-border pk-border-gray-300 pk-shadow pk-min-w-[200px] pk-max-w-[250px] pk-rounded-xl pk-z-50 dark:pk-bg-gray-800 dark:pk-border-gray-500 pk-transition-colors':
         {},
 
       // handle dropdown animation
       '&[data-side="top"]': {
-        '@apply animate-slide-down-and-fade': {},
+        '@apply pk-animate-slide-down-and-fade': {},
       },
       '&[data-side="bottom"]': {
-        '@apply animate-slide-up-and-fade': {},
+        '@apply pk-animate-slide-up-and-fade': {},
       },
       '&[data-side="left"]': {
-        '@apply animate-slide-right-and-fade': {},
+        '@apply pk-animate-slide-right-and-fade': {},
       },
       '&[data-side="right"]': {
-        '@apply animate-slide-left-and-fade': {},
+        '@apply pk-animate-slide-left-and-fade': {},
       },
     },
 
     '.dropdown-item': {
-      '@apply cursor-pointer flex items-center px-3 min-h-8 hover:bg-black/5 hover:outline-none active:bg-black/10 w-full gap-2 justify-between rounded-md aria-checked:bg-blue-500 aria-checked:text-white aria-checked:hover:bg-blue-400 aria-checked:active:bg-blue-500 dark:text-white dark:hover:bg-black/30 dark:active:bg-black/40 aria-checked:dark:hover:bg-blue-400 aria-checked:dark:active:bg-blue-500 transition-colors':
+      '@apply pk-cursor-pointer pk-flex pk-items-center pk-px-3 pk-min-h-8 hover:pk-bg-black/5 hover:pk-outline-none active:pk-bg-black/10 pk-w-full pk-gap-2 pk-justify-between pk-rounded-md aria-checked:pk-bg-blue-500 aria-checked:pk-text-white aria-checked:hover:pk-bg-blue-400 aria-checked:active:pk-bg-blue-500 dark:pk-text-white dark:hover:pk-bg-black/30 dark:active:pk-bg-black/40 aria-checked:dark:hover:pk-bg-blue-400 aria-checked:dark:active:pk-bg-blue-500 pk-transition-colors':
         {},
 
       '& + &': {
-        '@apply mt-1': {},
+        '@apply pk-mt-1': {},
       },
     },
 
     '.dropdown-separator': {
-      '@apply h-px mx-3 bg-gray-300 dark:bg-gray-500 transition-colors': {},
+      '@apply pk-h-px pk-mx-3 pk-bg-gray-300 dark:pk-bg-gray-500 pk-transition-colors':
+        {},
     },
 
     '.dropdown-arrow': {
-      '@apply fill-gray-300 dark:fill-gray-400 transition-colors': {},
+      '@apply pk-fill-gray-300 dark:pk-fill-gray-400 pk-transition-colors': {},
     },
   }
 

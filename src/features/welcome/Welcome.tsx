@@ -5,8 +5,8 @@ export default function () {
   const utility = useUtilityBarStore()
 
   return (
-    <div className="max-w-lg px-3 py-10 mx-auto space-y-3">
-      <h1 className="text-xl font-bold">👋 Welcome!</h1>
+    <div className="pk-mx-auto pk-max-w-lg pk-space-y-3 pk-px-3 pk-py-10">
+      <h1 className="pk-text-xl pk-font-bold">👋 Welcome!</h1>
       <p>
         This is a demo of a "decoupled" parts kit. To get started, simply click
         a parts link on the left.
@@ -14,17 +14,17 @@ export default function () {
       <p>
         If you'd like to try this out with your own JSON. Click the{' '}
         <button
-          className="text-blue-600 hover:underline"
+          className="pk-text-blue-600 hover:pk-underline"
           onClick={() => utility.setIsSettingsVisible(true)}
         >
-          <GearIcon className="inline" /> settings button
+          <GearIcon className="pk-inline" /> settings button
         </button>{' '}
         in the top menu bar.
       </p>
       <p>
         Curious what a decoupled parts kit is?{' '}
         <a
-          className="text-blue-600 underline"
+          className="pk-text-blue-600 pk-underline"
           href="https://github.com/vigetlabs/parts-kit"
         >
           📚 Check out the docs

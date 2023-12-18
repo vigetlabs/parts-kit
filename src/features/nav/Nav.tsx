@@ -54,20 +54,20 @@ export function Nav(props: NavProps) {
   return (
     <nav
       className={cx(
-        'flex min-w-[250px] flex-col gap-8 overflow-hidden bg-gray-100 bg-gradient-to-l from-gray-400/30 to-transparent to-35% transition-colors dark:bg-gray-800 dark:from-gray-900/40',
+        'to-35% pk-flex pk-min-w-[250px] pk-flex-col pk-gap-8 pk-overflow-hidden pk-bg-gray-100 pk-bg-gradient-to-l pk-from-gray-400/30 pk-to-transparent pk-transition-colors dark:pk-bg-gray-800 dark:pk-from-gray-900/40',
       )}
     >
       <div
         className={cx(
-          'grid grid-rows-[auto,1fr] h-full gap-6 transition-all duration-500 ease-out',
+          'pk-grid pk-h-full pk-grid-rows-[auto,1fr] pk-gap-6 pk-transition-all pk-duration-500 pk-ease-out',
           {
-            'opacity-100 delay-200': utilityStore.isNavBarVisible,
-            'invisible -translate-x-2 opacity-0 delay-0':
+            'pk-opacity-100 pk-delay-200': utilityStore.isNavBarVisible,
+            'pk-invisible -pk-translate-x-2 pk-opacity-0 pk-delay-0':
               !utilityStore.isNavBarVisible,
           },
         )}
       >
-        <div className="px-6 pt-6">
+        <div className="pk-px-6 pk-pt-6">
           <Search
             onInput={(e) =>
               setCurrentSearch(e.currentTarget.value.toLowerCase())
@@ -75,7 +75,7 @@ export function Nav(props: NavProps) {
           />
         </div>
 
-        <ul className="flex flex-col gap-2 overflow-auto pb-6">
+        <ul className="pk-flex pk-flex-col pk-gap-2 pk-overflow-auto pk-pb-6">
           {filteredNav.map((item) => (
             <NavItem
               activeNavItem={props.activeNavItem}

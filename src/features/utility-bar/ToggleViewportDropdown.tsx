@@ -31,7 +31,7 @@ export default function (props: ToggleViewportDropdownProps) {
           }
           trigger={
             <button
-              className="btn-subtle btn-icon"
+              className="pk-btn-subtle pk-btn-icon"
               title="Viewport Size [Shift + V]"
               disabled={props.isDoc}
             >
@@ -47,15 +47,17 @@ export default function (props: ToggleViewportDropdownProps) {
                     key={item.size}
                     value={item.size}
                     onClick={() => store.setActiveScreenSize(item.size)}
-                    className="dropdown-item"
+                    className="pk-dropdown-item"
                   >
                     {item.title}
                   </Dropdown.RadioItem>
                 )
               })}
             </Dropdown.RadioGroup>
-            <Dropdown.Separator className="dropdown-separator" />
-            <Dropdown.Item className="dropdown-item">Responsive</Dropdown.Item>
+            <Dropdown.Separator className="pk-dropdown-separator" />
+            <Dropdown.Item className="pk-dropdown-item">
+              Responsive
+            </Dropdown.Item>
           </>
         </Dropdown.Root>
       )}

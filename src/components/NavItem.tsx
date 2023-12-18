@@ -66,11 +66,11 @@ export function NavItem(props: NavItemProps) {
     <li>
       <button
         className={cx(
-          'flex min-h-8 w-full items-center gap-1 rounded-none px-4 text-start transition-colors hover:bg-black/5 active:bg-black/10 dark:text-gray-100 dark:hover:bg-black/30 dark:active:bg-black/40',
+          'pk-flex pk-min-h-8 pk-w-full pk-items-center pk-gap-1 pk-rounded-none pk-px-4 pk-text-start pk-transition-colors hover:pk-bg-black/5 active:pk-bg-black/10 dark:pk-text-gray-100 dark:hover:pk-bg-black/30 dark:active:pk-bg-black/40',
           {
-            'py-2 font-medium': !isChild || props.item.children.length,
-            'py-1 pl-4': isChild,
-            'bg-blue-500 text-white hover:bg-blue-400 dark:hover:bg-blue-400 dark:active:bg-blue-500':
+            'pk-py-2 pk-font-medium': !isChild || props.item.children.length,
+            'pk-py-1 pk-pl-4': isChild,
+            'pk-bg-blue-500 pk-text-white hover:pk-bg-blue-400 dark:hover:pk-bg-blue-400 dark:active:pk-bg-blue-500':
               props.activeNavItem === props.item,
           },
         )}
@@ -89,18 +89,18 @@ export function NavItem(props: NavItemProps) {
         {props.item.children.length ? (
           <>
             <ChevronRightIcon
-              className={cx('icon -ml-1', {
-                hidden: isOpen,
+              className={cx('pk-icon -pk-ml-1', {
+                'pk-hidden': isOpen,
               })}
             />
             <ChevronDownIcon
-              className={cx('icon -ml-1', {
-                hidden: !isOpen,
+              className={cx('pk-icon -pk-ml-1', {
+                'pk-hidden': !isOpen,
               })}
             />
           </>
         ) : !isChild ? (
-          <span className="w-3" /> // spacer
+          <span className="pk-w-3" /> // spacer
         ) : null}
         {props.item.title}
       </button>

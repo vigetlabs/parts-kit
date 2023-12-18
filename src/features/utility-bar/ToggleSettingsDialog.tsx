@@ -11,7 +11,10 @@ export default function () {
       open={store.isSettingsOpen}
       onOpenChange={() => store.setIsSettingsOpen(!store.isSettingsOpen)}
       trigger={
-        <button className="btn-subtle btn-icon" title="Settings [Shift + S]">
+        <button
+          className="pk-btn-subtle pk-btn-icon"
+          title="Settings [Shift + S]"
+        >
           <GearIcon />
         </button>
       }
