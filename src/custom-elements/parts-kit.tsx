@@ -3,9 +3,13 @@ import { App } from '../app.tsx'
 // https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
 import cssString from '../index.css?inline'
 
-export default class PartsKit extends HTMLElement {
+/**
+ * Ensure that we only set styles once
+ */
+let hasSetUpStyles = false
 
-  private shadow:ShadowRoot
+export default class PartsKit extends HTMLElement {
+  private shadow: ShadowRoot
 
   /**
    * Using constructable stylesheets.
@@ -23,23 +27,8 @@ export default class PartsKit extends HTMLElement {
     // Always call super first in constructor
     super()
 
-    this.shadow = this.attachShadow({mode: 'open'})
+    this.shadow = this.attachShadow({ mode: 'open' })
     this.shadow.adoptedStyleSheets = [this.styleSheet]
-
-    // TODO ensure this works
-
-    // Setup localStorage for theme prior to app loading to prevent FOUC
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      localStorage.theme = 'dark'
-      document.documentElement.classList.add('dark')
-    } else {
-      localStorage.theme = 'light'
-      document.documentElement.classList.remove('dark')
-    }
   }
 
   connectedCallback() {
@@ -54,21 +43,27 @@ export default class PartsKit extends HTMLElement {
     render(null, this)
   }
 
-  private setUpStyles(): void {
+  private setUpStyles() {
+    if (hasSetUpStyles) {
+      return
+    }
     const googleFontsLink = document.createElement('link')
-    googleFontsLink.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
+    googleFontsLink.href =
+      'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
     googleFontsLink.rel = 'stylesheet'
 
     document.head.appendChild(googleFontsLink)
 
     // Since our main stylesheet is scoped to the web component, we want to ensure that the body tag doesn't have its default padding & margins.
     const bodyStyles = document.createElement('style')
-    bodyStyles.appendChild(document.createTextNode(`
+    bodyStyles.appendChild(
+      document.createTextNode(`
       body {
         margin: 0;
         padding: 0;
       }
-    `))
+    `),
+    )
     document.head.appendChild(bodyStyles)
 
     // Attach styles to this custom element
@@ -78,12 +73,14 @@ export default class PartsKit extends HTMLElement {
     // https://vitejs.dev/guide/api-hmr#hot-accept-deps-cb
     if (import.meta.hot) {
       import.meta.hot.accept('../index.css?inline', (newCssString) => {
-        if(!newCssString) {
-          return;
+        if (!newCssString) {
+          return
         }
 
         this.styleSheet.replaceSync(newCssString.default)
       })
     }
+
+    hasSetUpStyles = true
   }
 }

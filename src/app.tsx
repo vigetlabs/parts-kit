@@ -6,6 +6,7 @@ import { useSettingsStore } from './features/settings/store.ts'
 import {
   ScreenSize,
   screenSizeMap,
+  useThemeStore,
   useUtilityBarStore,
 } from './features/utility-bar/store.ts'
 import Welcome from './features/welcome/Welcome.tsx'
@@ -34,6 +35,7 @@ export interface Config {
 export function App(props: AppProps) {
   const settings = useSettingsStore()
   const utilityStore = useUtilityBarStore()
+  const themeStore = useThemeStore()
 
   const [config, setConfig] = useState<Config>({ nav: [] })
   const hasConfigUrl = !!props.configUrl
@@ -117,7 +119,13 @@ export function App(props: AppProps) {
   KeyboardShortcuts()
 
   return (
-    <div className="font-sans">
+    <div className={cx(
+      'font-sans',
+      {
+        'light': themeStore.mode === 'light',
+        'dark': themeStore.mode === 'dark',
+      }
+    )}>
       <div
         className={cx(
           'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
