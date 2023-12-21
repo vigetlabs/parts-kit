@@ -117,7 +117,7 @@ export function App(props: AppProps) {
   KeyboardShortcuts()
 
   return (
-    <div id="parts-kit">
+    <div className="font-sans">
       <div
         className={cx(
           'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',

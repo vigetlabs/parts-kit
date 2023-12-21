@@ -45,7 +45,34 @@ export default class PartsKit extends HTMLElement {
   connectedCallback() {
     const configUrl = this.getAttribute('config-url')
 
-    // TODO, font styles
+    this.setUpStyles()
+
+    render(<App configUrl={configUrl} />, this.shadow)
+  }
+
+  disconnectedCallback() {
+    render(null, this)
+  }
+
+  private setUpStyles(): void {
+    const googleFontsLink = document.createElement('link')
+    googleFontsLink.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
+    googleFontsLink.rel = 'stylesheet'
+
+    document.head.appendChild(googleFontsLink)
+
+    // Since our main stylesheet is scoped to the web component, we want to ensure that the body tag doesn't have its default padding & margins.
+    const bodyStyles = document.createElement('style')
+    bodyStyles.appendChild(document.createTextNode(`
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    `))
+    document.head.appendChild(bodyStyles)
+
+    // Attach styles to this custom element
+    this.styleSheet.replaceSync(cssString)
 
     // Respond to HMR of our styles. This is tree shaken when building for prod
     // https://vitejs.dev/guide/api-hmr#hot-accept-deps-cb
@@ -58,14 +85,5 @@ export default class PartsKit extends HTMLElement {
         this.styleSheet.replaceSync(newCssString.default)
       })
     }
-
-    this.styleSheet.replaceSync(cssString)
-
-    render(<App configUrl={configUrl} />, this.shadow)
   }
-
-  disconnectedCallback() {
-    render(null, this)
-  }
-
 }
