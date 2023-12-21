@@ -1,9 +1,9 @@
 import { useEffect } from 'preact/hooks'
-import { useUtilityBarStore } from '../features/utility-bar/store'
-import { handleThemeClick } from '../features/utility-bar/ToggleTheme'
+import { useThemeStore, useUtilityBarStore } from '../features/utility-bar/store'
 
 export default function () {
   const utilityStore = useUtilityBarStore()
+  const themeStore = useThemeStore()
 
   // handles different keyboard shortcuts
   const keydownHandler = (e: KeyboardEvent) => {
@@ -38,7 +38,7 @@ export default function () {
       case 'T':
         if (e.shiftKey) {
           e.preventDefault()
-          handleThemeClick()
+          themeStore.toggleMode()
         }
         return
 
@@ -65,5 +65,6 @@ export default function () {
     utilityStore.isNavBarVisible,
     utilityStore.isViewportOpen,
     utilityStore.isSettingsOpen,
+    themeStore.mode,
   ])
 }

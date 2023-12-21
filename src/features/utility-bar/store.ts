@@ -1,22 +1,7 @@
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist, combine } from 'zustand/middleware'
 
-interface UtilityState {
-  isSettingsVisible: boolean
-  setIsSettingsVisible: (newVal: boolean) => void
-
-  isSettingsOpen: boolean
-  setIsSettingsOpen: (open: boolean) => void
-
-  isViewportOpen: boolean
-  setIsViewportOpen: (open: boolean) => void
-
-  isNavBarVisible: boolean
-  setIsNavBarVisible: (visible: boolean) => void
-
-  activeScreenSize: ScreenSize
-  setActiveScreenSize: (newVal: ScreenSize) => void
-}
+export type ThemeMode = 'light' | 'dark'
 
 export enum ScreenSize {
   Mobile,
@@ -45,24 +30,52 @@ export const screenSizeMap = {
   [ScreenSize.Desktop]: undefined,
 }
 
-export const useUtilityBarStore = create<UtilityState>()(
-  devtools((set) => ({
-    isSettingsVisible: false,
-    setIsSettingsVisible: (newVal: boolean) =>
-      set(() => ({ isSettingsVisible: newVal })),
+const getInitialMode = (): ThemeMode => {
+  const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  return colorSchemeQuery.matches ? 'dark' : 'light'
+}
 
-    isSettingsOpen: false,
-    setIsSettingsOpen: (open: boolean) => set(() => ({ isSettingsOpen: open })),
+export const useThemeStore = create(
+  persist(
+    devtools(
+      combine({ mode: getInitialMode() }, (set) => ({
+        setMode: (mode: ThemeMode) => set(() => ({ mode })),
+        toggleMode: () =>
+          set((state) => ({ mode: state.mode === 'light' ? 'dark' : 'light' })),
+      })),
+    ),
+    {
+      name: 'theme-store',
+    },
+  ),
+)
 
-    isViewportOpen: false,
-    setIsViewportOpen: (open: boolean) => set(() => ({ isViewportOpen: open })),
+export const useUtilityBarStore = create(
+  devtools(
+    combine(
+      {
+        isSettingsVisible: false,
+        isSettingsOpen: false,
+        isViewportOpen: false,
+        isNavBarVisible: true,
+        activeScreenSize: ScreenSize.Desktop,
+      },
+      (set) => ({
+        setIsSettingsVisible: (newVal: boolean) =>
+          set(() => ({ isSettingsVisible: newVal })),
 
-    isNavBarVisible: true,
-    setIsNavBarVisible: (visible: boolean) =>
-      set(() => ({ isNavBarVisible: visible })),
+        setIsSettingsOpen: (open: boolean) =>
+          set(() => ({ isSettingsOpen: open })),
 
-    activeScreenSize: ScreenSize.Desktop,
-    setActiveScreenSize: (val: ScreenSize) =>
-      set(() => ({ activeScreenSize: val })),
-  })),
+        setIsViewportOpen: (open: boolean) =>
+          set(() => ({ isViewportOpen: open })),
+
+        setIsNavBarVisible: (visible: boolean) =>
+          set(() => ({ isNavBarVisible: visible })),
+
+        setActiveScreenSize: (val: ScreenSize) =>
+          set(() => ({ activeScreenSize: val })),
+      }),
+    ),
+  ),
 )
