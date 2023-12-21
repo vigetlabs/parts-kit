@@ -7,11 +7,24 @@ export default class PartsKit extends HTMLElement {
 
   private shadow:ShadowRoot
 
+  /**
+   * Using constructable stylesheets.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM?ref=blog.jonas.liljegren.org#constructable_stylesheets
+   *
+   * In the future, we could make this variable globally shared across all web components that want to load our
+   * Tailwind based stylesheet.
+   *
+   * This doesn't work in Safari 16.3 and less. 16.4 was Released 2023-03-27
+   */
+  private styleSheet = new CSSStyleSheet()
+
   constructor() {
     // Always call super first in constructor
     super()
 
     this.shadow = this.attachShadow({mode: 'open'})
+    this.shadow.adoptedStyleSheets = [this.styleSheet]
 
     // TODO ensure this works
 
@@ -42,11 +55,11 @@ export default class PartsKit extends HTMLElement {
           return;
         }
 
-        this.setStyles(newCssString.default)
+        this.styleSheet.replaceSync(newCssString.default)
       })
     }
 
-    this.setStyles(cssString)
+    this.styleSheet.replaceSync(cssString)
 
     render(<App configUrl={configUrl} />, this.shadow)
   }
@@ -55,10 +68,4 @@ export default class PartsKit extends HTMLElement {
     render(null, this)
   }
 
-  private setStyles(cssString:string) {
-    const styleElement = this.querySelector('#css') || document.createElement('style')
-    styleElement.textContent = ''
-    styleElement.appendChild(document.createTextNode(cssString))
-    this.shadow.appendChild(styleElement)
-  }
 }
