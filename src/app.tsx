@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'preact/hooks'
-import './app.css'
 import cx from 'classnames'
 import { Nav } from './features/nav/Nav.tsx'
 import { NavItemInterface } from './features/nav/Nav.tsx'
