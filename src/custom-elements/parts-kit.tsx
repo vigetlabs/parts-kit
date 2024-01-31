@@ -11,6 +11,8 @@ let hasSetUpStyles = false
 export default class PartsKit extends HTMLElement {
   private shadow: ShadowRoot
 
+  static readonly elementName = 'parts-kit'
+
   /**
    * Using constructable stylesheets.
    *

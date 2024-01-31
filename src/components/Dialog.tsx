@@ -1,6 +1,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { JSX } from 'preact/jsx-runtime'
 import { Cross1Icon } from '@radix-ui/react-icons'
+import { partsKitRoot } from '../utilities/customElements'
 
 interface RootProps {
   trigger: JSX.Element
@@ -17,7 +18,7 @@ const Root = (props: RootProps) => {
         {props.trigger && props.trigger}
       </DialogPrimitive.Trigger>
 
-      <DialogPrimitive.Portal container={document.getElementById('parts-kit')}>
+      <DialogPrimitive.Portal container={partsKitRoot()}>
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-gray-900/60 backdrop-blur-[2px] data-[state=open]:animate-dialog-overlay-show" />
         <DialogPrimitive.Content className="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-xl border border-gray-300 bg-white px-6 py-8 shadow-lg transition-colors focus:outline-none data-[state=open]:animate-dialog-content-show dark:border-gray-500 dark:bg-gray-800 dark:text-white">
           {props.closeable && (
