@@ -1,5 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { JSX } from 'preact/jsx-runtime'
+import { partsKitRoot } from '../utilities/customElements'
 
 interface RootProps {
   trigger: JSX.Element
@@ -18,7 +19,7 @@ const Root = (props: RootProps) => {
         {props.trigger && props.trigger}
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Portal container={document.getElementById('parts-kit')}>
+      <DropdownMenu.Portal container={partsKitRoot()}>
         <DropdownMenu.Content
           sideOffset={5}
           align={props.align || 'start'}
