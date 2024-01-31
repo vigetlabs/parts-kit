@@ -22,7 +22,11 @@
       }
     </style>
 
-    <script async src="./content-editable.js"></script>
+    <!--
+      This emulates including the CDN parts kit script on every page that is loaded in the iframe.
+      It needs to be present for keyboard events and postmessage to bubble through the iframe.
+    -->
+    <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
     <div>
