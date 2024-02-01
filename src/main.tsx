@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const message: MessageKeyboardEvent = {
       type: 'keyboardEvent',
-      from: 'iframe',
-      to: 'react',
       payload: {
         key: event.key,
         shiftKey: event.shiftKey,

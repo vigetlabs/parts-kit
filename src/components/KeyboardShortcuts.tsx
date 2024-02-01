@@ -53,25 +53,20 @@ export default function () {
       return
     }
 
-    console.log({
-      key: e.key,
-      shiftKey: e.shiftKey,
-      preventDefault: e.preventDefault
-    })
-
-    switch (e.key) {
+    // Make sure all of your case statements are lowercase too
+    switch (e.key.toLowerCase()) {
       // toggle fullscreen [F]
       case 'f':
         preventDefault(e)
         return utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
 
       // exit fullscreen [Esc]
-      case 'Escape':
+      case 'escape':
         preventDefault(e)
         return utilityStore.setIsNavBarVisible(true)
 
       // toggle viewport menu [Shift + V]
-      case 'V':
+      case 'v':
         if (e.shiftKey) {
           preventDefault(e)
           utilityStore.setIsViewportOpen(!utilityStore.isViewportOpen)
@@ -79,7 +74,7 @@ export default function () {
         return
 
       // toggle theme [Shift + T]
-      case 'T':
+      case 't':
         if (e.shiftKey) {
           preventDefault(e)
           themeStore.toggleMode()
@@ -87,7 +82,7 @@ export default function () {
         return
 
       // toggle settings [Shift + S]
-      case 'S':
+      case 's':
         if (e.shiftKey) {
           preventDefault(e)
           utilityStore.setIsSettingsOpen(!utilityStore.isSettingsOpen)

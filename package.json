@@ -19,7 +19,7 @@
     "access": "public"
   },
   "scripts": {
-    "test": "vitest run",
+    "test": "tsc && vitest run",
     "dev": "vite --port 4000",
     "build": "tsc && vite build",
     "preview": "vite preview",

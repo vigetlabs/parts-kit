@@ -23,8 +23,8 @@
     </style>
 
     <!--
-      This emulates including the CDN parts kit script on every page that is loaded in the iframe.
-      It needs to be present for keyboard events and postmessage to bubble through the iframe.
+    On real world projects, this is the same as adding  https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js on your parts kit pages.
+    It needs to be present within the iframed pages for keyboard and postMessage events to bubble through the iframe.
     -->
     <script type="module" src="/src/main.tsx"></script>
   </head>
