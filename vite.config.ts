@@ -9,6 +9,7 @@ export const sharedConfig: UserConfig = defineConfig({
   ],
   test: {
     globals: true,
+    include: ['./src/**/*.{spec,test}.{ts,tsx}'],
   },
 })
 

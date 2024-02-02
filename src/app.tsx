@@ -119,13 +119,13 @@ export function App(props: AppProps) {
   KeyboardShortcuts()
 
   return (
-    <div className={cx(
-      'font-sans',
-      {
-        'light': themeStore.mode === 'light',
-        'dark': themeStore.mode === 'dark',
-      }
-    )}>
+    <div
+      data-testid="app"
+      className={cx('font-sans', {
+        light: themeStore.mode === 'light',
+        dark: themeStore.mode === 'dark',
+      })}
+    >
       <div
         className={cx(
           'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',

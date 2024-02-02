@@ -6,7 +6,7 @@ export default function () {
   const settings = useSettingsStore()
   const [localNavUrl, setLocalNavUrl] = useState(settings.configUrl)
   return (
-    <div className="flex flex-col gap-6">
+    <div data-testid="SettingsPanel" className="flex flex-col gap-6">
       <h2 className="text-md font-bold uppercase">Settings</h2>
       <div className="flex flex-col gap-2">
         <label className="text-xs font-medium uppercase" for="parts-json-url">
