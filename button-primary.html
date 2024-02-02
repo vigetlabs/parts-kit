@@ -22,7 +22,11 @@
       }
     </style>
 
-    <script async src="./content-editable.js"></script>
+    <!--
+    On real world projects, this is the same as adding  https://unpkg.com/@viget/parts-kit@^0/lib/parts-kit.js on your parts kit pages.
+    It needs to be present within the iframed pages for keyboard and postMessage events to bubble through the iframe.
+    -->
+    <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
     <div>
