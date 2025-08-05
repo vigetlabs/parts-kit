@@ -4,28 +4,8 @@ import cx from 'classnames'
 import { NavItem } from '../../components/NavItem'
 import { Search } from '../../components/Search'
 import { useUtilityBarStore } from '../utility-bar/store'
-import { itemMatchesSearch } from '../../utilities/itemMatchesSearch'
-
-export interface NavItemInterface {
-  /**
-    The title of the nav item
-  */
-  title: string
-  /**
-    The url of the nav item
-  */
-  url: string | null
-  /**
-    The children of the nav item
-  */
-  children: NavItemInterface[]
-  /**
-    Whether or not the nav item is a docs page.
-
-    If doc is true, the nav item iframe will not be resizable.
-    */
-  doc?: boolean
-}
+import { childrenMatchesSearch, itemMatchesSearch } from '../../utilities/itemMatchesSearch'
+import { NavItemInterface } from './types'
 
 interface NavProps {
   /**
@@ -46,7 +26,7 @@ export function Nav(props: NavProps) {
   const [currentSearch, setCurrentSearch] = useState('')
 
   const filteredNav = props.nav.filter((item) =>
-    itemMatchesSearch(item, currentSearch),
+    itemMatchesSearch(item, currentSearch) || childrenMatchesSearch(item.children, currentSearch)
   )
 
   const utilityStore = useUtilityBarStore()
@@ -84,6 +64,7 @@ export function Nav(props: NavProps) {
               expanded={currentSearch !== ''}
               level={1}
               currentSearch={currentSearch}
+              parentMatchesSearch={itemMatchesSearch(item, currentSearch)}
             />
           ))}
         </ul>

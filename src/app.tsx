@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import cx from 'classnames'
 import { Nav } from './features/nav/Nav.tsx'
-import { NavItemInterface } from './features/nav/Nav.tsx'
+import { NavItemInterface } from './features/nav/types'
 import { useSettingsStore } from './features/settings/store.ts'
 import {
   ScreenSize,

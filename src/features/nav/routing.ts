@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks'
-import { NavItemInterface } from './Nav'
+import { NavItemInterface } from './types'
 
 /**
  * The search param to look for when routing to the proper nav item

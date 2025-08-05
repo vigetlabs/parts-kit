@@ -1,5 +1,5 @@
 import { findFirstNavItem, findNavItemByUrl } from './routing'
-import { NavItemInterface } from './Nav'
+import { NavItemInterface } from './types'
 
 describe('findNavItemByUrl', () => {
   it('finds a nav item in list', () => {

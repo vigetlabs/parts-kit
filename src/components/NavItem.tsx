@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import cx from 'classnames'
 import { ChevronDownIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
-import { NavItemInterface } from '../features/nav/Nav.tsx'
+import { NavItemInterface } from '../features/nav/types'
 import { itemMatchesSearch } from '../utilities/itemMatchesSearch'
 
 interface NavItemProps {
@@ -10,6 +10,10 @@ interface NavItemProps {
     The nav item to render
   */
   item: NavItemInterface
+  /**
+    Whether or not the parent matches the search
+  */
+  parentMatchesSearch: boolean
   /**
     The currently active nav item
   */
@@ -58,8 +62,8 @@ export function NavItem(props: NavItemProps) {
   }, [props.expanded, props.activeNavItem, props.item])
 
   // hide children if they don't match the search
-  const filteredChildren = props.item.children.filter((child) =>
-    itemMatchesSearch(child, props.currentSearch),
+  const filteredChildren = props.item.children.filter((child: NavItemInterface) =>
+    itemMatchesSearch(child, props.currentSearch) || props.parentMatchesSearch,
   )
 
   return (
@@ -106,7 +110,7 @@ export function NavItem(props: NavItemProps) {
       </button>
       {filteredChildren.length > 0 && isOpen && (
         <ul>
-          {filteredChildren.map((childItem) => (
+          {filteredChildren.map((childItem: NavItemInterface) => (
             <NavItem
               activeNavItem={props.activeNavItem}
               item={childItem}
@@ -115,6 +119,7 @@ export function NavItem(props: NavItemProps) {
               isChild={true}
               level={props.level + 1}
               currentSearch={props.currentSearch}
+              parentMatchesSearch={itemMatchesSearch(props.item, props.currentSearch)}
             />
           ))}
         </ul>
