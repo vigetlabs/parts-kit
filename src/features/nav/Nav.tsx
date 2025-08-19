@@ -13,7 +13,7 @@ interface NavProps {
   */
   nav: NavItemInterface[]
   /**
-    The currently active nav item
+    The currently active nav item`
   */
   activeNavItem: NavItemInterface
   /**

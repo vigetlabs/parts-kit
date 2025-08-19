@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "tsc && vitest run",
+    "test:watch": "vitest",
     "dev": "vite --port 4000",
     "build": "tsc && vite build",
     "preview": "vite preview",
