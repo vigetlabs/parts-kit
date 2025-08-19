@@ -1,4 +1,4 @@
-import { NavItemInterface } from '../features/nav/Nav'
+import { NavItemInterface } from '../features/nav/types'
 
 export const itemMatchesSearch = (
   item: NavItemInterface,
@@ -7,7 +7,14 @@ export const itemMatchesSearch = (
   if (item.title.toLowerCase().includes(search)) {
     return true
   }
-  return item.children.some((child: NavItemInterface) =>
+  return false;
+}
+
+export const childrenMatchesSearch = (
+  children: NavItemInterface[],
+  search: string,
+): boolean => {
+  return children.some((child: NavItemInterface) =>
     itemMatchesSearch(child, search),
   )
 }
