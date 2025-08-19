@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test'
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/')
+  await page.waitForLoadState('networkidle')
+  await expect(page.getByTestId('app')).toBeVisible()
 })
 
 test.describe('Toggle To Dark Theme', () => {
@@ -11,7 +13,9 @@ test.describe('Toggle To Dark Theme', () => {
   })
 
   test('Click', async ({ page }) => {
-    await page.getByRole('button', { name: 'Toggle Theme [Shift + T]' }).click()
+    const toggleThemeButton = page.getByRole('button', { name: 'Toggle Theme [Shift + T]' })
+    await expect(toggleThemeButton).toBeVisible()
+    await toggleThemeButton.click()
   })
 
   test('Keyboard', async ({ page }) => {
@@ -26,8 +30,10 @@ test.describe('Toggle back to Light Theme from dark', () => {
   })
 
   test('Click', async ({ page }) => {
-    await page.getByRole('button', { name: 'Toggle Theme [Shift + T]' }).click()
-    await page.getByRole('button', { name: 'Toggle Theme [Shift + T]' }).click()
+    const toggleThemeButton = page.getByRole('button', { name: 'Toggle Theme [Shift + T]' })
+    await expect(toggleThemeButton).toBeVisible()
+    await toggleThemeButton.click()
+    await toggleThemeButton.click()
   })
 
   test('Keyboard', async ({ page }) => {
@@ -53,9 +59,9 @@ test.describe('Viewport Size Dropdown', () => {
   })
 
   test('Click', async ({ page }) => {
-    await page
-      .getByRole('button', { name: 'Viewport Size [Shift + V]' })
-      .click()
+    const viewportSizeButton = page.getByRole('button', { name: 'Viewport Size [Shift + V]' })
+    await expect(viewportSizeButton).toBeVisible()
+    await viewportSizeButton.click()
   })
 
   test('Keyboard', async ({ page }) => {
@@ -74,7 +80,9 @@ test.describe('Settings', () => {
   })
 
   test('Click', async ({ page }) => {
-    await page.getByRole('button', { name: 'Settings [Shift + S]' }).click()
+    const settingsButton = page.getByRole('button', { name: 'Settings [Shift + S]' })
+    await expect(settingsButton).toBeVisible()
+    await settingsButton.click()
   })
 
   test('Keyboard', async ({ page }) => {
