@@ -19,8 +19,9 @@
     "access": "public"
   },
   "scripts": {
-    "test": "tsc && vitest run",
-    "dev": "vite --port 4000",
+    "test": "tsc && vitest run && npm run e2e",
+    "e2e": "playwright test",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "gh-pages": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
@@ -40,7 +41,9 @@
   },
   "devDependencies": {
     "@minko-fe/postcss-pxtorem": "^1.3.0",
+    "@playwright/test": "^1.54.2",
     "@preact/preset-vite": "^2.5.0",
+    "@types/node": "^20.11.16",
     "autoprefixer": "^10.4.14",
     "gh-pages": "^6.0.0",
     "np": "^8.0.4",
