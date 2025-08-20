@@ -10,7 +10,6 @@ test.describe('Hash-based routing', () => {
 
   test('clicking nav updates hash and iframe', async ({ page }) => {
     await page.goto('/')
-    // Click Card in nav
     await page.getByRole('button', { name: 'Card' }).click()
     await expect(page).toHaveURL(/#\/card\.html$/)
     const iframe = page.locator('parts-kit').locator('iframe')
@@ -27,6 +26,13 @@ test.describe('Hash-based routing', () => {
 
     await page.goForward()
     await expect(page).toHaveURL(/#\/button-secondary\.html$/)
+  })
+
+  test('migrates legacy ?part= URLs to hash and loads nav item', async ({ page }) => {
+    await page.goto('/?part=button-primary.html')
+    await expect(page).toHaveURL(/#\/button-primary\.html$/)
+    const iframe = page.locator('parts-kit').locator('iframe')
+    await expect(iframe).toHaveAttribute('src', 'button-primary.html')
   })
 })
 

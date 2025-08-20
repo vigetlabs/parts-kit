@@ -75,6 +75,7 @@ export function App(props: AppProps) {
       if (!pathFromHash) {
         // Select the first nav item if no hash path present
         setActiveNavItem(findFirstNavItem(config.nav[0]))
+        setIsWelcomeVisible(false)
         return
       }
 
@@ -87,8 +88,28 @@ export function App(props: AppProps) {
       }
 
       setActiveNavItem(foundNavItem)
+      setIsWelcomeVisible(false)
     },
   })
+
+  // Migration: support old query param ?part=... by converting to hash #/...
+  useEffect(() => {
+    const currentUrl = new URL(window.location.href)
+    const legacyPart = currentUrl.searchParams.get('part')
+    if (!legacyPart) return
+
+    const normalized = legacyPart.startsWith('/')
+      ? legacyPart.slice(1)
+      : legacyPart
+
+    // Trigger navigation via hashchange
+    window.location.hash = `/${normalized}`
+
+    // Clean up the URL (remove query param) without another navigation
+    currentUrl.searchParams.delete('part')
+    currentUrl.hash = `/${normalized}`
+    history.replaceState({}, '', currentUrl)
+  }, [config.nav.length])
 
   const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(
     !navItemFromUrl,
