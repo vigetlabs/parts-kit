@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@minko-fe/postcss-pxtorem": "^1.3.0",
-    "@playwright/test": "^1.41.2",
+    "@playwright/test": "^1.54.2",
     "@preact/preset-vite": "^2.5.0",
     "@types/node": "^20.11.16",
     "autoprefixer": "^10.4.14",
