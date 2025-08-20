@@ -21,7 +21,7 @@
   "scripts": {
     "test": "tsc && vitest run && npm run e2e",
     "e2e": "playwright test",
-    "dev": "vite --port 4000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "gh-pages": "tsc && vite --config vite.config.ghpages build && gh-pages -d dist",
