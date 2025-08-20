@@ -1,4 +1,4 @@
-import { findFirstNavItem, findNavItemByUrl } from './routing'
+import { findFirstNavItem, findNavItemByUrl, getPathFromHash } from './routing'
 import { NavItemInterface } from './Nav'
 
 describe('findNavItemByUrl', () => {
@@ -115,5 +115,22 @@ describe('findFirstNavItem', () => {
       url: 'button.html',
       children: [],
     })
+  })
+})
+
+describe('getPathFromHash', () => {
+  it('returns null when no hash present', () => {
+    const url = new URL('http://localhost:5173/')
+    expect(getPathFromHash(url)).toBeNull()
+  })
+
+  it('parses path from #/path style', () => {
+    const url = new URL('http://localhost:5173/#/button-secondary.html')
+    expect(getPathFromHash(url)).toBe('button-secondary.html')
+  })
+
+  it('parses path from #path style', () => {
+    const url = new URL('http://localhost:5173/#button-secondary.html')
+    expect(getPathFromHash(url)).toBe('button-secondary.html')
   })
 })

@@ -15,7 +15,7 @@ import {
   findNavItemByUrl,
   findFirstNavItem,
   UseHistory,
-  SEARCH_PARAM_PART,
+  getPathFromHash,
 } from './features/nav/routing.ts'
 import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
@@ -63,24 +63,25 @@ export function App(props: AppProps) {
     return <div>Loading</div>
   }
 
-  const url = new URL(window.location.href).searchParams.get(SEARCH_PARAM_PART)
-  const navItemFromUrl = url ? findNavItemByUrl(url, config.nav) : undefined
+  const initialPath = getPathFromHash(new URL(window.location.href))
+  const navItemFromUrl = initialPath
+    ? findNavItemByUrl(initialPath, config.nav)
+    : undefined
 
   const useHistory = UseHistory({
     onPopState: ({ url }) => {
-      const urlFromHistory = url.searchParams.get(SEARCH_PARAM_PART)
+      const pathFromHash = getPathFromHash(url)
 
-      if (!urlFromHistory) {
-        console.warn("Url wasn't in history")
-        // Select the first nav item?
+      if (!pathFromHash) {
+        // Select the first nav item if no hash path present
         setActiveNavItem(findFirstNavItem(config.nav[0]))
         return
       }
 
-      const foundNavItem = findNavItemByUrl(urlFromHistory, config.nav)
+      const foundNavItem = findNavItemByUrl(pathFromHash, config.nav)
 
       if (!foundNavItem) {
-        console.error('Could not find nav item after popstate')
+        console.error('Could not find nav item after hash change')
         // TODO show a 404 message
         return
       }
@@ -111,9 +112,7 @@ export function App(props: AppProps) {
     setActiveNavItem(foundItem)
     setIsWelcomeVisible(false)
 
-    const url = new URL(window.location.href)
-    url.searchParams.set(SEARCH_PARAM_PART, foundItem.url)
-    useHistory.push(url, { url: foundItem.url })
+    useHistory.push(foundItem.url)
   }
 
   KeyboardShortcuts()
