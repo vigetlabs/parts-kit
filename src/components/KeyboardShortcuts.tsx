@@ -17,10 +17,30 @@ export interface SimpleKeyboardEvent {
   preventDefault?(): void
 }
 
+/**
+ * Finds the active element even in the shadow DOM.
+ *
+ * The app is rendered inside a parts-kit custom element with a shadow DOM.
+ * document.activeElement is the host element (<parts-kit>), not the inner <input>.
+ */
+function getDeepActiveElement(root: Document | ShadowRoot = document): Element | null {
+  // Start with the active element on the provided root (document by default)
+  let active: Element | null = (root as Document).activeElement ?? null
+
+  // If the active element hosts a shadow root, drill down to that shadow root's active element
+  while (active && (active as HTMLElement).shadowRoot) {
+    const shadow = (active as HTMLElement).shadowRoot as ShadowRoot
+    active = shadow.activeElement
+  }
+
+  return active
+}
+
 export function canHandleKeyboard(): boolean {
+  const active = getDeepActiveElement()
   return !(
-    document.activeElement instanceof HTMLInputElement ||
-    document.activeElement instanceof HTMLTextAreaElement
+    active instanceof HTMLInputElement ||
+    active instanceof HTMLTextAreaElement
   )
 }
 
