@@ -5,10 +5,12 @@ import ToggleFullscreen from './ToggleFullscreen'
 import ToggleTheme from './ToggleTheme'
 import ToggleViewportDropdown from './ToggleViewportDropdown'
 import ToggleSettingsDialog from './ToggleSettingsDialog'
+import { DirectLink } from './DirectLink'
 
 interface UtilityBarProps {
   showSettings: boolean
   isDoc: boolean
+  partUrl?: string|null
 }
 
 export default function (props: UtilityBarProps) {
@@ -35,6 +37,9 @@ export default function (props: UtilityBarProps) {
         <div className="flex items-center gap-2">
           {/* Settings Control */}
           {props.showSettings && <ToggleSettingsDialog />}
+
+          {/* Direct Link */}
+          {props.partUrl && <DirectLink url={props.partUrl} />}
 
           {/* Fullscreen control */}
           <ToggleFullscreen />
