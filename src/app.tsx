@@ -148,6 +148,7 @@ export function App(props: AppProps) {
           <UtilityBar
             isDoc={activeNavItem?.doc ?? false}
             showSettings={!hasConfigUrl}
+            partUrl={activeNavItem?.url ?? null}
           />
 
           <div className="flex flex-grow items-stretch justify-center">
