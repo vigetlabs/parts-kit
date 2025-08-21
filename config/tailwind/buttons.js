@@ -23,17 +23,17 @@ module.exports = plugin(({ addComponents }) => {
     // Variants
     '.btn': {
       ...base,
-      '@apply bg-blue-500 text-white enabled:hover:bg-blue-600 enabled:active:bg-blue-700 aria-expanded:bg-blue-700':
+      '@apply bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 aria-expanded:bg-blue-700':
         {},
     },
     '.btn-outline': {
       ...base,
-      '@apply bg-transparent text-gray-600 border border-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10':
+      '@apply bg-transparent text-gray-600 border border-gray-600 hover:bg-black/5 active:bg-black/10 aria-expanded:bg-black/10':
         {},
     },
     '.btn-subtle': {
       ...base,
-      '@apply bg-transparent text-gray-600 enabled:hover:bg-black/5 enabled:active:bg-black/10 aria-expanded:bg-black/10 dark:text-gray-300 dark:active:text-white dark:enabled:active:bg-black/30 dark:enabled:hover:bg-black/20 dark:aria-expanded:bg-black/30 dark:aria-expanded:text-white':
+      '@apply bg-transparent text-gray-600 hover:bg-black/5 active:bg-black/10 aria-expanded:bg-black/10 dark:text-gray-300 dark:active:text-white dark:active:bg-black/30 dark:hover:bg-black/20 dark:aria-expanded:bg-black/30 dark:aria-expanded:text-white':
         {},
     },
 
