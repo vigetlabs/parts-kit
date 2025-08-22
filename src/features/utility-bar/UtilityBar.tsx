@@ -5,7 +5,8 @@ import ToggleFullscreen from './ToggleFullscreen'
 import ToggleTheme from './ToggleTheme'
 import ToggleViewportDropdown from './ToggleViewportDropdown'
 import ToggleSettingsDialog from './ToggleSettingsDialog'
-import { DirectLink } from './DirectLink'
+import { Button } from '../../components/Button'
+import { Link1Icon } from '@radix-ui/react-icons'
 
 interface UtilityBarProps {
   showSettings: boolean
@@ -39,7 +40,18 @@ export default function (props: UtilityBarProps) {
           {props.showSettings && <ToggleSettingsDialog />}
 
           {/* Direct Link */}
-          {props.partUrl && <DirectLink url={props.partUrl} />}
+          {props.partUrl && (
+            <Button
+              href={props.partUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              variant="icon"
+              aria-label="Open direct link"
+              title="Open direct link"
+            >
+              <Link1Icon />
+            </Button>
+          )}
 
           {/* Fullscreen control */}
           <ToggleFullscreen />
