@@ -1,13 +1,23 @@
 import { forwardRef } from 'preact/compat'
 import cx from 'classnames'
 import { JSX } from 'preact/jsx-runtime'
-import { ComponentChildren } from 'preact'
+import { ComponentChildren, Ref } from 'preact'
+
+const variantToClass = {
+  solid: 'btn',
+  outline: 'btn-outline',
+  subtle: 'btn-subtle',
+  icon: 'btn-subtle btn-icon',
+} as const
+
+type ButtonVariant = keyof typeof variantToClass
 
 interface ButtonBaseProps {
-  variant?: 'solid' | 'outline' | 'subtle' | 'icon'
+  variant?: ButtonVariant
   isLoading?: boolean
   className?: string
   children: ComponentChildren
+  ariaDisabled?: boolean
 }
 
 interface AnchorProps
@@ -26,36 +36,40 @@ interface NativeButtonProps
 
 export type ButtonProps = AnchorProps | NativeButtonProps
 
-const variantToClass = {
-  solid: 'btn',
-  outline: 'btn-outline',
-  subtle: 'btn-subtle',
-  icon: 'btn-subtle btn-icon',
-} as const
-
+/**
+ * Forward refs let parent components obtain a DOM ref to a child component's
+ * underlying element. Wrapping `Button` with `forwardRef` means a ref passed to
+ * `<Button ref={...}>` will point at the actual rendered element (`<button>` or
+ * `<a>`). This enables imperative actions like `focus()`, measurements, and
+ * library interop that requires a DOM node. Because `Button` can render either
+ * element, the forwarded ref type is a union:
+ * `HTMLButtonElement | HTMLAnchorElement`.
+ */
 export const Button = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   ButtonProps
->(function Button(props, ref) {
+>(function Button(props: ButtonProps, ref) {
   const {
     variant = 'solid',
     isLoading = false,
     className,
     children,
+    ariaDisabled,
     ...rest
-  } = props as ButtonProps
+  } = props
 
   const classes = cx(variantToClass[variant], className, {
     'pointer-events-none': isLoading,
   })
 
-  if ('href' in props && props.href) {
-    const { href, onClick, target, rel, ...anchorRest } = rest as AnchorProps
-    const finalRel =
-      target === '_blank' ? rel || 'noopener noreferrer' : rel
+  if (isAnchor(props)) {
+    const { onClick, target, rel, ...anchorRest } = rest as Omit<AnchorProps, 'href'>
+    const href = (props as AnchorProps).href
+    const targetStr = getAttrString(target)
+    const relStr = getAttrString(rel)
+    const finalRel = targetStr === '_blank' ? ensureNoopener(relStr) : relStr
 
     const handleClick: JSX.MouseEventHandler<HTMLAnchorElement> = (e) => {
-      const ariaDisabled = (anchorRest as any)['aria-disabled']
       if (isLoading || ariaDisabled) e.preventDefault()
       if (onClick) onClick(e)
     }
@@ -65,11 +79,12 @@ export const Button = forwardRef<
         {...(anchorRest as Omit<AnchorProps, 'href'>)}
         href={href}
         className={classes}
-        aria-disabled={isLoading || (anchorRest as any)['aria-disabled'] ? true : undefined}
+        aria-disabled={isLoading || ariaDisabled ? true : undefined}
+        aria-busy={isLoading || undefined}
         onClick={handleClick}
         target={target}
         rel={finalRel}
-        ref={ref as any}
+        ref={ref as Ref<HTMLAnchorElement>}
       >
         {children}
       </a>
@@ -85,11 +100,38 @@ export const Button = forwardRef<
       className={classes}
       disabled={isLoading || !!disabled}
       aria-busy={isLoading || undefined}
-      ref={ref as any}
+      ref={ref as Ref<HTMLButtonElement>}
     >
       {children}
     </button>
   )
 })
+
+// Used to determine if the button is an anchor and providing typing
+function isAnchor(p: ButtonProps): p is AnchorProps {
+  return 'href' in p && !!p.href
+}
+
+// Ensures we don't overwrite existing rel values.
+function ensureNoopener(rel?: string) {
+  const set = new Set((rel ?? '').split(' ').filter(Boolean))
+  set.add('noopener')
+  set.add('noreferrer')
+  return Array.from(set).join(' ')
+}
+
+// Used for compatbility with Preact signals.
+function getAttrString(
+  value: string | { value?: string | undefined } | undefined
+): string | undefined {
+  if (typeof value === 'string') return value
+  if (value && typeof value === 'object' && 'value' in value) {
+    return (value as { value?: string | undefined }).value
+  }
+  return undefined
+}
+
+Button.displayName = 'Button'
+
 
 
