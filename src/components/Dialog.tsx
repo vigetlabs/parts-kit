@@ -2,6 +2,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { JSX } from 'preact/jsx-runtime'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import { partsKitRoot } from '../utilities/customElements'
+import { Button } from './Button'
 
 interface RootProps {
   trigger: JSX.Element
@@ -23,9 +24,14 @@ const Root = (props: RootProps) => {
         <DialogPrimitive.Content className="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw] max-w-md translate-x-[-50%] translate-y-[-50%] rounded-xl border border-gray-300 bg-white px-6 py-8 shadow-lg transition-colors focus:outline-none data-[state=open]:animate-dialog-content-show dark:border-gray-500 dark:bg-gray-800 dark:text-white">
           {props.closeable && (
             <DialogPrimitive.Close asChild>
-              <button className="btn-subtle btn-icon absolute right-2 top-2">
+              <Button
+                variant="icon"
+                className="absolute right-2 top-2"
+                aria-label="Close dialog"
+                title="Close"
+              >
                 <Cross1Icon />
-              </button>
+              </Button>
             </DialogPrimitive.Close>
           )}
           {props.children}

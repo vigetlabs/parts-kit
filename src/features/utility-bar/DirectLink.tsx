@@ -1,4 +1,5 @@
 import { Link1Icon } from '@radix-ui/react-icons'
+import { Button } from '../../components/Button'
 
 interface DirectLinkProps {
   url?: string
@@ -13,15 +14,16 @@ export function DirectLink({
 
   // TODO eventually refactor to use a button component
   return (
-    <a
-      className="btn-subtle btn-icon"
+    <Button
       href={url}
       target="_blank"
       rel="noreferrer noopener"
+      variant="icon"
+      aria-label="Open direct link"
       title="Open direct link"
     >
       <Link1Icon />
-    </a>
+    </Button>
   )
 }
 

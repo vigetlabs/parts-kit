@@ -1,13 +1,19 @@
 import { CrossCircledIcon, EnterFullScreenIcon } from '@radix-ui/react-icons'
 import { useUtilityBarStore } from './store'
+import { Button } from '../../components/Button'
 
 export default function () {
   const utilityStore = useUtilityBarStore()
 
   return (
-    <button
-      className="btn-subtle btn-icon"
+    <Button
+      variant="icon"
       title={
+        utilityStore.isNavBarVisible
+          ? 'Go Fullscreen [F]'
+          : 'Exit Fullscreen [F]'
+      }
+      aria-label={
         utilityStore.isNavBarVisible
           ? 'Go Fullscreen [F]'
           : 'Exit Fullscreen [F]'
@@ -21,6 +27,6 @@ export default function () {
       ) : (
         <CrossCircledIcon />
       )}
-    </button>
+    </Button>
   )
 }

@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks'
 import { DEFAULT_NAV_URL, useSettingsStore } from './store'
+import { Button } from '../../components/Button'
 import { Dialog } from '../../components/Dialog'
 
 export default function () {
@@ -25,14 +26,17 @@ export default function () {
         </p>
       </div>
       <div className="flex justify-end gap-2">
-        <Dialog.Close className="btn-outline">Cancel</Dialog.Close>
-        <Dialog.Close
-          className="btn"
-          onClick={() =>
-            settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
-          }
-        >
-          Save Settings
+        <Dialog.Close asChild>
+          <Button variant="outline">Cancel</Button>
+        </Dialog.Close>
+        <Dialog.Close asChild>
+          <Button
+            onClick={() =>
+              settings.setConfigUrl(localNavUrl.trim() || DEFAULT_NAV_URL)
+            }
+          >
+            Save Settings
+          </Button>
         </Dialog.Close>
       </div>
     </div>

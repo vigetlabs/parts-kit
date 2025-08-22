@@ -1,16 +1,18 @@
 import { BlendingModeIcon } from '@radix-ui/react-icons'
 import { useThemeStore } from './store'
+import { Button } from '../../components/Button'
 
 export default function () {
   const themeStore = useThemeStore()
 
   return (
-    <button
-      className="btn-subtle btn-icon"
+    <Button
+      variant="icon"
       title="Toggle Theme [Shift + T]"
+      aria-label="Toggle Theme [Shift + T]"
       onClick={() => themeStore.toggleMode()}
     >
       <BlendingModeIcon />
-    </button>
+    </Button>
   )
 }

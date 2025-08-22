@@ -6,6 +6,7 @@ import {
   useUtilityBarStore,
 } from '../../features/utility-bar/store'
 import { Dropdown } from '../../components/Dropdown'
+import { Button } from '../../components/Button'
 
 interface ToggleViewportDropdownProps {
   isDoc?: boolean
@@ -30,13 +31,14 @@ export default function (props: ToggleViewportDropdownProps) {
             props.isDoc || store.setIsViewportOpen(!store.isViewportOpen)
           }
           trigger={
-            <button
-              className="btn-subtle btn-icon"
+            <Button
+              variant="icon"
               title="Viewport Size [Shift + V]"
+              aria-label="Viewport Size [Shift + V]"
               disabled={props.isDoc}
             >
               <AspectRatioIcon />
-            </button>
+            </Button>
           }
         >
           <>
