@@ -147,6 +147,7 @@ export function App(props: AppProps) {
       })}
     >
       <div
+        data-testid="app-grid"
         className={cx(
           'grid h-screen grid-cols-[250px,1fr] bg-gray-100 transition-all duration-500',
           {
