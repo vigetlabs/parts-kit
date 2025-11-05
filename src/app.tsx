@@ -16,6 +16,7 @@ import {
   findFirstNavItem,
   UseHistory,
   SEARCH_PARAM_PART,
+  escapePath,
 } from './features/nav/routing.ts'
 import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
@@ -112,7 +113,8 @@ export function App(props: AppProps) {
     setIsWelcomeVisible(false)
 
     const url = new URL(window.location.href)
-    url.searchParams.set(SEARCH_PARAM_PART, foundItem.url)
+    // (searchParams.set() auto-encodes, so we construct the string directly)
+    url.search = `?${SEARCH_PARAM_PART}=${escapePath(foundItem.url)}`
     useHistory.push(url, { url: foundItem.url })
   }
 

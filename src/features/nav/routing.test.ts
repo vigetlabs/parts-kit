@@ -1,5 +1,22 @@
-import { findFirstNavItem, findNavItemByUrl } from './routing'
+import { findFirstNavItem, findNavItemByUrl, escapePath } from './routing'
 import { NavItemInterface } from './Nav'
+
+describe('escapePath', () => {
+  it('preserves forward slashes unencoded', () => {
+    const input = '/path/to/resource'
+    const result = escapePath(input)
+    expect(result).toBe('/path/to/resource')
+    expect(result).not.toContain('%2F')
+  })
+
+  it('encodes special characters but keeps slashes', () => {
+    const input = '/path with spaces/file.html'
+    const result = escapePath(input)
+    expect(result).toBe('/path%20with%20spaces/file.html')
+    expect(result).toContain('/')
+    expect(result).not.toContain('%2F')
+  })
+})
 
 describe('findNavItemByUrl', () => {
   it('finds a nav item in list', () => {
