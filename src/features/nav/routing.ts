@@ -2,10 +2,9 @@ import { useEffect } from 'preact/hooks'
 import { NavItemInterface } from './Nav'
 
 /**
- * Prefix used for hash-based routing
- * Example: http://localhost:5173/#/button-secondary.html
+ * The search param to look for when routing to the proper nav item
  */
-export const HASH_PREFIX = '#/'
+export const SEARCH_PARAM_PART = 'part'
 
 export const findNavItemByUrl = (
   urlToFind: string,
@@ -41,42 +40,25 @@ interface UseHistoryParams {
 }
 
 export const UseHistory = (params: UseHistoryParams) => {
-  const push = (path: string): void => {
-    const normalized = path.startsWith('/') ? path.slice(1) : path
-    // Setting the hash updates the URL and triggers 'hashchange'
-    window.location.hash = `/${normalized}`
+  const push = (url: URL, data: any): void => {
+    history.pushState(data, '', url)
   }
 
   useEffect(() => {
-    const handleHashChange = () => {
+    const handlePopState = () => {
       params.onPopState({
         url: new URL(window.location.href),
       })
     }
 
-    window.addEventListener('hashchange', handleHashChange)
+    window.addEventListener('popstate', handlePopState)
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange)
+      window.removeEventListener('popstate', handlePopState)
     }
   }, [])
 
   return {
     push,
   }
-}
-
-/**
- * Extract the path from a URL hash.
- * Returns null if there is no hash path.
- * Examples:
- *  - http://localhost/#/button-secondary.html => 'button-secondary.html'
- *  - http://localhost/#button-secondary.html => 'button-secondary.html'
- */
-export const getPathFromHash = (url: URL): string | null => {
-  const rawHash = url.hash
-  if (!rawHash) return null
-  // Remove leading '#/' or '#'
-  const stripped = rawHash.replace(/^#\/?/, '')
-  return stripped.length > 0 ? stripped : null
 }

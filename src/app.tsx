@@ -15,7 +15,7 @@ import {
   findNavItemByUrl,
   findFirstNavItem,
   UseHistory,
-  getPathFromHash,
+  SEARCH_PARAM_PART,
 } from './features/nav/routing.ts'
 import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
@@ -63,53 +63,31 @@ export function App(props: AppProps) {
     return <div>Loading</div>
   }
 
-  const initialPath = getPathFromHash(new URL(window.location.href))
-  const navItemFromUrl = initialPath
-    ? findNavItemByUrl(initialPath, config.nav)
-    : undefined
+  const url = new URL(window.location.href).searchParams.get(SEARCH_PARAM_PART)
+  const navItemFromUrl = url ? findNavItemByUrl(url, config.nav) : undefined
 
   const useHistory = UseHistory({
     onPopState: ({ url }) => {
-      const pathFromHash = getPathFromHash(url)
+      const urlFromHistory = url.searchParams.get(SEARCH_PARAM_PART)
 
-      if (!pathFromHash) {
-        // Select the first nav item if no hash path present
+      if (!urlFromHistory) {
+        console.warn("Url wasn't in history")
+        // Select the first nav item?
         setActiveNavItem(findFirstNavItem(config.nav[0]))
-        setIsWelcomeVisible(false)
         return
       }
 
-      const foundNavItem = findNavItemByUrl(pathFromHash, config.nav)
+      const foundNavItem = findNavItemByUrl(urlFromHistory, config.nav)
 
       if (!foundNavItem) {
-        console.error('Could not find nav item after hash change')
+        console.error('Could not find nav item after popstate')
         // TODO show a 404 message
         return
       }
 
       setActiveNavItem(foundNavItem)
-      setIsWelcomeVisible(false)
     },
   })
-
-  // Migration: support old query param ?part=... by converting to hash #/...
-  useEffect(() => {
-    const currentUrl = new URL(window.location.href)
-    const legacyPart = currentUrl.searchParams.get('part')
-    if (!legacyPart) return
-
-    const normalized = legacyPart.startsWith('/')
-      ? legacyPart.slice(1)
-      : legacyPart
-
-    // Trigger navigation via hashchange
-    window.location.hash = `/${normalized}`
-
-    // Clean up the URL (remove query param) without another navigation
-    currentUrl.searchParams.delete('part')
-    currentUrl.hash = `/${normalized}`
-    history.replaceState({}, '', currentUrl)
-  }, [config.nav.length])
 
   const [isWelcomeVisible, setIsWelcomeVisible] = useState<boolean>(
     !navItemFromUrl,
@@ -133,7 +111,9 @@ export function App(props: AppProps) {
     setActiveNavItem(foundItem)
     setIsWelcomeVisible(false)
 
-    useHistory.push(foundItem.url)
+    const url = new URL(window.location.href)
+    url.searchParams.set(SEARCH_PARAM_PART, foundItem.url)
+    useHistory.push(url, { url: foundItem.url })
   }
 
   KeyboardShortcuts()
