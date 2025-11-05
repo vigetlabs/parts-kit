@@ -21,6 +21,16 @@
       "title": "Card",
       "url": "card.html",
       "children": []
+    },
+    {
+      "title": "Child",
+      "children": [
+        {
+          "title": "Example",
+          "url": "child/example.html",
+          "children": []
+        }
+      ]
     }
   ]
 }

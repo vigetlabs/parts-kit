@@ -6,6 +6,14 @@ import { NavItemInterface } from './Nav'
  */
 export const SEARCH_PARAM_PART = 'part'
 
+/**
+ * Custom escape function to avoid encoding / as %2F
+ */
+export const escapePath = (url: string): string => {
+  const encoded = encodeURIComponent(url)
+  return encoded.replace(/%2F/g, '/')
+}
+
 export const findNavItemByUrl = (
   urlToFind: string,
   navItems: NavItemInterface[],
