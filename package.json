@@ -19,8 +19,10 @@
     "access": "public"
   },
   "scripts": {
-    "test": "tsc && vitest run && npm run e2e",
-    "e2e": "playwright test",
+    "test": "tsc && npm run unit && npm run e2e",
+    "unit": "vitest run",
+    "unit:watch": "vitest",
+    "e2e": "playwright test --reporter=line",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
