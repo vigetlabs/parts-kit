@@ -163,6 +163,7 @@ export function App(props: AppProps) {
               >
                 {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
                 <iframe
+                  data-testid="iframe"
                   key={activeNavItem?.url}
                   className={cx('h-full w-full', {
                     'rounded border-2 border-gray-100':
