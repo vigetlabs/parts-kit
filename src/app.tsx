@@ -15,8 +15,8 @@ import {
   findNavItemByUrl,
   findFirstNavItem,
   UseHistory,
-  SEARCH_PARAM_PART,
-  escapePath,
+  getPathFromSearchParams,
+  searchParamFromPath,
 } from './features/nav/routing.ts'
 import KeyboardShortcuts from './components/KeyboardShortcuts.tsx'
 
@@ -64,12 +64,12 @@ export function App(props: AppProps) {
     return <div>Loading</div>
   }
 
-  const url = new URL(window.location.href).searchParams.get(SEARCH_PARAM_PART)
+  const url = getPathFromSearchParams(new URL(window.location.href).searchParams)
   const navItemFromUrl = url ? findNavItemByUrl(url, config.nav) : undefined
 
   const useHistory = UseHistory({
     onPopState: ({ url }) => {
-      const urlFromHistory = url.searchParams.get(SEARCH_PARAM_PART)
+      const urlFromHistory = getPathFromSearchParams(url.searchParams)
 
       if (!urlFromHistory) {
         console.warn("Url wasn't in history")
@@ -113,8 +113,7 @@ export function App(props: AppProps) {
     setIsWelcomeVisible(false)
 
     const url = new URL(window.location.href)
-    // (searchParams.set() auto-encodes, so we construct the string directly)
-    url.search = `?${SEARCH_PARAM_PART}=${escapePath(foundItem.url)}`
+    url.search = searchParamFromPath(foundItem.url)
     useHistory.push(url, { url: foundItem.url })
   }
 

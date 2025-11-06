@@ -1,18 +1,55 @@
-import { findFirstNavItem, findNavItemByUrl, escapePath } from './routing'
+import {
+  findFirstNavItem,
+  findNavItemByUrl,
+  searchParamFromPath,
+  getPathFromSearchParams,
+} from './routing'
 import { NavItemInterface } from './Nav'
 
-describe('escapePath', () => {
+describe('getPathFromSearchParams', () => {
+  it('returns path param when present', () => {
+    const searchParams = new URLSearchParams('path=/some/path')
+    const result = getPathFromSearchParams(searchParams)
+    expect(result).toBe('/some/path')
+  })
+
+  it('returns legacy part param when path is not present', () => {
+    const searchParams = new URLSearchParams('part=/legacy/path')
+    const result = getPathFromSearchParams(searchParams)
+    expect(result).toBe('/legacy/path')
+  })
+
+  it('prefers path param over legacy part param when both are present', () => {
+    const searchParams = new URLSearchParams('path=/new/path&part=/old/path')
+    const result = getPathFromSearchParams(searchParams)
+    expect(result).toBe('/new/path')
+  })
+
+  it('returns null when neither param is present', () => {
+    const searchParams = new URLSearchParams('other=value')
+    const result = getPathFromSearchParams(searchParams)
+    expect(result).toBeNull()
+  })
+
+  it('returns null when search params are empty', () => {
+    const searchParams = new URLSearchParams('')
+    const result = getPathFromSearchParams(searchParams)
+    expect(result).toBeNull()
+  })
+})
+
+describe('searchParamFromPath', () => {
   it('preserves forward slashes unencoded', () => {
     const input = '/path/to/resource'
-    const result = escapePath(input)
-    expect(result).toBe('/path/to/resource')
+    const result = searchParamFromPath(input)
+    expect(result).toBe('?path=/path/to/resource')
     expect(result).not.toContain('%2F')
   })
 
   it('encodes special characters but keeps slashes', () => {
     const input = '/path with spaces/file.html'
-    const result = escapePath(input)
-    expect(result).toBe('/path%20with%20spaces/file.html')
+    const result = searchParamFromPath(input)
+    expect(result).toBe('?path=/path%20with%20spaces/file.html')
     expect(result).toContain('/')
     expect(result).not.toContain('%2F')
   })
