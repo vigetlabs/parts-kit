@@ -4,14 +4,30 @@ import { NavItemInterface } from './Nav'
 /**
  * The search param to look for when routing to the proper nav item
  */
-export const SEARCH_PARAM_PART = 'part'
+const SEARCH_PARAM_PATH = 'path'
+
+/**
+ * Legacy search param for backwards compatibility
+ */
+const SEARCH_PARAM_PART_LEGACY = 'part'
 
 /**
  * Custom escape function to avoid encoding / as %2F
  */
-export const escapePath = (url: string): string => {
-  const encoded = encodeURIComponent(url)
-  return encoded.replace(/%2F/g, '/')
+export const searchParamFromPath = (url: string): string => {
+  const encodedRaw = encodeURIComponent(url)
+  const encoded = encodedRaw.replace(/%2F/g, '/')
+
+  return `?${SEARCH_PARAM_PATH}=${encoded}`
+}
+
+/**
+ * Gets the path from URL search params, checking both the new 'path' param
+ * and the legacy 'part' param for backwards compatibility.
+ * Prefers the new 'path' param if both are present.
+ */
+export const getPathFromSearchParams = (searchParams: URLSearchParams): string | null => {
+  return searchParams.get(SEARCH_PARAM_PATH) || searchParams.get(SEARCH_PARAM_PART_LEGACY)
 }
 
 export const findNavItemByUrl = (

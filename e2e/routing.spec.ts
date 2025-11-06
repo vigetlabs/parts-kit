@@ -16,15 +16,29 @@ test.describe('Routing', () => {
     // Wait for navigation to complete
     await page.waitForLoadState('networkidle')
 
-    // Verify the URL is ?part=child/example.html
-    await expect(page).toHaveURL(/\?part=child\/example\.html/)
+    // Verify the URL is ?path=child/example.html
+    await expect(page).toHaveURL(/\?path=child\/example\.html/)
 
     // Verify the iframe has the correct src
     const iframe = page.getByTestId('iframe')
     await expect(iframe).toHaveAttribute('src', 'child/example.html')
   })
 
-  test('visiting URL with ?part=child/example.html loads correct iframe', async ({ page }) => {
+  test('visiting URL with ?path=child/example.html loads correct iframe', async ({ page }) => {
+    // Navigate directly to the URL with the part query parameter
+    await page.goto('/?path=child/example.html')
+    await page.waitForLoadState('networkidle')
+    await expect(page.getByTestId('app')).toBeVisible()
+
+    // Verify the URL is ?path=child/example.html
+    await expect(page).toHaveURL(/\?path=child\/example\.html/)
+
+    // Verify the iframe has the correct src
+    const iframe = page.getByTestId('iframe')
+    await expect(iframe).toHaveAttribute('src', 'child/example.html')
+  })
+
+  test('Legacy Behavior: visiting URL with ?part=child/example.html loads correct iframe', async ({ page }) => {
     // Navigate directly to the URL with the part query parameter
     await page.goto('/?part=child/example.html')
     await page.waitForLoadState('networkidle')
