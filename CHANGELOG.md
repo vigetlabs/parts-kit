@@ -1,6 +1,7 @@
 # Change Log
 
 ## 0.3.0
+- Fix flakey e2e test - `keyboard-shortcuts.spec.ts` ([#53](https://github.com/vigetlabs/parts-kit/pull/53))
 - [#50](https://github.com/vigetlabs/parts-kit/issues/50) - Don't escape forward slashes. Switch deep links to use a `path` parameter instead of `part`. Add routing e2e coverage. ([#51](https://github.com/vigetlabs/parts-kit/pull/51))
 - [#43](https://github.com/vigetlabs/parts-kit/issues/43) - Add a direct link button to the UtilityBar and fix anchor hover styles. ([#46](https://github.com/vigetlabs/parts-kit/pull/46))
 - [#40](https://github.com/vigetlabs/parts-kit/issues/40) - Fix keyboard shortcuts firing when focused within inputs. ([#45](https://github.com/vigetlabs/parts-kit/pull/45))

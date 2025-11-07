@@ -1,4 +1,4 @@
-import { useEffect } from 'preact/hooks'
+import { useCallback, useEffect } from 'preact/hooks'
 import {
   useThemeStore,
   useUtilityBarStore,
@@ -54,8 +54,55 @@ function preventDefault(e: SimpleKeyboardEvent) {
 }
 
 export default function () {
-  const utilityStore = useUtilityBarStore()
-  const themeStore = useThemeStore()
+  const keydownHandler = useCallback((e: SimpleKeyboardEvent) => {
+    const utilityStore = useUtilityBarStore.getState()
+    const themeStore = useThemeStore.getState()
+
+    if (!canHandleKeyboard()) {
+      return
+    }
+
+    switch (e.key.toLowerCase()) {
+      case 'f': {
+        preventDefault(e)
+        utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
+        return
+      }
+
+      case 'escape': {
+        preventDefault(e)
+        utilityStore.setIsNavBarVisible(true)
+        return
+      }
+
+      case 'v': {
+        if (e.shiftKey) {
+          preventDefault(e)
+          utilityStore.setIsViewportOpen(!utilityStore.isViewportOpen)
+        }
+        return
+      }
+
+      case 't': {
+        if (e.shiftKey) {
+          preventDefault(e)
+          themeStore.toggleMode()
+        }
+        return
+      }
+
+      case 's': {
+        if (e.shiftKey) {
+          preventDefault(e)
+          utilityStore.setIsSettingsOpen(!utilityStore.isSettingsOpen)
+        }
+        return
+      }
+
+      default:
+        return
+    }
+  }, [])
 
   usePostMessageReceiver({
     onMessage(e) {
@@ -67,63 +114,11 @@ export default function () {
     },
   })
 
-  // handles different keyboard shortcuts
-  const keydownHandler = (e: SimpleKeyboardEvent) => {
-    if (!canHandleKeyboard()) {
-      return
-    }
-
-    // Make sure all of your case statements are lowercase too
-    switch (e.key.toLowerCase()) {
-      // toggle fullscreen [F]
-      case 'f':
-        preventDefault(e)
-        return utilityStore.setIsNavBarVisible(!utilityStore.isNavBarVisible)
-
-      // exit fullscreen [Esc]
-      case 'escape':
-        preventDefault(e)
-        return utilityStore.setIsNavBarVisible(true)
-
-      // toggle viewport menu [Shift + V]
-      case 'v':
-        if (e.shiftKey) {
-          preventDefault(e)
-          utilityStore.setIsViewportOpen(!utilityStore.isViewportOpen)
-        }
-        return
-
-      // toggle theme [Shift + T]
-      case 't':
-        if (e.shiftKey) {
-          preventDefault(e)
-          themeStore.toggleMode()
-        }
-        return
-
-      // toggle settings [Shift + S]
-      case 's':
-        if (e.shiftKey) {
-          preventDefault(e)
-          utilityStore.setIsSettingsOpen(!utilityStore.isSettingsOpen)
-        }
-        return
-
-      default:
-        return
-    }
-  }
-
-  // be sure to track changes to your states here, or they won't update when re-used
   useEffect(() => {
-    document.addEventListener('keydown', keydownHandler)
+    const handleKeydown = (event: KeyboardEvent) => keydownHandler(event)
+    document.addEventListener('keydown', handleKeydown)
     return () => {
-      document.removeEventListener('keydown', keydownHandler)
+      document.removeEventListener('keydown', handleKeydown)
     }
-  }, [
-    utilityStore.isNavBarVisible,
-    utilityStore.isViewportOpen,
-    utilityStore.isSettingsOpen,
-    themeStore.mode,
-  ])
+  }, [keydownHandler])
 }
