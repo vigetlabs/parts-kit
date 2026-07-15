@@ -155,7 +155,7 @@ npm run dev
 ```
 
 ## Deploy NPM package
-For deployments, we let commits build up on `main`. When we're ready for a release, authenticate via `npm login` from your command line using the [Viget NPM account](https://my.1password.com/vaults/maxyfxamkf65q6flnyqzyixhgi/allitems/sb4qvqutpbbkvegrel3owkcqva), then  run `npm run deploy`. It runs a `build-lib` script and then uses `np` to automatically tag a release, update package.json and publish to NPM.
+For deployments, we let commits build up on `main`. When we're ready for a release, authenticate via `npm login` from your command line using the Viget NPM account, then  run `npm run deploy`. It runs a `build-lib` script and then uses `np` to automatically tag a release, update package.json and publish to NPM.
 
 We use [unpkg.com](https://unpkg.com/) as our CDN. Deploying a new version of the NPM package will automatically publish the script to our various app implementations.
 
