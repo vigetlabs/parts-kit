@@ -7,6 +7,7 @@ export enum ScreenSize {
   Mobile,
   Tablet,
   Desktop,
+  Manual,
 }
 
 export const screenSizes = [
@@ -22,12 +23,17 @@ export const screenSizes = [
     title: 'Desktop',
     size: ScreenSize.Desktop,
   },
+  {
+    title: 'Manual',
+    size: ScreenSize.Manual,
+  },
 ]
 
 export const screenSizeMap = {
   [ScreenSize.Mobile]: 375,
   [ScreenSize.Tablet]: 768,
   [ScreenSize.Desktop]: undefined,
+  [ScreenSize.Manual]: undefined,
 }
 
 const getInitialMode = (): ThemeMode => {
@@ -59,6 +65,7 @@ export const useUtilityBarStore = create(
         isViewportOpen: false,
         isNavBarVisible: true,
         activeScreenSize: ScreenSize.Desktop,
+        manualWidth: 800,
       },
       (set) => ({
         setIsSettingsVisible: (newVal: boolean) =>
@@ -75,6 +82,8 @@ export const useUtilityBarStore = create(
 
         setActiveScreenSize: (val: ScreenSize) =>
           set(() => ({ activeScreenSize: val })),
+
+        setManualWidth: (val: number) => set(() => ({ manualWidth: val })),
       }),
     ),
   ),

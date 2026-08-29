@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'preact/hooks'
 import cx from 'classnames'
+import { Resizable } from 're-resizable'
 import { Nav } from './features/nav/Nav.tsx'
+
+const ResizableBox = Resizable as any
+
 import { NavItemInterface } from './features/nav/Nav.tsx'
 import { useSettingsStore } from './features/settings/store.ts'
 import {
@@ -155,11 +159,33 @@ export function App(props: AppProps) {
             {!hasConfigUrl && isWelcomeVisible ? (
               <Welcome />
             ) : (
-              <div
-                className={cx('flex-grow', {
+              <ResizableBox
+                className={cx({
+                  'flex-grow': utilityStore.activeScreenSize === ScreenSize.Desktop,
                   'py-5': utilityStore.activeScreenSize !== ScreenSize.Desktop,
                 })}
-                style={{ maxWidth: activeScreenWidth }}
+                size={{
+                  width:
+                    utilityStore.activeScreenSize === ScreenSize.Manual
+                      ? utilityStore.manualWidth
+                      : activeScreenWidth ?? '100%',
+                  height: '100%',
+                }}
+                onResizeStop={(_e: any, _direction: any, ref: any, _d: any) => {
+                  if (utilityStore.activeScreenSize === ScreenSize.Manual) {
+                    utilityStore.setManualWidth(ref.offsetWidth)
+                  }
+                }}
+                enable={{
+                  top: false,
+                  right: utilityStore.activeScreenSize === ScreenSize.Manual,
+                  bottom: false,
+                  left: utilityStore.activeScreenSize === ScreenSize.Manual,
+                  topRight: false,
+                  bottomRight: false,
+                  bottomLeft: false,
+                  topLeft: false,
+                }}
               >
                 {/* Changing the src of iframes will muck up your history. Using key to rerender when the nav changes is a workaround */}
                 <iframe
@@ -171,7 +197,7 @@ export function App(props: AppProps) {
                   })}
                   src={activeNavItem?.url ?? undefined}
                 ></iframe>
-              </div>
+              </ResizableBox>
             )}
           </div>
         </div>
